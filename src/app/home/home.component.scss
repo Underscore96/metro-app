@@ -1,0 +1,62 @@
+$shadow: #fc0;
+
+html {
+  background-color: #ccc;
+}
+
+form {
+  display: block;
+  left: 50%;
+  position: absolute;
+  top: 30%;
+  input[type="search"] {
+    border: solid 3px #fff;
+    box-sizing: border-box;
+    font-size: 2em;
+    height: 2em;
+    margin-left: -15vw;
+    outline: solid #fc0 0;
+    padding: 0.5em;
+    transition: all 2s ease-in;
+    width: 30vw;
+    z-index: 1;
+    &:focus {
+      border: solid 3px #09f;
+      outline: solid #fc0 2000px;
+    }
+  }
+}
+
+
+
+
+/* Add your styling for the table and other elements here */
+.table-container {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.table-container.open {
+  display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ba1d1d;
+}
+
+th {
+  background-color: #d64b4b;
+}
+
+
+
+
+

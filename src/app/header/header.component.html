@@ -1,0 +1,20 @@
+
+
+<div class="header-wrapper">
+    <div class="logo">
+      <h2>METRO</h2>
+    </div>
+    <div class="hamburger-main">
+      <div class="hamburger-icon" (click)="toggleMenu()" [class.active]="isMenuOpen">
+        <span></span>
+        <span></span>
+      </div>
+      <div class="mega-menu" [class.active]="isMenuOpen">
+        <ul>
+          <li><a class="nav-link" href="/home"> Home </a></li>
+          <li>  <a class="nav-link" href="/admin"> Amministrazione </a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  

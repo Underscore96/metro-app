@@ -5,6 +5,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,12 +36,12 @@ public class Linea {
 	private String idLinea;
 
 	@Column(name = "nomeLinea", length = 10, nullable = false, unique = true)
-	private Integer nomeLinea;
+	private String nomeLinea;
 
 	@Column(name = "direzione", length = 40, nullable = true, unique = false)
 	private String direzione;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idFermata")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idFermata", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	@JsonIgnore
 	@ToString.Exclude

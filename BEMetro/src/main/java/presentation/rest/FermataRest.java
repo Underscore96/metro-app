@@ -1,61 +1,145 @@
 package presentation.rest;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
-import db.entity.Fermata;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
+import presentation.pojo.PojoFermata;
+import service.FermataService;
 
 @Path("/fermata")
 public class FermataRest {
-	Session session = null;
-	
+	Session sessione = null;
+
 	@GET
 	@Path("/test")
 	public Response test() {
 		return Response.ok().build();
 	}
-	
+
 	@POST
-	@Path("/create")
+	@Path("/crea")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response createConfRule(Fermata fermata) {
-		String result = null;
-		Response resp = null;
+	public Response creaFermata(PojoFermata fermata) {
+		String risultato = null;
+		Response risposta = null;
 
 		try {
-			result = FermataService.createFermata(fermata);
-			resp = Response.ok(result).build();
+			risultato = FermataService.creaFermata(fermata);
+			risposta = Response.ok(risultato).build();
 
 		} finally {
-			if (session != null && session.isOpen()) {
-				session.close();
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
 			}
 		}
-		return resp;
+		return risposta;
 	}
-	
+
 	@POST
-	@Path("/read")
+	@Path("/leggi")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response readConfRule(Fermata fermata) {
-		Response resp = null;
-		Fermata confRuleFound = null;
+	public Response leggiFermata(PojoFermata fermata) {
+		Response risposta = null;
+		PojoFermata fermataTrovata = null;
 
 		try {
-			confRuleFound = FermataService.readFermata(fermata);
-			resp = Response.ok(confRuleFound).build();
+			fermataTrovata = FermataService.leggiFermata(fermata);
+			risposta = Response.ok(fermataTrovata).build();
 		} finally {
-			if (session != null && session.isOpen()) {
-				session.close();
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
 			}
 		}
-		return resp;
+		return risposta;
+	}
+
+	@PUT
+	@Path("/aggiorna")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response aggiornaFermata(PojoFermata fermata) {
+		PojoFermata fermataAggiornata = null;
+		Response risposta = null;
+
+		try {
+			fermataAggiornata = FermataService.aggiornaFermata(fermata);
+			risposta = Response.ok(fermataAggiornata).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
+	}
+
+	@DELETE
+	@Path("/cancella")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cancellaFermata(PojoFermata fermata) {
+		String risultato = null;
+		Response risposta = null;
+
+		try {
+			risultato = FermataService.cancellaFermata(fermata);
+			risposta = Response.ok(risultato).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
+	}
+
+	@GET
+	@Path("tutte")
+	@Produces("application/Json")
+	public Response trovaTutteLeFermate() {
+		List<PojoFermata> listaFermate = null;
+		Response risposta = null;
+
+		try {
+			listaFermate = FermataService.trovaTutteLeFermate();
+
+			risposta = Response.ok(listaFermate).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
+	}
+
+	@POST
+	@Path("attributi")
+	@Produces("application/Json")
+	public Response trovaConAttributi(@QueryParam("nome") String nome,
+			@QueryParam("previsioneMeteo") String previsioneMeteo) {
+		List<PojoFermata> listaFermate = null;
+		Response risultati = null;
+
+		try {
+			listaFermate = FermataService.trovaConAttributi(nome,
+					previsioneMeteo);
+
+			risultati = Response.ok(listaFermate).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risultati;
 	}
 }

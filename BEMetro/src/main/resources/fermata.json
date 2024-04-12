@@ -1,0 +1,128 @@
+[
+	{
+		"numFermata": 1,
+		"nome": "Brignole",
+		"orarioPrevisto": "16:30",
+		"ritardo": "16:35",
+		"previsioneMeteo": "pioggia"
+	},
+	{
+		"numFermata": 2,
+		"nome": "Corvetto",
+		"orarioPrevisto": null,
+		"ritardo": null,
+		"previsioneMeteo": null
+	},
+	{
+		"numFermata": 2,
+		"nome": "De Ferrari",
+		"orarioPrevisto": "16:35",
+		"ritardo": "16:40",
+		"previsioneMeteo": "pioggia"
+	},
+	{
+		"numFermata": 3,
+		"nome": "Sarzano",
+		"orarioPrevisto": "16:40",
+		"ritardo": "16:45",
+		"previsioneMeteo": "nuvolo"
+	},
+	{
+		"numFermata": 4,
+		"nome": "San Giorgio",
+		"orarioPrevisto": "16:45",
+		"ritardo": "16:50",
+		"previsioneMeteo": "nuvolo"
+	},
+	{
+		"numFermata": 5,
+		"nome": "Darsena",
+		"orarioPrevisto": "16:50",
+		"ritardo": "16:55",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 6,
+		"nome": "Piazza Principe",
+		"orarioPrevisto": "16:55",
+		"ritardo": "17:00",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 7,
+		"nome": "Dinegro",
+		"orarioPrevisto": "17:00",
+		"ritardo": "16:05",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 8,
+		"nome": "Brin",
+		"orarioPrevisto": "17:05",
+		"ritardo": "16:10",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 9,
+		"nome": "Brignole",
+		"orarioPrevisto": "16:30",
+		"ritardo": "16:35",
+		"previsioneMeteo": "pioggia"
+	},
+	{
+		"numFermata": 10,
+		"nome": "Corvetto",
+		"orarioPrevisto": null,
+		"ritardo": null,
+		"previsioneMeteo": null
+	},
+	{
+		"numFermata": 11,
+		"nome": "De Ferrari",
+		"orarioPrevisto": "16:35",
+		"ritardo": "16:40",
+		"previsioneMeteo": "pioggia"
+	},
+	{
+		"numFermata": 12,
+		"nome": "Sarzano",
+		"orarioPrevisto": "16:40",
+		"ritardo": "16:45",
+		"previsioneMeteo": "nuvolo"
+	},
+	{
+		"numFermata": 13,
+		"nome": "San Giorgio",
+		"orarioPrevisto": "16:45",
+		"ritardo": "16:50",
+		"previsioneMeteo": "nuvolo"
+	},
+	{
+		"numFermata": 14,
+		"nome": "Darsena",
+		"orarioPrevisto": "16:50",
+		"ritardo": "16:55",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 15,
+		"nome": "Piazza Principe",
+		"orarioPrevisto": "16:55",
+		"ritardo": "17:00",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 16,
+		"nome": "Dinegro",
+		"orarioPrevisto": "17:00",
+		"ritardo": "16:05",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 17,
+		"nome": "Brin",
+		"orarioPrevisto": "17:05",
+		"ritardo": "16:10",
+		"previsioneMeteo": "sole"
+	}
+]

@@ -1,6 +1,6 @@
 package presentation.pojo;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +20,6 @@ public class PojoFermataFE {
 	private String nome_linea;
 	private String direzione;
 	private String previsione_meteo;
-	private LocalDate tempo_arrivo;
-	private LocalDate ritardo_stimato;
+	private LocalTime tempo_arrivo;
+	private LocalTime ritardo_stimato;
 }

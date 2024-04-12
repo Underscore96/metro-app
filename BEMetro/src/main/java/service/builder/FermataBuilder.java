@@ -1,6 +1,6 @@
 package service.builder;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 import db.entity.Fermata;
 import db.entity.Linea;
@@ -9,8 +9,8 @@ public class FermataBuilder {
 	private String idFermata;
 	private Integer numFermata;
 	private String nome;
-	private LocalDate orarioPrevisto;
-	private LocalDate ritardo;
+	private LocalTime orarioPrevisto;
+	private LocalTime ritardo;
 	private String previsioneMeteo;
 	private Linea linea;
 
@@ -29,12 +29,12 @@ public class FermataBuilder {
 		return this;
 	}
 
-	public FermataBuilder setOrarioPrevisto(LocalDate orarioPrevisto) {
+	public FermataBuilder setOrarioPrevisto(LocalTime orarioPrevisto) {
 		this.orarioPrevisto = orarioPrevisto;
 		return this;
 	}
 
-	public FermataBuilder setRitardo(LocalDate ritardo) {
+	public FermataBuilder setRitardo(LocalTime ritardo) {
 		this.ritardo = ritardo;
 		return this;
 	}
@@ -51,7 +51,7 @@ public class FermataBuilder {
 
 	public Fermata costruisci() {
 		Fermata nuovaFermata = new Fermata();
-		
+
 		nuovaFermata.setIdFermata(idFermata);
 		nuovaFermata.setNumFermata(numFermata);
 		nuovaFermata.setNome(nome);
@@ -59,7 +59,7 @@ public class FermataBuilder {
 		nuovaFermata.setRitardo(ritardo);
 		nuovaFermata.setPrevisioneMeteo(previsioneMeteo);
 		nuovaFermata.setLinea(linea);
-		
+
 		return nuovaFermata;
 	}
 }

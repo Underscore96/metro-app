@@ -1,6 +1,6 @@
 package db.entity;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,10 +41,10 @@ public class Fermata {
 	private String nome;
 
 	@Column(name = "orarioPrevisto", nullable = true, unique = false)
-	private LocalDate orarioPrevisto;
+	private LocalTime orarioPrevisto;
 
 	@Column(name = "ritardo", nullable = true, unique = false)
-	private LocalDate ritardo;
+	private LocalTime ritardo;
 
 	@Column(name = "previsioneMeteo", length = 40, nullable = true, unique = false)
 	private String previsioneMeteo;

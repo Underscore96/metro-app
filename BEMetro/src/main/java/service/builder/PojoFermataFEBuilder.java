@@ -1,6 +1,6 @@
 package service.builder;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 import presentation.pojo.PojoFermataFE;
 
@@ -11,8 +11,8 @@ public class PojoFermataFEBuilder {
 	private String nome_linea;
 	private String direzione;
 	private String previsione_meteo;
-	private LocalDate tempo_arrivo;
-	private LocalDate ritardo_stimato;
+	private LocalTime tempo_arrivo;
+	private LocalTime ritardo_stimato;
 
 	public PojoFermataFEBuilder setId(Integer id) {
 		this.id = id;
@@ -44,12 +44,12 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setTempo_arrivo(LocalDate tempo_arrivo) {
+	public PojoFermataFEBuilder setTempo_arrivo(LocalTime tempo_arrivo) {
 		this.tempo_arrivo = tempo_arrivo;
 		return this;
 	}
 
-	public PojoFermataFEBuilder setRitardo_stimato(LocalDate ritardo_stimato) {
+	public PojoFermataFEBuilder setRitardo_stimato(LocalTime ritardo_stimato) {
 		this.ritardo_stimato = ritardo_stimato;
 		return this;
 	}

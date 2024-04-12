@@ -1,6 +1,6 @@
 package presentation.pojo;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 import db.entity.Linea;
 import lombok.AllArgsConstructor;
@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class PojoFermata {
 	private Integer numFermata;
 	private String nome;
-	private LocalDate orarioPrevisto;
-	private LocalDate ritardo;
+	private LocalTime orarioPrevisto;
+	private LocalTime ritardo;
 	private String previsioneMeteo;
 	private Linea linea;
 }

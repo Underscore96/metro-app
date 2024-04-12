@@ -8,6 +8,7 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import presentation.rest.FermataFERest;
 import presentation.rest.FermataRest;
+import presentation.rest.GestioneDBRest;
 import presentation.rest.LineaRest;
 
 @ApplicationPath("rest")
@@ -19,6 +20,7 @@ public class MyApplication extends Application {
 		s.add(FermataRest.class);
 		s.add(LineaRest.class);
 		s.add(FermataFERest.class);
+		s.add(GestioneDBRest.class);
 		s.add(ServerExceptionMapper.class);
 
 		return s;

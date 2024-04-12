@@ -13,11 +13,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
-import presentation.pojo.PojoFermata;
-import service.FermataService;
+import presentation.pojo.PojoLinea;
+import service.LineaService;
 
-@Path("/fermata")
-public class FermataRest {
+@Path("/linea")
+public class LineaRest {
 	Session sessione = null;
 
 	@GET
@@ -30,12 +30,12 @@ public class FermataRest {
 	@Path("/crea")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response creaFermata(PojoFermata fermata) {
+	public Response creaLinea(PojoLinea linea) {
 		String risultato = null;
 		Response risposta = null;
 
 		try {
-			risultato = FermataService.creaFermata(fermata);
+			risultato = LineaService.creaLinea(linea);
 			risposta = Response.ok(risultato).build();
 
 		} finally {
@@ -50,13 +50,13 @@ public class FermataRest {
 	@Path("/leggi")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response leggiFermata(PojoFermata fermata) {
+	public Response leggiLinea(PojoLinea linea) {
 		Response risposta = null;
-		PojoFermata fermataTrovata = null;
+		PojoLinea lineaTrovata = null;
 
 		try {
-			fermataTrovata = FermataService.leggiFermata(fermata);
-			risposta = Response.ok(fermataTrovata).build();
+			lineaTrovata = LineaService.leggiLinea(linea);
+			risposta = Response.ok(lineaTrovata).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -69,13 +69,13 @@ public class FermataRest {
 	@Path("/aggiorna")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response aggiornaFermata(PojoFermata fermata) {
-		PojoFermata fermataAggiornata = null;
+	public Response aggiornaLinea(PojoLinea linea) {
+		PojoLinea lineaAggiornata = null;
 		Response risposta = null;
 
 		try {
-			fermataAggiornata = FermataService.aggiornaFermata(fermata);
-			risposta = Response.ok(fermataAggiornata).build();
+			lineaAggiornata = LineaService.aggiornaLinea(linea);
+			risposta = Response.ok(lineaAggiornata).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -88,12 +88,12 @@ public class FermataRest {
 	@Path("/cancella")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cancellaFermata(PojoFermata fermata) {
+	public Response cancellaLinea(PojoLinea linea) {
 		String risultato = null;
 		Response risposta = null;
 
 		try {
-			risultato = FermataService.cancellaFermata(fermata);
+			risultato = LineaService.cancellaLinea(linea);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
@@ -106,14 +106,14 @@ public class FermataRest {
 	@GET
 	@Path("tutte")
 	@Produces("application/Json")
-	public Response trovaTutteLeFermate() {
-		List<PojoFermata> listaFermate = null;
+	public Response trovaTutteLeLinee() {
+		List<PojoLinea> listaLinee = null;
 		Response risposta = null;
 
 		try {
-			listaFermate = FermataService.trovaTutteLeFermate();
+			listaLinee = LineaService.trovaTutteLeLinee();
 
-			risposta = Response.ok(listaFermate).build();
+			risposta = Response.ok(listaLinee).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -125,16 +125,15 @@ public class FermataRest {
 	@POST
 	@Path("attributi")
 	@Produces("application/Json")
-	public Response trovaConAttributi(@QueryParam("nome") String nome,
-			@QueryParam("previsioneMeteo") String previsioneMeteo) {
-		List<PojoFermata> listaFermate = null;
+	public Response trovaConAttributi(
+			@QueryParam("direzione") String direzione) {
+		List<PojoLinea> listaLinee = null;
 		Response risultati = null;
 
 		try {
-			listaFermate = FermataService.trovaConAttributi(nome,
-					previsioneMeteo);
+			listaLinee = LineaService.trovaConAttributi(direzione);
 
-			risultati = Response.ok(listaFermate).build();
+			risultati = Response.ok(listaLinee).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();

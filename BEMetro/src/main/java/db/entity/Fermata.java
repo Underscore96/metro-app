@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "idFermata" })
 @Entity
-@Table(name = "Expense")
+@Table(name = "Fermata")
 public class Fermata {
 
 	@Id

@@ -14,18 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = { "idLinea" })
 @Entity
 @Table(name = "Linea")
 public class Linea {
@@ -44,6 +33,43 @@ public class Linea {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idFermata", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	@JsonIgnore
-	@ToString.Exclude
 	private Set<Fermata> fermate;
+
+	public String getIdLinea() {
+		return idLinea;
+	}
+
+	public void setIdLinea(String idLinea) {
+		this.idLinea = idLinea;
+	}
+
+	public String getNomeLinea() {
+		return nomeLinea;
+	}
+
+	public void setNomeLinea(String nomeLinea) {
+		this.nomeLinea = nomeLinea;
+	}
+
+	public String getDirezione() {
+		return direzione;
+	}
+
+	public void setDirezione(String direzione) {
+		this.direzione = direzione;
+	}
+
+	public Set<Fermata> getFermate() {
+		return fermate;
+	}
+
+	public void setFermate(Set<Fermata> fermate) {
+		this.fermate = fermate;
+	}
+
+	@Override
+	public String toString() {
+		return "Linea [idLinea=" + idLinea + ", nomeLinea=" + nomeLinea
+				+ ", direzione=" + direzione + "]";
+	}
 }

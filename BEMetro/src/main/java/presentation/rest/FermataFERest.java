@@ -64,7 +64,7 @@ public class FermataFERest {
 		return risposta;
 	}
 
-	@POST
+	@GET
 	@Path("/leggi")
 	@Consumes("Application/json")
 	@Produces("Application/json")

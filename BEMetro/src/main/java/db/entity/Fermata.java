@@ -14,17 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = { "idFermata" })
 @Entity
 @Table(name = "Fermata")
 public class Fermata {
@@ -54,4 +44,68 @@ public class Fermata {
 	@JsonIgnore
 	@JsonBackReference
 	private Linea linea;
+
+	public String getIdFermata() {
+		return idFermata;
+	}
+
+	public void setIdFermata(String idFermata) {
+		this.idFermata = idFermata;
+	}
+
+	public Integer getNumFermata() {
+		return numFermata;
+	}
+
+	public void setNumFermata(Integer numFermata) {
+		this.numFermata = numFermata;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public LocalTime getOrarioPrevisto() {
+		return orarioPrevisto;
+	}
+
+	public void setOrarioPrevisto(LocalTime orarioPrevisto) {
+		this.orarioPrevisto = orarioPrevisto;
+	}
+
+	public LocalTime getRitardo() {
+		return ritardo;
+	}
+
+	public void setRitardo(LocalTime ritardo) {
+		this.ritardo = ritardo;
+	}
+
+	public String getPrevisioneMeteo() {
+		return previsioneMeteo;
+	}
+
+	public void setPrevisioneMeteo(String previsioneMeteo) {
+		this.previsioneMeteo = previsioneMeteo;
+	}
+
+	public Linea getLinea() {
+		return linea;
+	}
+
+	public void setLinea(Linea linea) {
+		this.linea = linea;
+	}
+
+	@Override
+	public String toString() {
+		return "Fermata [idFermata=" + idFermata + ", numFermata=" + numFermata
+				+ ", nome=" + nome + ", orarioPrevisto=" + orarioPrevisto
+				+ ", ritardo=" + ritardo + ", previsioneMeteo="
+				+ previsioneMeteo + ", linea=" + linea + "]";
+	}
 }

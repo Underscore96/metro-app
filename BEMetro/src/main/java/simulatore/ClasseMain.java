@@ -1,4 +1,4 @@
-package SimulatoreMetro;
+package simulatore;
 
 import java.time.LocalTime;
 import java.util.List;

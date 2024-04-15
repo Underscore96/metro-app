@@ -12,6 +12,21 @@ public class PojoFermata {
 	private String previsioneMeteo;
 	private Linea linea;
 
+	public PojoFermata() {
+	}
+
+	public PojoFermata(Integer numFermata, String nome,
+			LocalTime orarioPrevisto, LocalTime ritardo, String previsioneMeteo,
+			Linea linea) {
+		super();
+		this.numFermata = numFermata;
+		this.nome = nome;
+		this.orarioPrevisto = orarioPrevisto;
+		this.ritardo = ritardo;
+		this.previsioneMeteo = previsioneMeteo;
+		this.linea = linea;
+	}
+
 	public Integer getNumFermata() {
 		return numFermata;
 	}
@@ -64,7 +79,7 @@ public class PojoFermata {
 	public String toString() {
 		return "PojoFermata [numFermata=" + numFermata + ", nome=" + nome
 				+ ", orarioPrevisto=" + orarioPrevisto + ", ritardo=" + ritardo
-				+ ", previsioneMeteo=" + previsioneMeteo + ", linea=" + linea
+				+ ", previsioneMeteo=" + previsioneMeteo + ", nomeLinea=" + linea.getNomeLinea()
 				+ "]";
 	}
 

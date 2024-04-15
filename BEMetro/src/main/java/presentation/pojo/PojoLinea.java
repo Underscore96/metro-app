@@ -9,6 +9,16 @@ public class PojoLinea {
 	private String direzione;
 	private Set<Fermata> fermate;
 
+	public PojoLinea() {
+	}
+
+	public PojoLinea(String nomeLinea, String direzione, Set<Fermata> fermate) {
+		super();
+		this.nomeLinea = nomeLinea;
+		this.direzione = direzione;
+		this.fermate = fermate;
+	}
+
 	public String getNomeLinea() {
 		return nomeLinea;
 	}
@@ -36,6 +46,6 @@ public class PojoLinea {
 	@Override
 	public String toString() {
 		return "PojoLinea [nomeLinea=" + nomeLinea + ", direzione=" + direzione
-				+ "]";
+				+ ", fermate=" + fermate + "]";
 	}
 }

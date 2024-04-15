@@ -9,6 +9,7 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
+import db.entity.Fermata;
 import db.entity.Linea;
 import db.util.HibernateUtil;
 import exception.CustomException;
@@ -16,6 +17,8 @@ import exception.ErrorMessages;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.ws.rs.core.Response;
@@ -198,5 +201,43 @@ public class LineaDAO {
 		for (Object member : myCollection)
 			r.add(classType.cast(member));
 		return r;
+	}
+
+	public List<Fermata> leggiLineaConFermate(String nomeLinea) {
+//		List<Fermata> result = new ArrayList<>();
+//		CriteriaBuilder builder;
+//		CriteriaQuery<Fermata> criteria;
+//		Root<Fermata> root;
+		List<Fermata> result = new ArrayList<>();
+
+		try {
+			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
+			sessione.beginTransaction();
+
+			String sqlQuery = "SELECT f.* FROM Fermata f JOIN Linea l ON f.idLinea = l.idLinea WHERE l.nomeLinea = :nomeLinea";
+	        result = sessione.createNativeQuery(sqlQuery, Fermata.class)
+	                        .setParameter("nomeLinea", nomeLinea)
+	                        .getResultList();
+			
+//			builder = sessione.getCriteriaBuilder();
+//			criteria = builder.createQuery(Fermata.class);
+//			root = criteria.from(Fermata.class);
+//
+//			Join<Fermata, Linea> lineaJoin = root.join("linee", JoinType.INNER);
+//
+//			criteria.select(root).where(
+//					builder.equal(lineaJoin.get("NOMELINEA"), nomeLinea));
+			
+//			result = sessione.createQuery(criteria).getResultList();
+			System.out.println("STAMPO LINEA: " + result);
+		} catch (HibernateException e) {
+			sessione.getTransaction().rollback();
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			if (sessione != null)
+				sessione.close();
+		}
+		return result;
 	}
 }

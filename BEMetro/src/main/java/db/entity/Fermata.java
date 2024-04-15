@@ -45,6 +45,22 @@ public class Fermata {
 	@JsonBackReference
 	private Linea linea;
 
+	public Fermata() {
+	}
+
+	public Fermata(String idFermata, Integer numFermata, String nome,
+			LocalTime orarioPrevisto, LocalTime ritardo, String previsioneMeteo,
+			Linea linea) {
+		super();
+		this.idFermata = idFermata;
+		this.numFermata = numFermata;
+		this.nome = nome;
+		this.orarioPrevisto = orarioPrevisto;
+		this.ritardo = ritardo;
+		this.previsioneMeteo = previsioneMeteo;
+		this.linea = linea;
+	}
+
 	public String getIdFermata() {
 		return idFermata;
 	}
@@ -106,6 +122,6 @@ public class Fermata {
 		return "Fermata [idFermata=" + idFermata + ", numFermata=" + numFermata
 				+ ", nome=" + nome + ", orarioPrevisto=" + orarioPrevisto
 				+ ", ritardo=" + ritardo + ", previsioneMeteo="
-				+ previsioneMeteo + ", linea=" + linea + "]";
+				+ previsioneMeteo + ", nomeLinea=" + linea.getNomeLinea()+ "]";
 	}
 }

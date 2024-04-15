@@ -19,14 +19,18 @@
         <tr>
           <th>Direzione</th>
           <th>Arrivo</th>
+          <th>Ritardo</th>
+          <th>Nome Fermata</th>
           <th>Meteo</th>
         </tr>
       </thead>
       <tbody>
           <tr *ngFor="let fermata of fermate">
-            <td>{{ fermata.direzione }}</td>
-            <td>{{ fermata.tempo_arrivo }}</td>
-            <td>{{ fermata.previsione_meteo }}</td>
+            <td>{{ fermata.linea.direzione }}</td>
+            <td>{{ fermata.orarioPrevisto }}</td>
+            <td>{{ fermata.ritardo }}</td>
+            <td>{{ fermata.nome }}</td>
+            <td>{{ fermata.previsioneMeteo }}</td>
           </tr>
       </tbody>
     </table>

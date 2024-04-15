@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdministComponent } from '../administ/administ.component';
 import { HeaderComponent } from "../header/header.component";
 import { CommonModule } from '@angular/common';
@@ -16,13 +16,18 @@ import {MatButtonModule} from '@angular/material/button';
     styleUrl: './home.component.scss',
     imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
   searchTerm: string = '';
   fermate: any[] = [];
   isTableOpen: boolean = false;
 
   constructor(private http: HttpClient) {}
+  ngOnInit() {
+    this.getFermate();
+  }
+
+
 
 
 
@@ -33,15 +38,21 @@ export class HomeComponent {
 
    searchFermata() {
     if (this.searchTerm.trim() !== '') {
-      this.http.get<any[]>('https://6617b953ed6b8fa4348396d9.mockapi.io/fermate_metro')
+      this.http.get<any[]>('http://localhost:8080/Metro/rest/fermata/tutte')
         .subscribe(data => {
-          this.fermate = data.filter(item => item.numero_fermata.toString() === this.searchTerm);
+          this.fermate = data.filter(item => item.numFermata.toString() === this.searchTerm);
         });
     } else {
       this.fermate = [];
     }
   }
 
+
+  getFermate(){
+  this.http.get('http://localhost:8080/Metro/rest/fermata/tutte').subscribe((data: any) => {console.log(data);
+},
+ (error) => {console.log('error fetching data')})
   
 
+}
 }

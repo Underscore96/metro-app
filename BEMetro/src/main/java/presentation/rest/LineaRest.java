@@ -146,14 +146,13 @@ public class LineaRest {
 
 	@POST
 	@Path("/leggilinea")
-	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response leggiLinea(Linea linea) {
+	public Response leggiLinea(@QueryParam("nomeLinea") String nomeLinea) {
 		Response risposta = null;
 		List<PojoFermata> listaFermate = null;
 
 		try {
-			listaFermate = LineaService.leggiLineaConFermate(linea);
+			listaFermate = LineaService.leggiLineaConFermate(nomeLinea);
 			risposta = Response.ok(listaFermate).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {

@@ -281,14 +281,14 @@ public class LineaService {
 		return risultati;
 	}
 
-	public static List<PojoFermata> leggiLineaConFermate(Linea linea) {
+	public static List<PojoFermata> leggiLineaConFermate(String nomeLinea) {
 		PojoFermata pojoFermata = null;
 		List<Fermata> listaFermateDB = null;
 		List<PojoFermata> risultato = new ArrayList<>();
 
 		try {
 			listaFermateDB = lineaDAO
-					.leggiLineaConFermate(linea.getNomeLinea());
+					.leggiLineaConFermate(nomeLinea);
 
 			for (Fermata fermataDB : listaFermateDB) {
 

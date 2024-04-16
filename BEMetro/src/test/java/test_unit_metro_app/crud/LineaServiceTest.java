@@ -56,7 +56,7 @@ class LineaServiceTest {
 		linea.setNomeLinea(null);
 
 		assertThrows(CustomException.class, () -> {
-			LineaService.leggiLineaConFermate(lin);
+			LineaService.leggiLineaConFermate(null);
 		});
 
 		assertThrows(CustomException.class, () -> {

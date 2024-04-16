@@ -13,12 +13,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
-import presentation.pojo.PojoFermata;
-import presentation.pojo.PojoLinea;
-import service.LineaService;
+import presentation.pojo.PojoUtente;
+import service.UtenteService;
 
-@Path("/linea")
-public class LineaRest {
+@Path("/login")
+public class UtenteRest {
 	Session sessione = null;
 
 	@GET
@@ -31,12 +30,13 @@ public class LineaRest {
 	@Path("/crea")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response creaLinea(PojoLinea linea) {
+	public Response creaUtente(PojoUtente utente) {
 		String risultato = null;
 		Response risposta = null;
+		System.out.println("utenteREST: " + utente);
 
 		try {
-			risultato = LineaService.creaLinea(linea);
+			risultato = UtenteService.creaUtente(utente);
 			risposta = Response.ok(risultato).build();
 
 		} finally {
@@ -51,13 +51,13 @@ public class LineaRest {
 	@Path("/leggi")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response leggiLinea(PojoLinea linea) {
+	public Response leggiFermata(PojoUtente utente) {
 		Response risposta = null;
-		PojoLinea lineaTrovata = null;
+		PojoUtente utenteTrovato = null;
 
 		try {
-			lineaTrovata = LineaService.leggiLinea(linea);
-			risposta = Response.ok(lineaTrovata).build();
+			utenteTrovato = UtenteService.leggiUtente(utente);
+			risposta = Response.ok(utenteTrovato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -70,13 +70,13 @@ public class LineaRest {
 	@Path("/aggiorna")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response aggiornaLinea(PojoLinea linea) {
-		PojoLinea lineaAggiornata = null;
+	public Response aggiornaUtente(PojoUtente utente) {
+		PojoUtente utenteAggiornata = null;
 		Response risposta = null;
 
 		try {
-			lineaAggiornata = LineaService.aggiornaLinea(linea);
-			risposta = Response.ok(lineaAggiornata).build();
+			utenteAggiornata = UtenteService.aggiornaUtente(utente);
+			risposta = Response.ok(utenteAggiornata).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -89,12 +89,13 @@ public class LineaRest {
 	@Path("/cancella")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cancellaLinea(PojoLinea linea) {
+	public Response cancellaUtente(PojoUtente utente) {
 		String risultato = null;
 		Response risposta = null;
+		System.out.println("utenteREST: " + utente);
 
 		try {
-			risultato = LineaService.cancellaLinea(linea);
+			risultato = UtenteService.cancellaUtente(utente);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
@@ -107,14 +108,14 @@ public class LineaRest {
 	@GET
 	@Path("tutte")
 	@Produces("application/Json")
-	public Response trovaTutteLeLinee() {
-		List<PojoLinea> listaLinee = null;
+	public Response trovaTuttiIUtenti() {
+		List<PojoUtente> listaUtenti = null;
 		Response risposta = null;
 
 		try {
-			listaLinee = LineaService.trovaTutteLeLinee();
+			listaUtenti = UtenteService.trovaTuttiIUtenti();
 
-			risposta = Response.ok(listaLinee).build();
+			risposta = Response.ok(listaUtenti).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -126,15 +127,20 @@ public class LineaRest {
 	@GET
 	@Path("attributi")
 	@Produces("application/Json")
-	public Response trovaConAttributi(
-			@QueryParam("direzione") String direzione) {
-		List<PojoLinea> listaLinee = null;
+	public Response trovaConAttributi(@QueryParam("password") String password,
+			@QueryParam("nome") String nome,
+			@QueryParam("cognome") String cognome,
+			@QueryParam("mail") String mail,
+			@QueryParam("telefono") String telefono,
+			@QueryParam("ruolo") String ruolo) {
+		List<PojoUtente> listaUtenti = null;
 		Response risultati = null;
 
 		try {
-			listaLinee = LineaService.trovaConAttributi(direzione);
+			listaUtenti = UtenteService.trovaConAttributi(password, nome,
+					cognome, mail, telefono, ruolo);
 
-			risultati = Response.ok(listaLinee).build();
+			risultati = Response.ok(listaUtenti).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -144,20 +150,21 @@ public class LineaRest {
 	}
 
 	@GET
-	@Path("/leggilinea")
-	@Produces("Application/json")
-	public Response leggiLinea(@QueryParam("nomeLinea") String nomeLinea) {
-		Response risposta = null;
-		List<PojoFermata> listaFermate = null;
+	@Produces("application/Json")
+	public Response login(@QueryParam("nomeUtente") String nomeUtente,
+			@QueryParam("password") String password) {
+		List<PojoUtente> listaUtenti = null;
+		Response risultati = null;
 
 		try {
-			listaFermate = LineaService.leggiLineaConFermate(nomeLinea);
-			risposta = Response.ok(listaFermate).build();
+			listaUtenti = UtenteService.login(nomeUtente, password);
+
+			risultati = Response.ok(listaUtenti).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
 			}
 		}
-		return risposta;
+		return risultati;
 	}
 }

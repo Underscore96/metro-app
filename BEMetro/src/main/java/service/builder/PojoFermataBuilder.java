@@ -1,6 +1,5 @@
 package service.builder;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 import db.entity.Linea;

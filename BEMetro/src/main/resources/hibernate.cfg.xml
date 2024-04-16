@@ -9,5 +9,6 @@
 			name="hibernate.connection.provider_configuration_file_resource">hibernate.properties</property>
 		<mapping class="db.entity.Fermata" />
 		<mapping class="db.entity.Linea" />
+		<mapping class="db.entity.Utente" />
 	</session-factory>
 </hibernate-configuration>

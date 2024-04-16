@@ -122,7 +122,7 @@ public class FermataRest {
 		return risposta;
 	}
 
-	@POST
+	@GET
 	@Path("attributi")
 	@Produces("application/Json")
 	public Response trovaConAttributi(@QueryParam("nome") String nome,

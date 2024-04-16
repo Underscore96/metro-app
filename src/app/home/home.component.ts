@@ -14,15 +14,19 @@ import {MatButtonModule} from '@angular/material/button';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule ]
+    imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule]
 })
 export class HomeComponent implements OnInit{
 
   searchTerm: string = '';
   fermate: any[] = [];
   isTableOpen: boolean = false;
+  lastFetchTimestamp: any;
 
   constructor(private http: HttpClient) {}
+
+
+
   ngOnInit() {
     this.getFermate();
   }
@@ -48,11 +52,24 @@ export class HomeComponent implements OnInit{
   }
 
 
-  getFermate(){
-  this.http.get('http://localhost:8080/Metro/rest/fermata/tutte').subscribe((data: any) => {console.log(data);
-},
- (error) => {console.log('error fetching data')})
+  getFermate() {
+    this.http.get('http://localhost:8080/Metro/rest/fermata/tutte').subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data.length > 0) {
+          console.log('ritardo:', typeof data[0].fermata.ritardo);
+          console.log('arrivo:', typeof data[0].orarioPrevisto);
+        }
+        this.lastFetchTimestamp = new Date(); 
+      },
+      (error) => {
+        console.log('error fetching data');
+        this.lastFetchTimestamp = null; 
+      }
+    );
+  }
+  
   
 
 }
-}
+

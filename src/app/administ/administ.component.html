@@ -1,5 +1,31 @@
 <app-header></app-header>
 
+
+<h2>Metro Lines and Stops</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Metro Line</th>
+      <th>Stops</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let line of metroLines">
+      <td>{{ line.nomeLinea }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let stop of line.fermate">
+            {{ stop.nome }}
+
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
 <table>
     <thead>
       <tr>

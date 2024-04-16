@@ -30,7 +30,12 @@
             <td>{{ fermata.orarioPrevisto }}</td>
             <td>{{ fermata.ritardo }}</td>
             <td>{{ fermata.nome }}</td>
-            <td>{{ fermata.previsioneMeteo }}</td>
+            <!-- <td>{{ fermata.previsioneMeteo }}</td> -->
+            <td>
+            <mat-icon *ngIf="fermata.previsioneMeteo === 'Sole'">wb_sunny</mat-icon>
+            <mat-icon *ngIf="fermata.previsioneMeteo === 'Pioggia'">
+            umbrella</mat-icon>
+          </td>
           </tr>
       </tbody>
     </table>

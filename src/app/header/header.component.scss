@@ -69,10 +69,18 @@
     transition: 0.5s ease all;
     transform-origin: top;
   }
-  .header-wrapper .mega-menu ul li {
+  .header-wrapper .mega-menu ul li a {
     color: #fff;
-    margin-bottom: 10px;
-  }
+    text-decoration: none; 
+    font-size: 18px; 
+    font-weight: bold; /* Make the font bolder */
+    font-family: Arial, sans-serif; /* Use a common sans-serif font */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.header-wrapper .mega-menu ul li a:hover {
+  color: #ffc107; 
+}
   .header-wrapper .mega-menu.active {
     height: auto;
     transform: scaleY(1);

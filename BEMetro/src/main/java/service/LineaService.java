@@ -157,16 +157,16 @@ public class LineaService {
 		return risultato;
 	}
 
-	public static String cancellaLinea(PojoLinea linea) {
+	public static String cancellaLinea(String nomeLinea) {
 		List<Linea> listaLineeDB;
-		Linea LineaDB = null;
+		Linea lineaDB = null;
 		String risultato = "LINEA NON CANCELLATA";
 
 		try {
-			listaLineeDB = lineaDAO.leggiDaNomeLinea(linea.getNomeLinea());
-			LineaDB = listaLineeDB.get(0);
+			listaLineeDB = lineaDAO.leggiDaNomeLinea(nomeLinea);
+			lineaDB = listaLineeDB.get(0);
 
-			lineaDAO.cancella(LineaDB);
+			lineaDAO.cancella(lineaDB);
 			risultato = "LINEA CANCELLATA";
 
 		} catch (NullPointerException e) {
@@ -287,8 +287,7 @@ public class LineaService {
 		List<PojoFermata> risultato = new ArrayList<>();
 
 		try {
-			listaFermateDB = lineaDAO
-					.leggiLineaConFermate(nomeLinea);
+			listaFermateDB = lineaDAO.leggiLineaConFermate(nomeLinea);
 
 			for (Fermata fermataDB : listaFermateDB) {
 

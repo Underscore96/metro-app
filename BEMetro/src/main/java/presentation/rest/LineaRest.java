@@ -87,14 +87,13 @@ public class LineaRest {
 
 	@DELETE
 	@Path("/cancella")
-	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cancellaLinea(PojoLinea linea) {
+	public Response cancellaLinea(@QueryParam("nomeLinea") String nomeLinea) {
 		String risultato = null;
 		Response risposta = null;
 
 		try {
-			risultato = LineaService.cancellaLinea(linea);
+			risultato = LineaService.cancellaLinea(nomeLinea);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {

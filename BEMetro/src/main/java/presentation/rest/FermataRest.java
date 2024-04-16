@@ -86,14 +86,13 @@ public class FermataRest {
 
 	@DELETE
 	@Path("/cancella")
-	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cancellaFermata(PojoFermata fermata) {
+	public Response cancellaFermata(@QueryParam("numFermata") Integer numFermata) {
 		String risultato = null;
 		Response risposta = null;
 
 		try {
-			risultato = FermataService.cancellaFermata(fermata);
+			risultato = FermataService.cancellaFermata(numFermata);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {

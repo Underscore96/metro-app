@@ -182,7 +182,7 @@ public class FermataFEService {
 					fermataRiscontro = "IMPOSSIBILE CANCELLARE FERMATA, DATO NON PRESENTE O GIA' CANCELLATO";
 				} else {
 					fermataRiscontro = FermataService
-							.cancellaFermata(pojoFermata);
+							.cancellaFermata(pojoFermata.getNumFermata());
 				}
 			}
 
@@ -190,7 +190,8 @@ public class FermataFEService {
 				if (controlloLinee.isEmpty()) {
 					lineaRiscontro = "IMPOSSIBILE CANCELLARE LINEA, DATO NON PRESENTE O GIA' CANCELLATO";
 				} else {
-					lineaRiscontro = LineaService.cancellaLinea(pojolinea);
+					lineaRiscontro = LineaService
+							.cancellaLinea(pojolinea.getNomeLinea());
 				}
 			}
 

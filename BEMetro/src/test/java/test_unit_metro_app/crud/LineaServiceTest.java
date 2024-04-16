@@ -84,9 +84,9 @@ class LineaServiceTest {
 	@Test
 	void When_CancellaLineaNulla_Expect_CustomException() {
 		linea.setNomeLinea(null);
-
+		String nomeLinea = linea.getNomeLinea();
 		assertThrows(CustomException.class, () -> {
-			LineaService.cancellaLinea(linea);
+			LineaService.cancellaLinea(nomeLinea);
 		});
 
 		assertThrows(CustomException.class, () -> {

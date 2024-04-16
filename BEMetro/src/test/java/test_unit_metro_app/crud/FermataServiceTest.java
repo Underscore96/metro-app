@@ -70,9 +70,9 @@ class FermataServiceTest {
 	@Test
 	void When_CancellaFermataNulla_Expect_CustomException() {
 		fermata.setNumFermata(null);
-
+		Integer numFermata = fermata.getNumFermata();
 		assertThrows(CustomException.class, () -> {
-			FermataService.cancellaFermata(fermata);
+			FermataService.cancellaFermata(numFermata);
 		});
 
 		assertThrows(CustomException.class, () -> {

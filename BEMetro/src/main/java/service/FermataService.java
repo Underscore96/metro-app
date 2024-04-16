@@ -171,13 +171,13 @@ public class FermataService {
 		return risultato;
 	}
 
-	public static String cancellaFermata(PojoFermata fermata) {
+	public static String cancellaFermata(Integer numFermata) {
 		List<Fermata> fermateDB;
 		Fermata fermataTrovata = null;
 		String risultato = "FERMATA NON CANCELLATA";
 
 		try {
-			fermateDB = fermataDAO.leggiDaNumFermata(fermata.getNumFermata());
+			fermateDB = fermataDAO.leggiDaNumFermata(numFermata);
 			fermataTrovata = fermateDB.get(0);
 
 			fermataDAO.cancella(fermataTrovata);

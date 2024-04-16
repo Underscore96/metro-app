@@ -357,4 +357,68 @@ public class FermataService {
 
 		return risultato;
 	}
+
+	public static PojoFermata rinominaFermata(Integer numFermata,
+			String nomeFermata) {
+		Fermata fermataVecchia = null;
+		Fermata fermataAggiornata = null;
+		PojoFermata risultato = null;
+		List<Fermata> listaFermateTrovate = null;
+
+		try {
+			listaFermateTrovate = fermataDAO.leggiDaNumFermata(numFermata);
+			fermataVecchia = listaFermateTrovate.get(0);
+
+			if (numFermata == null)
+				throw new CustomException(
+						String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+								NUMFERMATA, NUMFERMATA),
+						Response.Status.NOT_FOUND);
+
+			fermataAggiornata = new FermataBuilder()
+					.setIdFermata(fermataVecchia.getIdFermata())
+					.setNumFermata(numFermata)
+					.setNome(nomeFermata)
+					.setOrarioPrevisto(fermataVecchia.getOrarioPrevisto())
+					.setRitardo(fermataVecchia.getRitardo())
+					.setPrevisioneMeteo(fermataVecchia.getPrevisioneMeteo())
+					.setLinea(fermataVecchia.getLinea()).costruisci();
+
+			fermataAggiornata = fermataDAO.aggiorna(fermataAggiornata);
+
+			if (fermataAggiornata.getNumFermata() == null)
+				throw new CustomException(
+						String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+								NUMFERMATA, NUMFERMATA),
+						Response.Status.NOT_FOUND);
+
+			risultato = new PojoFermataBuilder()
+					.setNumFermata(fermataAggiornata.getNumFermata())
+					.setNome(fermataAggiornata.getNome())
+					.setOrarioPrevisto(fermataAggiornata.getOrarioPrevisto())
+					.setRitardo(fermataAggiornata.getRitardo())
+					.setPrevisioneMeteo(fermataAggiornata.getPrevisioneMeteo())
+					.setLinea(fermataAggiornata.getLinea()).costruisci();
+
+		} catch (NullPointerException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+							NUMFERMATA, NUMFERMATA),
+					Response.Status.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.ILLEGAL_ARGUMENT_EXCEPTION,
+							NUMFERMATA),
+					Response.Status.BAD_REQUEST);
+		} catch (IndexOutOfBoundsException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.INDEX_OUT_OF_BOUNDS_EXCEPTION),
+					Response.Status.NOT_FOUND);
+		} catch (HibernateException e) {
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		}
+
+		return risultato;
+	}
 }

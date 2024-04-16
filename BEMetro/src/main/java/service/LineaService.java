@@ -328,4 +328,60 @@ public class LineaService {
 
 		return risultato;
 	}
+
+	public static PojoLinea rinominaLinea(String nomeLinea, String nuovoNome) {
+		Linea lineaVecchia = null;
+		Linea lineaAggiornata = null;
+		PojoLinea risultato = null;
+		List<Linea> listaLineeTrovate = null;
+
+		try {
+			listaLineeTrovate = lineaDAO.leggiDaNomeLinea(nomeLinea);
+			lineaVecchia = listaLineeTrovate.get(0);
+
+			if (nomeLinea == null)
+				throw new CustomException(
+						String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+								NOMELINEA, NOMELINEA),
+						Response.Status.NOT_FOUND);
+
+			lineaAggiornata = new LineaBuilder()
+					.setIdLinea(lineaVecchia.getIdLinea())
+					.setNomeLinea(nuovoNome).setDirezione(lineaVecchia.getDirezione())
+					.setFermate(lineaVecchia.getFermate()).costruisci();
+
+			lineaAggiornata = lineaDAO.aggiorna(lineaAggiornata);
+
+			if (lineaAggiornata.getNomeLinea() == null)
+				throw new CustomException(
+						String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+								NOMELINEA, NOMELINEA),
+						Response.Status.NOT_FOUND);
+
+			risultato = new PojoLineaBuilder()
+					.setNomeLinea(lineaAggiornata.getNomeLinea())
+					.setDirezione(lineaAggiornata.getDirezione())
+					.setFermate(lineaAggiornata.getFermate()).costruisci();
+
+		} catch (NullPointerException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+							NOMELINEA, NOMELINEA),
+					Response.Status.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.ILLEGAL_ARGUMENT_EXCEPTION,
+							NOMELINEA),
+					Response.Status.BAD_REQUEST);
+		} catch (IndexOutOfBoundsException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.INDEX_OUT_OF_BOUNDS_EXCEPTION),
+					Response.Status.NOT_FOUND);
+		} catch (HibernateException e) {
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		}
+
+		return risultato;
+	}
 }

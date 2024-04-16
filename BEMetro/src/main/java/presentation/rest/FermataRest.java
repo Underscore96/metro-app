@@ -87,7 +87,8 @@ public class FermataRest {
 	@DELETE
 	@Path("/cancella")
 	@Produces("application/json")
-	public Response cancellaFermata(@QueryParam("numFermata") Integer numFermata) {
+	public Response cancellaFermata(
+			@QueryParam("numFermata") Integer numFermata) {
 		String risultato = null;
 		Response risposta = null;
 
@@ -140,5 +141,27 @@ public class FermataRest {
 			}
 		}
 		return risultati;
+	}
+
+	@PUT
+	@Path("/rinomina")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response rinominaFermata(
+			@QueryParam("numFermata") Integer numFermata,
+			@QueryParam("nomeFermata") String nomeFermata) {
+		PojoFermata fermataAggiornata = null;
+		Response risposta = null;
+
+		try {
+			fermataAggiornata = FermataService.rinominaFermata(numFermata,
+					nomeFermata);
+			risposta = Response.ok(fermataAggiornata).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
 	}
 }

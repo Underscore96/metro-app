@@ -159,4 +159,24 @@ public class LineaRest {
 		}
 		return risposta;
 	}
+
+	@PUT
+	@Path("/rinomina")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response rinominaLinea(@QueryParam("nomeLinea") String nomeLinea,
+			@QueryParam("nuovoNome") String nuovoNome) {
+		PojoLinea lineaAggiornata = null;
+		Response risposta = null;
+
+		try {
+			lineaAggiornata = LineaService.rinominaLinea(nomeLinea, nuovoNome);
+			risposta = Response.ok(lineaAggiornata).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
+	}
 }

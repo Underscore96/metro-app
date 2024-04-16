@@ -2,9 +2,6 @@ package db.entity;
 
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,9 +28,26 @@ public class Linea {
 	private String direzione;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idFermata", cascade = CascadeType.ALL)
-	@JsonManagedReference
-	@JsonIgnore
 	private Set<Fermata> fermate;
+
+	public Linea() {
+	}
+
+	public Linea(String idLinea, String nomeLinea, String direzione) {
+		super();
+		this.idLinea = idLinea;
+		this.nomeLinea = nomeLinea;
+		this.direzione = direzione;
+	}
+
+	public Linea(String idLinea, String nomeLinea, String direzione,
+			Set<Fermata> fermate) {
+		super();
+		this.idLinea = idLinea;
+		this.nomeLinea = nomeLinea;
+		this.direzione = direzione;
+		this.fermate = fermate;
+	}
 
 	public String getIdLinea() {
 		return idLinea;

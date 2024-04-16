@@ -9,6 +9,7 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
+import db.entity.Fermata;
 import db.entity.Linea;
 import db.util.HibernateUtil;
 import exception.CustomException;
@@ -198,5 +199,27 @@ public class LineaDAO {
 		for (Object member : myCollection)
 			r.add(classType.cast(member));
 		return r;
+	}
+
+	public List<Fermata> leggiLineaConFermate(String nomeLinea) {
+		List<Fermata> result = new ArrayList<>();
+
+		try {
+			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
+			sessione.beginTransaction();
+
+			String sqlQuery = "SELECT f.* FROM Fermata f JOIN Linea l ON f.idLinea = l.idLinea WHERE l.nomeLinea = :nomeLinea";
+			result = sessione.createNativeQuery(sqlQuery, Fermata.class)
+					.setParameter(NOMELINEA, nomeLinea).getResultList();
+
+		} catch (HibernateException e) {
+			sessione.getTransaction().rollback();
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			if (sessione != null)
+				sessione.close();
+		}
+		return result;
 	}
 }

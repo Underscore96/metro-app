@@ -14,115 +14,115 @@
 		"previsioneMeteo": null
 	},
 	{
-		"numFermata": 2,
+		"numFermata": 3,
 		"nome": "De Ferrari",
 		"orarioPrevisto": "16:35",
 		"ritardo": "16:40",
 		"previsioneMeteo": "pioggia"
 	},
 	{
-		"numFermata": 3,
+		"numFermata": 4,
 		"nome": "Sarzano",
 		"orarioPrevisto": "16:40",
 		"ritardo": "16:45",
 		"previsioneMeteo": "nuvolo"
 	},
 	{
-		"numFermata": 4,
+		"numFermata": 5,
 		"nome": "San Giorgio",
 		"orarioPrevisto": "16:45",
 		"ritardo": "16:50",
 		"previsioneMeteo": "nuvolo"
 	},
 	{
-		"numFermata": 5,
+		"numFermata": 6,
 		"nome": "Darsena",
 		"orarioPrevisto": "16:50",
 		"ritardo": "16:55",
 		"previsioneMeteo": "sole"
 	},
 	{
-		"numFermata": 6,
+		"numFermata": 7,
 		"nome": "Piazza Principe",
 		"orarioPrevisto": "16:55",
 		"ritardo": "17:00",
 		"previsioneMeteo": "sole"
 	},
 	{
-		"numFermata": 7,
+		"numFermata": 8,
 		"nome": "Dinegro",
 		"orarioPrevisto": "17:00",
 		"ritardo": "16:05",
 		"previsioneMeteo": "sole"
 	},
 	{
-		"numFermata": 8,
+		"numFermata": 9,
 		"nome": "Brin",
 		"orarioPrevisto": "17:05",
 		"ritardo": "16:10",
 		"previsioneMeteo": "sole"
 	},
 	{
-		"numFermata": 9,
-		"nome": "Brignole",
+		"numFermata": 10,
+		"nome": "Brin",
 		"orarioPrevisto": "16:30",
 		"ritardo": "16:35",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 11,
+		"nome": "Dinegro",
+		"orarioPrevisto": "16:35",
+		"ritardo": "16:40",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 12,
+		"nome": "Piazza Principe",
+		"orarioPrevisto": "16:40",
+		"ritardo": "16:45",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 13,
+		"nome": "Darsena",
+		"orarioPrevisto": "16:45",
+		"ritardo": "16:50",
+		"previsioneMeteo": "sole"
+	},
+	{
+		"numFermata": 14,
+		"nome": "San Giorgio",
+		"orarioPrevisto": "16:50",
+		"ritardo": "16:55",
+		"previsioneMeteo": "nuvolo"
+	},
+	{
+		"numFermata": 15,
+		"nome": "Sarzano",
+		"orarioPrevisto": "16:55",
+		"ritardo": "17:00",
+		"previsioneMeteo": "nuvolo"
+	},
+	{
+		"numFermata": 16,
+		"nome": "De Ferrari",
+		"orarioPrevisto": "17:00",
+		"ritardo": "17:05",
 		"previsioneMeteo": "pioggia"
 	},
 	{
-		"numFermata": 10,
+		"numFermata": 17,
 		"nome": "Corvetto",
 		"orarioPrevisto": null,
 		"ritardo": null,
 		"previsioneMeteo": null
 	},
 	{
-		"numFermata": 11,
-		"nome": "De Ferrari",
-		"orarioPrevisto": "16:35",
-		"ritardo": "16:40",
-		"previsioneMeteo": "pioggia"
-	},
-	{
-		"numFermata": 12,
-		"nome": "Sarzano",
-		"orarioPrevisto": "16:40",
-		"ritardo": "16:45",
-		"previsioneMeteo": "nuvolo"
-	},
-	{
-		"numFermata": 13,
-		"nome": "San Giorgio",
-		"orarioPrevisto": "16:45",
-		"ritardo": "16:50",
-		"previsioneMeteo": "nuvolo"
-	},
-	{
-		"numFermata": 14,
-		"nome": "Darsena",
-		"orarioPrevisto": "16:50",
-		"ritardo": "16:55",
-		"previsioneMeteo": "sole"
-	},
-	{
-		"numFermata": 15,
-		"nome": "Piazza Principe",
-		"orarioPrevisto": "16:55",
-		"ritardo": "17:00",
-		"previsioneMeteo": "sole"
-	},
-	{
-		"numFermata": 16,
-		"nome": "Dinegro",
-		"orarioPrevisto": "17:00",
-		"ritardo": "16:05",
-		"previsioneMeteo": "sole"
-	},
-	{
-		"numFermata": 17,
-		"nome": "Brin",
+		"numFermata": 18,
+		"nome": "Brignole",
 		"orarioPrevisto": "17:05",
-		"ritardo": "16:10",
-		"previsioneMeteo": "sole"
+		"ritardo": "17:10",
+		"previsioneMeteo": "pioggia"
 	}
 ]

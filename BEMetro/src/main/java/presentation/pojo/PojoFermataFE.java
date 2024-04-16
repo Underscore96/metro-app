@@ -12,6 +12,24 @@ public class PojoFermataFE {
 	private LocalTime tempo_arrivo;
 	private LocalTime ritardo_stimato;
 
+	public PojoFermataFE() {
+	}
+
+	public PojoFermataFE(Integer id, Integer numero_fermata,
+			String nome_fermata, String nome_linea, String direzione,
+			String previsione_meteo, LocalTime tempo_arrivo,
+			LocalTime ritardo_stimato) {
+		super();
+		this.id = id;
+		this.numero_fermata = numero_fermata;
+		this.nome_fermata = nome_fermata;
+		this.nome_linea = nome_linea;
+		this.direzione = direzione;
+		this.previsione_meteo = previsione_meteo;
+		this.tempo_arrivo = tempo_arrivo;
+		this.ritardo_stimato = ritardo_stimato;
+	}
+
 	public Integer getId() {
 		return id;
 	}

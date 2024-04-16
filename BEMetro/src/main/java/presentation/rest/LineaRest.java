@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import db.entity.Linea;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -13,6 +14,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
+import presentation.pojo.PojoFermata;
 import presentation.pojo.PojoLinea;
 import service.LineaService;
 
@@ -140,5 +142,24 @@ public class LineaRest {
 			}
 		}
 		return risultati;
+	}
+
+	@POST
+	@Path("/leggilinea")
+	@Consumes("Application/json")
+	@Produces("Application/json")
+	public Response leggiLinea(Linea linea) {
+		Response risposta = null;
+		List<PojoFermata> listaFermate = null;
+
+		try {
+			listaFermate = LineaService.leggiLineaConFermate(linea);
+			risposta = Response.ok(listaFermate).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
 	}
 }

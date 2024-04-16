@@ -6,12 +6,15 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import db.dao.LineaDAO;
+import db.entity.Fermata;
 import db.entity.Linea;
 import exception.CustomException;
 import exception.ErrorMessages;
 import jakarta.ws.rs.core.Response;
+import presentation.pojo.PojoFermata;
 import presentation.pojo.PojoLinea;
 import service.builder.LineaBuilder;
+import service.builder.PojoFermataBuilder;
 import service.builder.PojoLineaBuilder;
 
 public class LineaService {
@@ -276,5 +279,54 @@ public class LineaService {
 		}
 
 		return risultati;
+	}
+
+	public static List<PojoFermata> leggiLineaConFermate(Linea linea) {
+		PojoFermata pojoFermata = null;
+		List<Fermata> listaFermateDB = null;
+		List<PojoFermata> risultato = new ArrayList<>();
+
+		try {
+			listaFermateDB = lineaDAO
+					.leggiLineaConFermate(linea.getNomeLinea());
+
+			for (Fermata fermataDB : listaFermateDB) {
+
+				if (fermataDB.getNumFermata() == null)
+					throw new CustomException(
+							String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+									NOMELINEA, NOMELINEA),
+							Response.Status.NOT_FOUND);
+
+				pojoFermata = new PojoFermataBuilder()
+						.setNumFermata(fermataDB.getNumFermata())
+						.setNome(fermataDB.getNome())
+						.setOrarioPrevisto(fermataDB.getOrarioPrevisto())
+						.setRitardo(fermataDB.getRitardo())
+						.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
+						.setLinea(fermataDB.getLinea()).costruisci();
+
+				risultato.add(pojoFermata);
+			}
+		} catch (NullPointerException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+							NOMELINEA, NOMELINEA),
+					Response.Status.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.ILLEGAL_ARGUMENT_EXCEPTION,
+							NOMELINEA),
+					Response.Status.BAD_REQUEST);
+		} catch (IndexOutOfBoundsException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.INDEX_OUT_OF_BOUNDS_EXCEPTION),
+					Response.Status.NOT_FOUND);
+		} catch (HibernateException e) {
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		}
+
+		return risultato;
 	}
 }

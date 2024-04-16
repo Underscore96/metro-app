@@ -144,7 +144,7 @@ public class LineaRest {
 		return risultati;
 	}
 
-	@POST
+	@GET
 	@Path("/leggilinea")
 	@Produces("Application/json")
 	public Response leggiLinea(@QueryParam("nomeLinea") String nomeLinea) {

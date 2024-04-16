@@ -33,6 +33,13 @@ public class Linea {
 	public Linea() {
 	}
 
+	public Linea(String idLinea, String nomeLinea, String direzione) {
+		super();
+		this.idLinea = idLinea;
+		this.nomeLinea = nomeLinea;
+		this.direzione = direzione;
+	}
+
 	public Linea(String idLinea, String nomeLinea, String direzione,
 			Set<Fermata> fermate) {
 		super();
@@ -77,6 +84,6 @@ public class Linea {
 	@Override
 	public String toString() {
 		return "Linea [idLinea=" + idLinea + ", nomeLinea=" + nomeLinea
-				+ ", direzione=" + direzione + ", fermate=" + fermate + "]";
+				+ ", direzione=" + direzione + "]";
 	}
 }

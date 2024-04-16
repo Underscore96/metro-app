@@ -16,15 +16,14 @@ public class PojoFermata {
 	}
 
 	public PojoFermata(Integer numFermata, String nome,
-			LocalTime orarioPrevisto, LocalTime ritardo, String previsioneMeteo,
-			Linea linea) {
+			LocalTime orarioPrevisto, LocalTime ritardo,
+			String previsioneMeteo) {
 		super();
 		this.numFermata = numFermata;
 		this.nome = nome;
 		this.orarioPrevisto = orarioPrevisto;
 		this.ritardo = ritardo;
 		this.previsioneMeteo = previsioneMeteo;
-		this.linea = linea;
 	}
 
 	public Integer getNumFermata() {
@@ -79,8 +78,7 @@ public class PojoFermata {
 	public String toString() {
 		return "PojoFermata [numFermata=" + numFermata + ", nome=" + nome
 				+ ", orarioPrevisto=" + orarioPrevisto + ", ritardo=" + ritardo
-				+ ", previsioneMeteo=" + previsioneMeteo + ", nomeLinea=" + linea.getNomeLinea()
-				+ "]";
+				+ ", previsioneMeteo=" + previsioneMeteo + "]";
 	}
 
 }

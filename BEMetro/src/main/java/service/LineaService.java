@@ -73,8 +73,6 @@ public class LineaService {
 								NOMELINEA, NOMELINEA),
 						Response.Status.NOT_FOUND);
 
-			System.out.println("SET FERMATE lineaDB: " + lineaDB.getFermate());
-
 			risultato = new PojoLineaBuilder()
 					.setNomeLinea(lineaDB.getNomeLinea())
 					.setDirezione(lineaDB.getDirezione())
@@ -299,8 +297,6 @@ public class LineaService {
 							String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
 									NOMELINEA, NOMELINEA),
 							Response.Status.NOT_FOUND);
-
-				System.out.println("SET FERMATE: " + fermataDB);
 
 				pojoFermata = new PojoFermataBuilder()
 						.setNumFermata(fermataDB.getNumFermata())

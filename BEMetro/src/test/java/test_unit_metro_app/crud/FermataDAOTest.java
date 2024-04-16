@@ -15,7 +15,7 @@ class FermataDAOTest {
 	private LocalTime orarioPrevisto = LocalTime.of(8, 24);
 	private LocalTime ritardo = LocalTime.of(8, 34);
 	private final Fermata fermata = new Fermata("30000", 30000, "Brignole",
-			orarioPrevisto, ritardo, "Piove", null);
+			orarioPrevisto, ritardo, "Piove");
 
 	@Test
 	void when_ArgumentNull_Expect_IllegalArgumentException() {

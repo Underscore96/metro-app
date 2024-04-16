@@ -1,6 +1,6 @@
 package test_unit_metro_app.crud;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalTime;
@@ -83,7 +83,7 @@ class FermataServiceTest {
 	}
 
 	@Test
-	void When_IdFermataONumFermataNullo_Expect_CustomException() {
+	void When_IdFermataOrNumFermataNullo_Expect_CustomException() {
 		fer.setIdFermata(null);
 		fer.setNumFermata(null);
 		String valore1 = fer.getIdFermata();
@@ -121,11 +121,11 @@ class FermataServiceTest {
 
 	@Test
 	void Should_ConvertireAFermata_When_Passo_PojoFermata() {
-		PojoFermata pojoFermata = new PojoFermata(30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", null);
-
 		Fermata expected = new Fermata("30001", 30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", null);
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
+
+		PojoFermata pojoFermata = new PojoFermata(30000, "Brignole",
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
 
 		Fermata actual = new FermataBuilder().setIdFermata("30001")
 				.setNumFermata(pojoFermata.getNumFermata())
@@ -133,27 +133,36 @@ class FermataServiceTest {
 				.setOrarioPrevisto(pojoFermata.getOrarioPrevisto())
 				.setRitardo(pojoFermata.getRitardo())
 				.setPrevisioneMeteo(pojoFermata.getPrevisioneMeteo())
-				.setLinea(pojoFermata.getLinea()).costruisci();
+				.costruisci();
 
-		assertEquals(expected, actual);
+		assertThat(actual)
+				.extracting("numFermata", "nome", "orarioPrevisto", "ritardo",
+						"previsioneMeteo")
+				.containsExactly(expected.getNumFermata(), expected.getNome(),
+						expected.getOrarioPrevisto(), expected.getRitardo(),
+						expected.getPrevisioneMeteo());
 	}
 
 	@Test
 	void Should_ConvertireAPojoFermata_When_Passo_Fermata() {
-		Fermata fermata1 = new Fermata("30000", 30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", null);
-
 		PojoFermata expected = new PojoFermata(30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", null);
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
+
+		Fermata fermata1 = new Fermata("30000", 30000, "Brignole",
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
 
 		PojoFermata actual = new PojoFermataBuilder()
 				.setNumFermata(fermata1.getNumFermata())
 				.setNome(fermata1.getNome())
 				.setOrarioPrevisto(fermata1.getOrarioPrevisto())
 				.setRitardo(fermata1.getRitardo())
-				.setPrevisioneMeteo(fermata1.getPrevisioneMeteo())
-				.setLinea(fermata1.getLinea()).costruisci();
+				.setPrevisioneMeteo(fermata1.getPrevisioneMeteo()).costruisci();
 
-		assertEquals(expected, actual);
+		assertThat(actual)
+				.extracting("numFermata", "nome", "orarioPrevisto", "ritardo",
+						"previsioneMeteo")
+				.containsExactly(expected.getNumFermata(), expected.getNome(),
+						expected.getOrarioPrevisto(), expected.getRitardo(),
+						expected.getPrevisioneMeteo());
 	}
 }

@@ -10,7 +10,7 @@ import db.util.HibernateUtil;
 import jakarta.persistence.EntityExistsException;
 
 class LineaDAOTest {
-	private final Linea linea = new Linea("30000", "30000", "Brignole", null);
+	private final Linea linea = new Linea("30000", "30000", "Brignole");
 
 	@Test
 	void when_ArgumentNull_Expect_IllegalArgumentException() {

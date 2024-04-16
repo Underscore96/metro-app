@@ -17,8 +17,6 @@ import exception.ErrorMessages;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.ws.rs.core.Response;
@@ -204,10 +202,6 @@ public class LineaDAO {
 	}
 
 	public List<Fermata> leggiLineaConFermate(String nomeLinea) {
-//		List<Fermata> result = new ArrayList<>();
-//		CriteriaBuilder builder;
-//		CriteriaQuery<Fermata> criteria;
-//		Root<Fermata> root;
 		List<Fermata> result = new ArrayList<>();
 
 		try {
@@ -215,21 +209,9 @@ public class LineaDAO {
 			sessione.beginTransaction();
 
 			String sqlQuery = "SELECT f.* FROM Fermata f JOIN Linea l ON f.idLinea = l.idLinea WHERE l.nomeLinea = :nomeLinea";
-	        result = sessione.createNativeQuery(sqlQuery, Fermata.class)
-	                        .setParameter("nomeLinea", nomeLinea)
-	                        .getResultList();
-			
-//			builder = sessione.getCriteriaBuilder();
-//			criteria = builder.createQuery(Fermata.class);
-//			root = criteria.from(Fermata.class);
-//
-//			Join<Fermata, Linea> lineaJoin = root.join("linee", JoinType.INNER);
-//
-//			criteria.select(root).where(
-//					builder.equal(lineaJoin.get("NOMELINEA"), nomeLinea));
-			
-//			result = sessione.createQuery(criteria).getResultList();
-			System.out.println("STAMPO LINEA: " + result);
+			result = sessione.createNativeQuery(sqlQuery, Fermata.class)
+					.setParameter(NOMELINEA, nomeLinea).getResultList();
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),

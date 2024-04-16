@@ -49,8 +49,8 @@ public class Fermata {
 	}
 
 	public Fermata(String idFermata, Integer numFermata, String nome,
-			LocalTime orarioPrevisto, LocalTime ritardo, String previsioneMeteo,
-			Linea linea) {
+			LocalTime orarioPrevisto, LocalTime ritardo,
+			String previsioneMeteo) {
 		super();
 		this.idFermata = idFermata;
 		this.numFermata = numFermata;
@@ -58,7 +58,6 @@ public class Fermata {
 		this.orarioPrevisto = orarioPrevisto;
 		this.ritardo = ritardo;
 		this.previsioneMeteo = previsioneMeteo;
-		this.linea = linea;
 	}
 
 	public String getIdFermata() {
@@ -122,6 +121,6 @@ public class Fermata {
 		return "Fermata [idFermata=" + idFermata + ", numFermata=" + numFermata
 				+ ", nome=" + nome + ", orarioPrevisto=" + orarioPrevisto
 				+ ", ritardo=" + ritardo + ", previsioneMeteo="
-				+ previsioneMeteo + ", nomeLinea=" + linea.getNomeLinea()+ "]";
+				+ previsioneMeteo + "]";
 	}
 }

@@ -12,6 +12,12 @@ public class PojoLinea {
 	public PojoLinea() {
 	}
 
+	public PojoLinea(String nomeLinea, String direzione) {
+		super();
+		this.nomeLinea = nomeLinea;
+		this.direzione = direzione;
+	}
+
 	public PojoLinea(String nomeLinea, String direzione, Set<Fermata> fermate) {
 		super();
 		this.nomeLinea = nomeLinea;
@@ -46,6 +52,6 @@ public class PojoLinea {
 	@Override
 	public String toString() {
 		return "PojoLinea [nomeLinea=" + nomeLinea + ", direzione=" + direzione
-				+ ", fermate=" + fermate + "]";
+				+ "]";
 	}
 }

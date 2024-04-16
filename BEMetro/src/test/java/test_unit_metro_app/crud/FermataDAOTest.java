@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.LocalTime;
 
 import org.hibernate.Session;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import db.entity.Fermata;
 import db.util.HibernateUtil;
 import jakarta.persistence.EntityExistsException;
 
+@DisplayName("FERMATA DAO")
 class FermataDAOTest {
 	private LocalTime orarioPrevisto = LocalTime.of(8, 24);
 	private LocalTime ritardo = LocalTime.of(8, 34);
@@ -18,7 +20,7 @@ class FermataDAOTest {
 			orarioPrevisto, ritardo, "Piove");
 
 	@Test
-	void when_ArgumentNull_Expect_IllegalArgumentException() {
+	void when_ArgumentoNullo_Expect_IllegalArgumentException() {
 		Session sessione = HibernateUtil.getSessionFactory()
 				.getCurrentSession();
 		sessione.beginTransaction();
@@ -31,7 +33,7 @@ class FermataDAOTest {
 	}
 
 	@Test
-	void when_PersistEntityAlreadyPresent_Expect_EntityExistsException() {
+	void when_CreoFermataGiaPresente_Expect_EntityExistsException() {
 
 		Session sessione = HibernateUtil.getSessionFactory()
 				.getCurrentSession();

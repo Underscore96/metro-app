@@ -89,13 +89,13 @@ public class UtenteRest {
 	@Path("/cancella")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cancellaUtente(PojoUtente utente) {
+	public Response cancellaUtente(
+			@QueryParam("nomeUtente") String nomeUtente) {
 		String risultato = null;
 		Response risposta = null;
-		System.out.println("utenteREST: " + utente);
 
 		try {
-			risultato = UtenteService.cancellaUtente(utente);
+			risultato = UtenteService.cancellaUtente(nomeUtente);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {

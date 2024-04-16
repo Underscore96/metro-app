@@ -24,14 +24,14 @@ public class UtenteService {
 	public static String creaUtente(PojoUtente utente) {
 		Utente utenteDB = null;
 		String risultato = "UTENTE NON CREATO";
-		
+
 		try {
 			utenteDB = new UtenteBuilder().setNomeUtente(utente.getNomeUtente())
 					.setPassword(utente.getPassword()).setNome(utente.getNome())
 					.setCognome(utente.getCognome())
 					.setTelefono(utente.getTelefono()).setMail(utente.getMail())
 					.setRuolo(utente.getRuolo()).costruisci();
-			
+
 			utenteDAO.crea(utenteDB);
 			risultato = "UTENTE CREATO";
 
@@ -167,13 +167,13 @@ public class UtenteService {
 		return risultato;
 	}
 
-	public static String cancellaUtente(PojoUtente utente) {
+	public static String cancellaUtente(String nomeUtente) {
 		List<Utente> listaUtentiDB;
 		Utente utenteDB = null;
 		String risultato = "UTENTE NON CANCELLATO";
 
 		try {
-			listaUtentiDB = utenteDAO.leggiDaNomeUtente(utente.getNomeUtente());
+			listaUtentiDB = utenteDAO.leggiDaNomeUtente(nomeUtente);
 			utenteDB = listaUtentiDB.get(0);
 
 			utenteDAO.cancella(utenteDB);
@@ -301,7 +301,7 @@ public class UtenteService {
 
 		return risultati;
 	}
-	
+
 	public static List<PojoUtente> login(String nomeUtente, String password) {
 		PojoUtente utenteSingolo = null;
 		List<PojoUtente> risultati = new ArrayList<>();

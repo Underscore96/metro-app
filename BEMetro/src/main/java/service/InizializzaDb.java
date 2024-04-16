@@ -11,16 +11,19 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import db.dao.FermataDAO;
 import db.dao.LineaDAO;
+import db.dao.UtenteDAO;
 import db.entity.Fermata;
 import db.entity.Linea;
+import db.entity.Utente;
 import presentation.pojo.PojoFermata;
 
 public class InizializzaDb {
 	private FermataDAO fermataDAO = new FermataDAO();
 	private LineaDAO lineaDAO = new LineaDAO();
+	private UtenteDAO utenteDAO = new UtenteDAO();
 
 	public Object[] inizDb() {
-		Object[] dbData = new Object[2];
+		Object[] dbData = new Object[3];
 
 		InputStream fermataInputStream = getClass().getClassLoader()
 				.getResourceAsStream("fermata.json");
@@ -28,11 +31,15 @@ public class InizializzaDb {
 		InputStream lineaInputStream = getClass().getClassLoader()
 				.getResourceAsStream("linea.json");
 
+		InputStream utenteInputStream = getClass().getClassLoader()
+				.getResourceAsStream("utente.json");
+
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 
 		List<Fermata> listaFermate = null;
 		List<Linea> listaLinee = null;
+		List<Utente> listaUtente = null;
 
 		try {
 			listaFermate = mapper.readValue(fermataInputStream,
@@ -40,6 +47,10 @@ public class InizializzaDb {
 					});
 			listaLinee = mapper.readValue(lineaInputStream,
 					new TypeReference<List<Linea>>() {
+					});
+
+			listaUtente = mapper.readValue(utenteInputStream,
+					new TypeReference<List<Utente>>() {
 					});
 
 			for (Fermata fermata : listaFermate) {
@@ -53,8 +64,15 @@ public class InizializzaDb {
 					lineaDAO.crea(linea);
 			}
 
+			for (Utente utente : listaUtente) {
+				if (utenteDAO.leggiDaNomeUtente(utente.getNomeUtente())
+						.isEmpty())
+					utenteDAO.crea(utente);
+			}
+
 			dbData[0] = costruisciRelazione(listaFermate, listaLinee);
 			dbData[1] = listaLinee;
+			dbData[2] = listaUtente;
 
 		} catch (Exception e) {
 			e.printStackTrace();

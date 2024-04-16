@@ -109,22 +109,24 @@ class LineaServiceTest {
 		assertThrows(NullPointerException.class, () -> {
 			valore2.concat("a");
 		});
+
+		lin = new Linea();
 	}
 
 	@SuppressWarnings("null")
 	@Test
 	void When_ListaFermateNullaOrVuota_Expect_returnaNullo() {
-		List<Linea> nullList = null;
-		List<Linea> emptyList = new ArrayList<>();
-		List<Linea> nullMember = new ArrayList<>();
-		nullMember.add(null);
-		lin = nullMember.get(0);
+		List<Linea> listaNulla = null;
+		List<Linea> listaVuota = new ArrayList<>();
+		List<Linea> membroNullo = new ArrayList<>();
+		membroNullo.add(null);
+		lin = membroNullo.get(0);
 
 		assertThrows(NullPointerException.class, () -> {
-			nullList.add(null);
+			listaNulla.add(null);
 		});
 		assertThrows(IndexOutOfBoundsException.class, () -> {
-			emptyList.get(0);
+			listaVuota.get(0);
 		});
 		assertThrows(NullPointerException.class, () -> {
 			lin.setDirezione(null);
@@ -134,7 +136,7 @@ class LineaServiceTest {
 	}
 
 	@Test
-	void Should_convertireALinea_When_Passo_PojoFermata() {
+	void Should_ConvertireALinea_When_PassoPojoFermata() {
 		Linea expected = new Linea("30001", "verde", "Brignole");
 
 		PojoLinea pojoLinea = new PojoLinea("verde", "Brignole");
@@ -149,7 +151,7 @@ class LineaServiceTest {
 	}
 
 	@Test
-	void Should_convertireAPojoLinea_When_Passo_Fermata() {
+	void Should_ConvertireAPojoLinea_When_PassoFermata() {
 		PojoLinea expected = new PojoLinea("verde", "Brignole");
 
 		Linea Linea = new Linea("30001", "verde", "Brignole");

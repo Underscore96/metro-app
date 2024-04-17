@@ -3,4 +3,4 @@
 .settings/
 target/
 node_modules
-/BEMetro/src/main/resources
+BEMetro/src/main/resources/hibernate.properties

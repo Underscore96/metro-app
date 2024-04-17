@@ -1,0 +1,92 @@
+[
+	{
+		"nomeUtente": "Francesco1234",
+		"password": "1234",
+		"nome": "Francesco",
+		"cognome": "Mestre",
+		"mail": "f.mestre@gmail.com",
+		"telefono": "348544554",
+		"ruolo": "amministratore"
+	},
+	{
+		"nomeUtente": "Giulia5678",
+		"password": "5678",
+		"nome": "Giulia",
+		"cognome": "Rossi",
+		"mail": "g.rossi@gmail.com",
+		"telefono": "349876543",
+		"ruolo": "amministratore"
+	},
+	{
+		"nomeUtente": "MarcoUtente",
+		"password": "utente123",
+		"nome": "Marco",
+		"cognome": "Bianchi",
+		"mail": "m.bianchi@gmail.com",
+		"telefono": "347654321",
+		"ruolo": "utente"
+	},
+	{
+		"nomeUtente": "AnnaUtente",
+		"password": "password123",
+		"nome": "Anna",
+		"cognome": "Verdi",
+		"mail": "a.verdi@gmail.com",
+		"telefono": "345123456",
+		"ruolo": "utente"
+	},
+	{
+		"nomeUtente": "PaoloOspite",
+		"password": "ospite123",
+		"nome": "Paolo",
+		"cognome": "Neri",
+		"mail": "p.neri@gmail.com",
+		"telefono": "349875432",
+		"ruolo": "ospite"
+	},
+	{
+		"nomeUtente": "LisaOspite",
+		"password": "lisa456",
+		"nome": "Lisa",
+		"cognome": "Russo",
+		"mail": "l.russo@gmail.com",
+		"telefono": "346543789",
+		"ruolo": "ospite"
+	},
+	{
+		"nomeUtente": "MarioUtente2",
+		"password": "qwerty",
+		"nome": "Mario",
+		"cognome": "Gialli",
+		"mail": "m.gialli@gmail.com",
+		"telefono": "345987654",
+		"ruolo": "utente"
+	},
+	{
+		"nomeUtente": "RobertaOspite2",
+		"password": "rob456",
+		"nome": "Roberta",
+		"cognome": "Bianchini",
+		"mail": "r.bianchini@gmail.com",
+		"telefono": "349876543",
+		"ruolo": "ospite"
+	},
+	{
+		"nomeUtente": "GiovanniUtente3",
+		"password": "pass123",
+		"nome": "Giovanni",
+		"cognome": "Verde",
+		"mail": "g.verde@gmail.com",
+		"telefono": "345123789",
+		"ruolo": "utente"
+	},
+	{
+		"nomeUtente": "EleonoraOspite3",
+		"password": "ele123",
+		"nome": "Eleonora",
+		"cognome": "Rossini",
+		"mail": "e.rossini@gmail.com",
+		"telefono": "346789123",
+		"ruolo": "utente"
+	}
+]

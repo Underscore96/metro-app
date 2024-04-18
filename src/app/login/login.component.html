@@ -1,5 +1,5 @@
 <div class="icon">
-    <div class="icon-text">Enter</div>
+    <div class="icon-text">Entra in Amministrazione</div>
 </div>
 
 <form>
@@ -9,9 +9,12 @@
   
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" [(ngModel)]="password" required>
-      <div class="error">{{ errorMsg }}</div>
+
   
-      <button type="button" (click)="login()">Login</button>
+      <button type="button" (click)="onSubmit(this.username, this.password)">Login</button>
+      <div *ngIf="this.errorMsg">
+        <h1>Invalid username and password Please try again</h1>
+      </div>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>

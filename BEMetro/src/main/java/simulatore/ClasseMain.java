@@ -53,13 +53,13 @@ public class ClasseMain {
 
 		switch (meteo) {
 			case 1 :
-				return "Pioggia";
+				return "pioggia";
 			case 2 :
-				return "Sole";
+				return "sole";
 			case 3 :
-				return "Nuvolo";
+				return "nuvolo";
 			default :
-				return "Sole";
+				return "sole";
 		}
 	}
 }

@@ -11,6 +11,7 @@ import presentation.rest.FermataFERest;
 import presentation.rest.FermataRest;
 import presentation.rest.GestioneDBRest;
 import presentation.rest.LineaRest;
+import presentation.rest.MezzoRest;
 import presentation.rest.UtenteRest;
 
 @ApplicationPath("rest")
@@ -25,6 +26,7 @@ public class MyApplication extends Application {
 		s.add(FermataFERest.class);
 		s.add(GestioneDBRest.class);
 		s.add(UtenteRest.class);
+		s.add(MezzoRest.class);
 		s.add(ServerExceptionMapper.class);
 
 		return s;

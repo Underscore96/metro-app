@@ -1,0 +1,12 @@
+[
+	{
+		"numMezzo": 1,
+		"numMaxPasseggeri": 100,
+		"orario": "08:00"
+	},
+	{
+		"numMezzo": 2,
+		"numMaxPasseggeri": 100,
+		"orario": "08:00"
+	}
+]

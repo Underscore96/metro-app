@@ -122,10 +122,10 @@ class FermataServiceTest {
 	@Test
 	void Should_ConvertireAFermata_When_Passo_PojoFermata() {
 		Fermata expected = new Fermata("30001", 30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", "presente");
 
 		PojoFermata pojoFermata = new PojoFermata(30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", "presente");
 
 		Fermata actual = new FermataBuilder().setIdFermata("30001")
 				.setNumFermata(pojoFermata.getNumFermata())
@@ -146,10 +146,10 @@ class FermataServiceTest {
 	@Test
 	void Should_ConvertireAPojoFermata_When_Passo_Fermata() {
 		PojoFermata expected = new PojoFermata(30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", "presente");
 
 		Fermata fermata1 = new Fermata("30000", 30000, "Brignole",
-				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove");
+				LocalTime.of(8, 24), LocalTime.of(8, 34), "Piove", "presente");
 
 		PojoFermata actual = new PojoFermataBuilder()
 				.setNumFermata(fermata1.getNumFermata())

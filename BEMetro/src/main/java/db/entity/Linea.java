@@ -2,6 +2,9 @@ package db.entity;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +30,9 @@ public class Linea {
 	@Column(name = "direzione", length = 40, nullable = true, unique = false)
 	private String direzione;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idFermata", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "linea", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@JsonIgnore
 	private Set<Fermata> fermate;
 
 	public Linea() {

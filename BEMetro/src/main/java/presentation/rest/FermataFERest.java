@@ -1,5 +1,7 @@
 package presentation.rest;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 import jakarta.ws.rs.Consumes;
@@ -66,7 +68,6 @@ public class FermataFERest {
 
 	@GET
 	@Path("/leggi")
-	@Consumes("Application/json")
 	@Produces("Application/json")
 	public Response rimuoviFermata(@QueryParam("id") Integer id,
 			@QueryParam("nome_linea") String nome_linea,
@@ -77,6 +78,24 @@ public class FermataFERest {
 		try {
 			risultato = FermataFEService.leggiFermataFE(id, nome_linea,
 					numero_fermata);
+			risposta = Response.ok(risultato).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
+	}
+
+	@GET
+	@Path("/tutte")
+	@Produces("Application/json")
+	public Response leggiTutteLeFermateFE() {
+		Response risposta = null;
+		List<PojoFermataFE> risultato = null;
+
+		try {
+			risultato = FermataFEService.leggiTutteLeFermateFE();
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {

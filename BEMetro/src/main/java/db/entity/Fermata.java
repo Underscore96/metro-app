@@ -1,9 +1,11 @@
 package db.entity;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,18 +42,25 @@ public class Fermata {
 	@Column(name = "previsioneMeteo", length = 40, nullable = true, unique = false)
 	private String previsioneMeteo;
 
+	@Column(name = "posMezzo", length = 20, nullable = true, unique = false)
+	private String posMezzo;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idLinea")
-	@JsonIgnore
 	@JsonBackReference
 	private Linea linea;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "fermataAttuale")
+	@JsonManagedReference
+	@JsonIgnore
+	private Set<Mezzo> mezzi;
 
 	public Fermata() {
 	}
 
 	public Fermata(String idFermata, Integer numFermata, String nome,
-			LocalTime orarioPrevisto, LocalTime ritardo,
-			String previsioneMeteo) {
+			LocalTime orarioPrevisto, LocalTime ritardo, String previsioneMeteo,
+			String posMezzo) {
 		super();
 		this.idFermata = idFermata;
 		this.numFermata = numFermata;
@@ -58,6 +68,7 @@ public class Fermata {
 		this.orarioPrevisto = orarioPrevisto;
 		this.ritardo = ritardo;
 		this.previsioneMeteo = previsioneMeteo;
+		this.posMezzo = posMezzo;
 	}
 
 	public String getIdFermata() {
@@ -116,11 +127,27 @@ public class Fermata {
 		this.linea = linea;
 	}
 
+	public Set<Mezzo> getMezzi() {
+		return mezzi;
+	}
+
+	public void setMezzi(Set<Mezzo> mezzi) {
+		this.mezzi = mezzi;
+	}
+
+	public String getPosMezzo() {
+		return posMezzo;
+	}
+
+	public void setPosMezzo(String posMezzo) {
+		this.posMezzo = posMezzo;
+	}
+
 	@Override
 	public String toString() {
 		return "Fermata [idFermata=" + idFermata + ", numFermata=" + numFermata
 				+ ", nome=" + nome + ", orarioPrevisto=" + orarioPrevisto
 				+ ", ritardo=" + ritardo + ", previsioneMeteo="
-				+ previsioneMeteo + "]";
+				+ previsioneMeteo + ", posMezzo=" + posMezzo + "]";
 	}
 }

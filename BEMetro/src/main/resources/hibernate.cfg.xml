@@ -10,5 +10,6 @@
 		<mapping class="db.entity.Fermata" />
 		<mapping class="db.entity.Linea" />
 		<mapping class="db.entity.Utente" />
+		<mapping class="db.entity.Mezzo" />
 	</session-factory>
 </hibernate-configuration>

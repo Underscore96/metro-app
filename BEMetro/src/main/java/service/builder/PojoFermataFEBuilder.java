@@ -13,6 +13,7 @@ public class PojoFermataFEBuilder {
 	private String previsione_meteo;
 	private LocalTime tempo_arrivo;
 	private LocalTime ritardo_stimato;
+	private String posizione_mezzo;
 
 	public PojoFermataFEBuilder setId(Integer id) {
 		this.id = id;
@@ -53,6 +54,11 @@ public class PojoFermataFEBuilder {
 		this.ritardo_stimato = ritardo_stimato;
 		return this;
 	}
+	
+	public PojoFermataFEBuilder setPosizione_mezzo(String posizione_mezzo) {
+		this.posizione_mezzo = posizione_mezzo;
+		return this;
+	}
 
 	public PojoFermataFE costruisci() {
 		PojoFermataFE nuovoPojoFermataFE = new PojoFermataFE();
@@ -65,6 +71,7 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setPrevisione_meteo(previsione_meteo);
 		nuovoPojoFermataFE.setTempo_arrivo(tempo_arrivo);
 		nuovoPojoFermataFE.setRitardo_stimato(ritardo_stimato);
+		nuovoPojoFermataFE.setPosizione_mezzo(posizione_mezzo);
 
 		return nuovoPojoFermataFE;
 	}

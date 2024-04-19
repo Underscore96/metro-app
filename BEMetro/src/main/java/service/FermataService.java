@@ -35,7 +35,9 @@ public class FermataService {
 					.setOrarioPrevisto(fermata.getOrarioPrevisto())
 					.setRitardo(fermata.getRitardo())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
-					.setLinea(fermata.getLinea()).costruisci();
+					.setPosMezzo(fermata.getPosMezzo())
+					.setLinea(fermata.getLinea()).setMezzi(fermata.getMezzi())
+					.costruisci();
 
 			fermataDAO.crea(dbFermata);
 			risultato = "FERMATA CREATE";
@@ -83,7 +85,9 @@ public class FermataService {
 					.setOrarioPrevisto(fermataDB.getOrarioPrevisto())
 					.setRitardo(fermataDB.getRitardo())
 					.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
-					.setLinea(fermataDB.getLinea()).costruisci();
+					.setPosMezzo(fermataDB.getPosMezzo())
+					.setLinea(fermataDB.getLinea())
+					.setMezzi(fermataDB.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {
 			throw new CustomException(
@@ -131,7 +135,9 @@ public class FermataService {
 					.setOrarioPrevisto(fermata.getOrarioPrevisto())
 					.setRitardo(fermata.getRitardo())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
-					.setLinea(fermata.getLinea()).costruisci();
+					.setPosMezzo(fermata.getPosMezzo())
+					.setLinea(fermata.getLinea()).setMezzi(fermata.getMezzi())
+					.costruisci();
 
 			fermataAggiornata = fermataDAO.aggiorna(fermataAggiornata);
 
@@ -147,7 +153,9 @@ public class FermataService {
 					.setOrarioPrevisto(fermataAggiornata.getOrarioPrevisto())
 					.setRitardo(fermataAggiornata.getRitardo())
 					.setPrevisioneMeteo(fermataAggiornata.getPrevisioneMeteo())
-					.setLinea(fermataAggiornata.getLinea()).costruisci();
+					.setPosMezzo(fermataAggiornata.getPosMezzo())
+					.setLinea(fermataAggiornata.getLinea())
+					.setMezzi(fermataAggiornata.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {
 			throw new CustomException(
@@ -227,7 +235,9 @@ public class FermataService {
 						.setOrarioPrevisto(fermataDB.getOrarioPrevisto())
 						.setRitardo(fermataDB.getRitardo())
 						.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
-						.setLinea(fermataDB.getLinea()).costruisci();
+						.setPosMezzo(fermataDB.getPosMezzo())
+						.setLinea(fermataDB.getLinea())
+						.setMezzi(fermataDB.getMezzi()).costruisci();
 
 				risultati.add(fermataSingola);
 			}
@@ -277,7 +287,9 @@ public class FermataService {
 						.setOrarioPrevisto(fermataDB.getOrarioPrevisto())
 						.setRitardo(fermataDB.getRitardo())
 						.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
-						.setLinea(fermataDB.getLinea()).costruisci();
+						.setPosMezzo(fermataDB.getPosMezzo())
+						.setLinea(fermataDB.getLinea())
+						.setMezzi(fermataDB.getMezzi()).costruisci();
 
 				risultati.add(fermataSingola);
 			}
@@ -320,7 +332,7 @@ public class FermataService {
 		try {
 			fermataDB.setLinea(lineaDB);
 
-			fermataDB = fermataDAO.aggiornaRelazioneFermata(fermataDB);
+			fermataDB = fermataDAO.aggiorna(fermataDB);
 
 			if (fermataDB.getNumFermata() == null)
 				throw new CustomException(
@@ -334,7 +346,9 @@ public class FermataService {
 					.setOrarioPrevisto(fermataDB.getOrarioPrevisto())
 					.setRitardo(fermataDB.getRitardo())
 					.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
-					.setLinea(fermataDB.getLinea()).costruisci();
+					.setPosMezzo(fermataDB.getPosMezzo())
+					.setLinea(fermataDB.getLinea())
+					.setMezzi(fermataDB.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {
 			throw new CustomException(
@@ -377,12 +391,13 @@ public class FermataService {
 
 			fermataAggiornata = new FermataBuilder()
 					.setIdFermata(fermataVecchia.getIdFermata())
-					.setNumFermata(numFermata)
-					.setNome(nomeFermata)
+					.setNumFermata(numFermata).setNome(nomeFermata)
 					.setOrarioPrevisto(fermataVecchia.getOrarioPrevisto())
 					.setRitardo(fermataVecchia.getRitardo())
 					.setPrevisioneMeteo(fermataVecchia.getPrevisioneMeteo())
-					.setLinea(fermataVecchia.getLinea()).costruisci();
+					.setPosMezzo(fermataVecchia.getPosMezzo())
+					.setLinea(fermataVecchia.getLinea())
+					.setMezzi(fermataVecchia.getMezzi()).costruisci();
 
 			fermataAggiornata = fermataDAO.aggiorna(fermataAggiornata);
 
@@ -398,7 +413,9 @@ public class FermataService {
 					.setOrarioPrevisto(fermataAggiornata.getOrarioPrevisto())
 					.setRitardo(fermataAggiornata.getRitardo())
 					.setPrevisioneMeteo(fermataAggiornata.getPrevisioneMeteo())
-					.setLinea(fermataAggiornata.getLinea()).costruisci();
+					.setPosMezzo(fermataAggiornata.getPosMezzo())
+					.setLinea(fermataAggiornata.getLinea())
+					.setMezzi(fermataAggiornata.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {
 			throw new CustomException(

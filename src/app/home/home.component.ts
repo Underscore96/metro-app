@@ -72,20 +72,24 @@ export class HomeComponent implements OnInit{
 
   formatArrivalTime(timeArray: number[]): string {
     if (!Array.isArray(timeArray) || timeArray.length !== 2) {
-        return 'N/A'; // Handle invalid time format
+        return 'N/A'; 
     }
     const hours = ('0' + timeArray[0]).slice(-2);
     const minutes = ('0' + timeArray[1]).slice(-2);
     return `${hours}:${minutes}`;
 }
 
-
-// Function to get delay in minutes
-getDelayMinutes(delay: string): string {
-    const delayMinutes = parseInt(delay, 10);
-    return isNaN(delayMinutes) ? 'N/A' : `${delayMinutes} min`;
+formatDelayTime(delayArray: number[]): string {
+  if (!Array.isArray(delayArray) || delayArray.length !== 2) {
+      return 'N/A'; // Handle invalid delay format
+  }
+  const hours = delayArray[0];
+  const minutes = delayArray[1];
+  const totalMinutes = hours * 60 + minutes;
+  return `${totalMinutes} min`;
 }
-  
+
+
 
 }
 

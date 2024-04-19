@@ -1,7 +1,6 @@
 package db.dao;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -9,39 +8,37 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
-import db.entity.Fermata;
+import db.entity.Mezzo;
 import db.util.HibernateUtil;
 import exception.CustomException;
 import exception.ErrorMessages;
-import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.ws.rs.core.Response;
 
-public class FermataDAO {
+public class MezzoDAO {
 	Session sessione = null;
-	private static final String NUMFERMATA = "numFermata";
+	private static final String NUMMEZZO = "numMezzo";
 
-	public void crea(Fermata fermata) {
+	public void crea(Mezzo mezzo) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			sessione.persist(fermata);
+			sessione.persist(mezzo);
 
 			sessione.getTransaction().commit();
 
 		} catch (PropertyValueException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(String
-					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMFERMATA),
+					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMMEZZO),
 					Response.Status.CONFLICT);
 		} catch (GenericJDBCException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(
-					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMFERMATA),
+					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMMEZZO),
 					Response.Status.CONFLICT);
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
@@ -54,22 +51,22 @@ public class FermataDAO {
 		}
 	}
 
-	public List<Fermata> leggiDaNumFermata(Integer numFermata) {
-		List<Fermata> result = new ArrayList<>();
+	public List<Mezzo> leggiDaNumMezzo(Integer numMezzo) {
+		List<Mezzo> result = new ArrayList<>();
 		CriteriaBuilder builder;
-		CriteriaQuery<Fermata> criteria;
-		Root<Fermata> root;
+		CriteriaQuery<Mezzo> criteria;
+		Root<Mezzo> root;
 
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
 			builder = sessione.getCriteriaBuilder();
-			criteria = builder.createQuery(Fermata.class);
-			root = criteria.from(Fermata.class);
+			criteria = builder.createQuery(Mezzo.class);
+			root = criteria.from(Mezzo.class);
 
 			criteria.select(root)
-					.where(builder.equal(root.get(NUMFERMATA), numFermata));
+					.where(builder.equal(root.get(NUMMEZZO), numMezzo));
 			result = sessione.createQuery(criteria).getResultList();
 
 		} catch (HibernateException e) {
@@ -83,23 +80,23 @@ public class FermataDAO {
 		return result;
 	}
 
-	public Fermata aggiorna(Fermata fermata) {
+	public Mezzo aggiorna(Mezzo mezzo) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			fermata = sessione.merge(fermata);
-			
+			mezzo = sessione.merge(mezzo);
+
 			sessione.getTransaction().commit();
 		} catch (PropertyValueException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(String
-					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMFERMATA),
+					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMMEZZO),
 					Response.Status.CONFLICT);
 		} catch (GenericJDBCException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(
-					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMFERMATA),
+					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMMEZZO),
 					Response.Status.CONFLICT);
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
@@ -109,16 +106,16 @@ public class FermataDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return fermata;
+		return mezzo;
 	}
 
-	public void cancella(Fermata fermata) {
+	public void cancella(Mezzo mezzo) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			sessione.remove(fermata);
-			
+			sessione.remove(mezzo);
+
 			sessione.getTransaction().commit();
 
 		} catch (HibernateException e) {
@@ -130,18 +127,18 @@ public class FermataDAO {
 		}
 	}
 
-	public List<Fermata> trovaTutteLeFermate() {
-		List<Fermata> result = new ArrayList<>();
+	public List<Mezzo> trovaTuttiIMezzi() {
+		List<Mezzo> result = new ArrayList<>();
 		CriteriaBuilder builder;
-		CriteriaQuery<Fermata> criteria;
+		CriteriaQuery<Mezzo> criteria;
 
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
 			builder = sessione.getCriteriaBuilder();
-			criteria = builder.createQuery(Fermata.class);
-			criteria.from(Fermata.class);
+			criteria = builder.createQuery(Mezzo.class);
+			criteria.from(Mezzo.class);
 
 			result = sessione.createQuery(criteria).getResultList();
 		} catch (HibernateException e) {
@@ -153,55 +150,5 @@ public class FermataDAO {
 				sessione.close();
 		}
 		return result;
-	}
-
-	public List<Fermata> trovaConAttributi(String nome,
-			String previsioneMeteo) {
-		List<Fermata> risultati = new ArrayList<>();
-		CriteriaBuilder criteriaBuilder;
-		CriteriaQuery<Fermata> criteriaQuery;
-		Root<Fermata> root;
-		List<Predicate> predicates = new ArrayList<>();
-
-		try {
-			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
-			sessione.beginTransaction();
-
-			criteriaBuilder = sessione.getCriteriaBuilder();
-			criteriaQuery = criteriaBuilder.createQuery(Fermata.class);
-			root = criteriaQuery.from(Fermata.class);
-
-			if (nome != null) {
-				predicates.add(criteriaBuilder.equal(root.get("nome"), nome));
-			}
-
-			if (previsioneMeteo != null) {
-				predicates.add(criteriaBuilder
-						.equal(root.get("previsioneMeteo"), previsioneMeteo));
-			}
-
-			criteriaQuery.select(root)
-					.where(predicates.toArray(new Predicate[0]));
-			Query query = sessione.createQuery(criteriaQuery);
-
-			risultati = castList(Fermata.class, query.getResultList());
-
-		} catch (HibernateException e) {
-			sessione.getTransaction().rollback();
-			throw new CustomException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		} finally {
-			sessione.close();
-		}
-
-		return risultati;
-	}
-
-	public static <T> List<T> castList(Class<? extends T> classType,
-			Collection<?> myCollection) {
-		List<T> r = new ArrayList<>(myCollection.size());
-		for (Object member : myCollection)
-			r.add(classType.cast(member));
-		return r;
 	}
 }

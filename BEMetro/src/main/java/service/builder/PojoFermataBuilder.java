@@ -1,8 +1,10 @@
 package service.builder;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 import db.entity.Linea;
+import db.entity.Mezzo;
 import presentation.pojo.PojoFermata;
 
 public class PojoFermataBuilder {
@@ -11,7 +13,9 @@ public class PojoFermataBuilder {
 	private LocalTime orarioPrevisto;
 	private LocalTime ritardo;
 	private String previsioneMeteo;
+	private String posMezzo;
 	private Linea linea;
+	private Set<Mezzo> mezzi;
 
 	public PojoFermataBuilder setNumFermata(Integer numFermata) {
 		this.numFermata = numFermata;
@@ -38,8 +42,18 @@ public class PojoFermataBuilder {
 		return this;
 	}
 
+	public PojoFermataBuilder setPosMezzo(String posMezzo) {
+		this.posMezzo = posMezzo;
+		return this;
+	}
+
 	public PojoFermataBuilder setLinea(Linea linea) {
 		this.linea = linea;
+		return this;
+	}
+
+	public PojoFermataBuilder setMezzi(Set<Mezzo> mezzi) {
+		this.mezzi = mezzi;
 		return this;
 	}
 
@@ -51,7 +65,9 @@ public class PojoFermataBuilder {
 		nuovaFermata.setOrarioPrevisto(orarioPrevisto);
 		nuovaFermata.setRitardo(ritardo);
 		nuovaFermata.setPrevisioneMeteo(previsioneMeteo);
+		nuovaFermata.setPosMezzo(posMezzo);
 		nuovaFermata.setLinea(linea);
+		nuovaFermata.setMezzi(mezzi);
 
 		return nuovaFermata;
 	}

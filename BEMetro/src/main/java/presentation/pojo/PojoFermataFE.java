@@ -11,6 +11,7 @@ public class PojoFermataFE {
 	private String previsione_meteo;
 	private LocalTime tempo_arrivo;
 	private LocalTime ritardo_stimato;
+	private String posizione_mezzo;
 
 	public PojoFermataFE() {
 	}
@@ -18,7 +19,7 @@ public class PojoFermataFE {
 	public PojoFermataFE(Integer id, Integer numero_fermata,
 			String nome_fermata, String nome_linea, String direzione,
 			String previsione_meteo, LocalTime tempo_arrivo,
-			LocalTime ritardo_stimato) {
+			LocalTime ritardo_stimato, String posizione_mezzo) {
 		super();
 		this.id = id;
 		this.numero_fermata = numero_fermata;
@@ -28,6 +29,7 @@ public class PojoFermataFE {
 		this.previsione_meteo = previsione_meteo;
 		this.tempo_arrivo = tempo_arrivo;
 		this.ritardo_stimato = ritardo_stimato;
+		this.posizione_mezzo = posizione_mezzo;
 	}
 
 	public Integer getId() {
@@ -94,12 +96,21 @@ public class PojoFermataFE {
 		this.ritardo_stimato = ritardo_stimato;
 	}
 
+	public String getPosizione_mezzo() {
+		return posizione_mezzo;
+	}
+
+	public void setPosizione_mezzo(String posizione_mezzo) {
+		this.posizione_mezzo = posizione_mezzo;
+	}
+
 	@Override
 	public String toString() {
 		return "PojoFermataFE [id=" + id + ", numero_fermata=" + numero_fermata
 				+ ", nome_fermata=" + nome_fermata + ", nome_linea="
 				+ nome_linea + ", direzione=" + direzione
 				+ ", previsione_meteo=" + previsione_meteo + ", tempo_arrivo="
-				+ tempo_arrivo + ", ritardo_stimato=" + ritardo_stimato + "]";
+				+ tempo_arrivo + ", ritardo_stimato=" + ritardo_stimato
+				+ ", posizione_mezzo=" + posizione_mezzo + "]";
 	}
 }

@@ -126,10 +126,10 @@ public class InizializzaDb {
 				numFermata = fermata.getNumFermata();
 				if (numFermata <= listaNomiFermate.length)
 					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "blu"));
+							.aggiornaRelazioneFermata(numFermata, "verde"));
 				else
 					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "verde"));
+							.aggiornaRelazioneFermata(numFermata, "blu"));
 			}
 		}
 

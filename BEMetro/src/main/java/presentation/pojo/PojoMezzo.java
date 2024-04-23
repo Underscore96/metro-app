@@ -1,23 +1,24 @@
 package presentation.pojo;
 
-import java.time.LocalTime;
+import java.util.Set;
 
 import db.entity.Fermata;
+import db.entity.Orario;
 
 public class PojoMezzo {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
-	private LocalTime orario;
+	private Set<Orario> orari;
 	private Fermata fermataAttuale;
 
 	public PojoMezzo() {
 	}
 
 	public PojoMezzo(Integer numMezzo, Integer numMaxPasseggeri,
-			LocalTime orario) {
+			Set<Orario> orari) {
 		this.numMezzo = numMezzo;
 		this.numMaxPasseggeri = numMaxPasseggeri;
-		this.orario = orario;
+		this.orari = orari;
 	}
 
 	public Integer getNumMezzo() {
@@ -36,12 +37,12 @@ public class PojoMezzo {
 		this.numMaxPasseggeri = numMaxPasseggeri;
 	}
 
-	public LocalTime getOrario() {
-		return orario;
+	public Set<Orario> getOrari() {
+		return orari;
 	}
 
-	public void setOrario(LocalTime orario) {
-		this.orario = orario;
+	public void setOrari(Set<Orario> orari) {
+		this.orari = orari;
 	}
 
 	public Fermata getFermataAttuale() {
@@ -55,7 +56,7 @@ public class PojoMezzo {
 	@Override
 	public String toString() {
 		return "PojoMezzo [numMezzo=" + numMezzo + ", numMaxPasseggeri="
-				+ numMaxPasseggeri + ", orario=" + orario + ", fermataAttuale="
+				+ numMaxPasseggeri + ", orari=" + orari + ", fermataAttuale="
 				+ fermataAttuale + "]";
 	}
 }

@@ -2,8 +2,6 @@ package test_unit_metro_app.crud;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.LocalTime;
-
 import org.hibernate.Session;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +12,8 @@ import jakarta.persistence.EntityExistsException;
 
 @DisplayName("FERMATA DAO")
 class FermataDAOTest {
-	private LocalTime orarioPrevisto = LocalTime.of(8, 24);
-	private LocalTime ritardo = LocalTime.of(8, 34);
 	private final Fermata fermata = new Fermata("30000", 30000, "Brignole",
-			orarioPrevisto, ritardo, "Piove", "presente");
+			"Piove", "presente");
 
 	@Test
 	void when_ArgumentoNullo_Expect_IllegalArgumentException() {

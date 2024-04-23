@@ -2,128 +2,96 @@
 	{
 		"numFermata": 1,
 		"nome": "Brignole",
-		"orarioPrevisto": "16:30",
-		"ritardo": "00:05",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "presente"
 	},
 	{
 		"numFermata": 2,
 		"nome": "De Ferrari",
-		"orarioPrevisto": "16:35",
-		"ritardo": "00:05",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 3,
 		"nome": "Sarzano",
-		"orarioPrevisto": "16:40",
-		"ritardo": "00:05",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 4,
 		"nome": "San Giorgio",
-		"orarioPrevisto": "16:45",
-		"ritardo": "00:05",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 5,
 		"nome": "Darsena",
-		"orarioPrevisto": "16:50",
-		"ritardo": "00:05",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 6,
-		"nome": "Piazza Principe",
-		"orarioPrevisto": "16:55",
-		"ritardo": "00:05",
+		"nome": "Principe",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 7,
 		"nome": "Dinegro",
-		"orarioPrevisto": "17:00",
-		"ritardo": "00:05",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 8,
 		"nome": "Brin",
-		"orarioPrevisto": "17:05",
-		"ritardo": "00:05",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 9,
 		"nome": "Brin",
-		"orarioPrevisto": "16:30",
-		"ritardo": "00:10",
 		"previsioneMeteo": "sole",
 		"posMezzo": "presente"
 	},
 	{
 		"numFermata": 10,
 		"nome": "Dinegro",
-		"orarioPrevisto": "16:35",
-		"ritardo": "00:10",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 11,
-		"nome": "Piazza Principe",
-		"orarioPrevisto": "16:40",
-		"ritardo": "00:10",
+		"nome": "Principe",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 12,
 		"nome": "Darsena",
-		"orarioPrevisto": "16:45",
-		"ritardo": "00:10",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 13,
 		"nome": "San Giorgio",
-		"orarioPrevisto": "16:50",
-		"ritardo": "00:10",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 14,
 		"nome": "Sarzano",
-		"orarioPrevisto": "16:55",
-		"ritardo": "00:10",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 15,
 		"nome": "De Ferrari",
-		"orarioPrevisto": "17:00",
-		"ritardo": "00:10",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 16,
 		"nome": "Brignole",
-		"orarioPrevisto": "17:05",
-		"ritardo": "00:10",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	}

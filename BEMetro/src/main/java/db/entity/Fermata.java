@@ -1,6 +1,5 @@
 package db.entity;
 
-import java.time.LocalTime;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -19,7 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Fermata")
+@Table(name = "Fermate")
 public class Fermata {
 
 	@Id
@@ -32,12 +31,6 @@ public class Fermata {
 
 	@Column(name = "nome", length = 40, nullable = true, unique = false)
 	private String nome;
-
-	@Column(name = "orarioPrevisto", nullable = true, unique = false)
-	private LocalTime orarioPrevisto;
-
-	@Column(name = "ritardo", nullable = true, unique = false)
-	private LocalTime ritardo;
 
 	@Column(name = "previsioneMeteo", length = 40, nullable = true, unique = false)
 	private String previsioneMeteo;
@@ -59,14 +52,11 @@ public class Fermata {
 	}
 
 	public Fermata(String idFermata, Integer numFermata, String nome,
-			LocalTime orarioPrevisto, LocalTime ritardo, String previsioneMeteo,
-			String posMezzo) {
+			String previsioneMeteo, String posMezzo) {
 		super();
 		this.idFermata = idFermata;
 		this.numFermata = numFermata;
 		this.nome = nome;
-		this.orarioPrevisto = orarioPrevisto;
-		this.ritardo = ritardo;
 		this.previsioneMeteo = previsioneMeteo;
 		this.posMezzo = posMezzo;
 	}
@@ -93,22 +83,6 @@ public class Fermata {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public LocalTime getOrarioPrevisto() {
-		return orarioPrevisto;
-	}
-
-	public void setOrarioPrevisto(LocalTime orarioPrevisto) {
-		this.orarioPrevisto = orarioPrevisto;
-	}
-
-	public LocalTime getRitardo() {
-		return ritardo;
-	}
-
-	public void setRitardo(LocalTime ritardo) {
-		this.ritardo = ritardo;
 	}
 
 	public String getPrevisioneMeteo() {
@@ -146,8 +120,8 @@ public class Fermata {
 	@Override
 	public String toString() {
 		return "Fermata [idFermata=" + idFermata + ", numFermata=" + numFermata
-				+ ", nome=" + nome + ", orarioPrevisto=" + orarioPrevisto
-				+ ", ritardo=" + ritardo + ", previsioneMeteo="
-				+ previsioneMeteo + ", posMezzo=" + posMezzo + "]";
+				+ ", nome=" + nome + ", previsioneMeteo=" + previsioneMeteo
+				+ ", posMezzo=" + posMezzo + ", linea=" + linea + ", mezzi="
+				+ mezzi + "]";
 	}
 }

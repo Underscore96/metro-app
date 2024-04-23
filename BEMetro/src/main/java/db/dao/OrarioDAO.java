@@ -9,7 +9,7 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
-import db.entity.Fermata;
+import db.entity.Orario;
 import db.util.HibernateUtil;
 import exception.CustomException;
 import exception.ErrorMessages;
@@ -20,28 +20,28 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.ws.rs.core.Response;
 
-public class FermataDAO {
+public class OrarioDAO {
 	Session sessione = null;
-	private static final String NUMFERMATA = "numFermata";
+	private static final String ID_ORARIO = "idOrario";
 
-	public void crea(Fermata fermata) {
+	public void crea(Orario orario) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			sessione.persist(fermata);
+			sessione.persist(orario);
 
 			sessione.getTransaction().commit();
 
 		} catch (PropertyValueException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(String
-					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMFERMATA),
+					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, ID_ORARIO),
 					Response.Status.CONFLICT);
 		} catch (GenericJDBCException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(
-					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMFERMATA),
+					String.format(ErrorMessages.UNIQUE_CONSTRAINT, ID_ORARIO),
 					Response.Status.CONFLICT);
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
@@ -54,22 +54,22 @@ public class FermataDAO {
 		}
 	}
 
-	public List<Fermata> leggiDaNumFermata(Integer numFermata) {
-		List<Fermata> result = new ArrayList<>();
+	public List<Orario> leggiDaIdOrario(String idOrario) {
+		List<Orario> result = new ArrayList<>();
 		CriteriaBuilder builder;
-		CriteriaQuery<Fermata> criteria;
-		Root<Fermata> root;
+		CriteriaQuery<Orario> criteria;
+		Root<Orario> root;
 
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
 			builder = sessione.getCriteriaBuilder();
-			criteria = builder.createQuery(Fermata.class);
-			root = criteria.from(Fermata.class);
+			criteria = builder.createQuery(Orario.class);
+			root = criteria.from(Orario.class);
 
 			criteria.select(root)
-					.where(builder.equal(root.get(NUMFERMATA), numFermata));
+					.where(builder.equal(root.get(ID_ORARIO), idOrario));
 			result = sessione.createQuery(criteria).getResultList();
 
 		} catch (HibernateException e) {
@@ -83,23 +83,23 @@ public class FermataDAO {
 		return result;
 	}
 
-	public Fermata aggiorna(Fermata fermata) {
+	public Orario aggiorna(Orario orario) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			fermata = sessione.merge(fermata);
-			
+			orario = sessione.merge(orario);
+
 			sessione.getTransaction().commit();
 		} catch (PropertyValueException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(String
-					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMFERMATA),
+					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, ID_ORARIO),
 					Response.Status.CONFLICT);
 		} catch (GenericJDBCException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(
-					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMFERMATA),
+					String.format(ErrorMessages.UNIQUE_CONSTRAINT, ID_ORARIO),
 					Response.Status.CONFLICT);
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
@@ -109,16 +109,16 @@ public class FermataDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return fermata;
+		return orario;
 	}
 
-	public void cancella(Fermata fermata) {
+	public void cancella(Orario orario) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			sessione.remove(fermata);
-			
+			sessione.remove(orario);
+
 			sessione.getTransaction().commit();
 
 		} catch (HibernateException e) {
@@ -131,18 +131,18 @@ public class FermataDAO {
 		}
 	}
 
-	public List<Fermata> trovaTutteLeFermate() {
-		List<Fermata> result = new ArrayList<>();
+	public List<Orario> trovaTuttiGliOrari() {
+		List<Orario> result = new ArrayList<>();
 		CriteriaBuilder builder;
-		CriteriaQuery<Fermata> criteria;
+		CriteriaQuery<Orario> criteria;
 
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
 			builder = sessione.getCriteriaBuilder();
-			criteria = builder.createQuery(Fermata.class);
-			criteria.from(Fermata.class);
+			criteria = builder.createQuery(Orario.class);
+			criteria.from(Orario.class);
 
 			result = sessione.createQuery(criteria).getResultList();
 		} catch (HibernateException e) {
@@ -156,12 +156,12 @@ public class FermataDAO {
 		return result;
 	}
 
-	public List<Fermata> trovaConAttributi(String nome,
-			String previsioneMeteo) {
-		List<Fermata> risultati = new ArrayList<>();
+	public List<Orario> trovaOrarioFermata(String nomeFermata,
+			String direzione) {
+		List<Orario> risultati = new ArrayList<>();
 		CriteriaBuilder criteriaBuilder;
-		CriteriaQuery<Fermata> criteriaQuery;
-		Root<Fermata> root;
+		CriteriaQuery<Orario> criteriaQuery;
+		Root<Orario> root;
 		List<Predicate> predicates = new ArrayList<>();
 
 		try {
@@ -169,23 +169,24 @@ public class FermataDAO {
 			sessione.beginTransaction();
 
 			criteriaBuilder = sessione.getCriteriaBuilder();
-			criteriaQuery = criteriaBuilder.createQuery(Fermata.class);
-			root = criteriaQuery.from(Fermata.class);
+			criteriaQuery = criteriaBuilder.createQuery(Orario.class);
+			root = criteriaQuery.from(Orario.class);
 
-			if (nome != null) {
-				predicates.add(criteriaBuilder.equal(root.get("nome"), nome));
+			if (nomeFermata != null) {
+				predicates.add(criteriaBuilder.equal(root.get("nomeFermata"),
+						nomeFermata));
 			}
 
-			if (previsioneMeteo != null) {
-				predicates.add(criteriaBuilder
-						.equal(root.get("previsioneMeteo"), previsioneMeteo));
+			if (direzione != null) {
+				predicates.add(criteriaBuilder.equal(root.get("direzione"),
+						direzione));
 			}
 
 			criteriaQuery.select(root)
 					.where(predicates.toArray(new Predicate[0]));
 			Query query = sessione.createQuery(criteriaQuery);
 
-			risultati = castList(Fermata.class, query.getResultList());
+			risultati = castList(Orario.class, query.getResultList());
 
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();

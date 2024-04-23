@@ -11,5 +11,6 @@
 		<mapping class="db.entity.Linea" />
 		<mapping class="db.entity.Utente" />
 		<mapping class="db.entity.Mezzo" />
+		<mapping class="db.entity.Orario" />
 	</session-factory>
 </hibernate-configuration>

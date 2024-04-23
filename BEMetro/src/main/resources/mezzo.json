@@ -1,12 +1,26 @@
 [
 	{
 		"numMezzo": 1,
-		"numMaxPasseggeri": 100,
-		"orario": "08:00"
+		"numMaxPasseggeri": 100
 	},
 	{
 		"numMezzo": 2,
-		"numMaxPasseggeri": 100,
-		"orario": "08:00"
+		"numMaxPasseggeri": 100
+	},
+	{
+		"numMezzo": 3,
+		"numMaxPasseggeri": 100
+	},
+	{
+		"numMezzo": 4,
+		"numMaxPasseggeri": 100
+	},
+	{
+		"numMezzo": 5,
+		"numMaxPasseggeri": 100
+	},
+	{
+		"numMezzo": 6,
+		"numMaxPasseggeri": 100
 	}
 ]

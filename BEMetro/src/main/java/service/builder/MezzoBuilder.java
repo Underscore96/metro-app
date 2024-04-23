@@ -1,16 +1,17 @@
 package service.builder;
 
-import java.time.LocalTime;
+import java.util.Set;
 
 import db.entity.Fermata;
 import db.entity.Mezzo;
+import db.entity.Orario;
 
 public class MezzoBuilder {
 	private String idMezzo;
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
-	private LocalTime orario;
 	private Fermata fermataAttuale;
+	private Set<Orario> orari;
 
 	public MezzoBuilder setIdMezzo(String idMezzo) {
 		this.idMezzo = idMezzo;
@@ -27,13 +28,13 @@ public class MezzoBuilder {
 		return this;
 	}
 
-	public MezzoBuilder setOrario(LocalTime orario) {
-		this.orario = orario;
+	public MezzoBuilder setFermataAttuale(Fermata fermataAttuale) {
+		this.fermataAttuale = fermataAttuale;
 		return this;
 	}
 
-	public MezzoBuilder setFermataAttuale(Fermata fermataAttuale) {
-		this.fermataAttuale = fermataAttuale;
+	public MezzoBuilder setOrari(Set<Orario> orari) {
+		this.orari = orari;
 		return this;
 	}
 
@@ -43,8 +44,8 @@ public class MezzoBuilder {
 		nuovoMezzo.setIdMezzo(idMezzo);
 		nuovoMezzo.setNumMezzo(numMezzo);
 		nuovoMezzo.setNumMaxPasseggeri(numMaxPasseggeri);
-		nuovoMezzo.setOrario(orario);
 		nuovoMezzo.setFermataAttuale(fermataAttuale);
+		nuovoMezzo.setOrari(orari);
 
 		return nuovoMezzo;
 

@@ -31,7 +31,7 @@ public class MezzoService {
 		try {
 			mezzoDB = new MezzoBuilder().setNumMezzo(mezzo.getNumMezzo())
 					.setNumMaxPasseggeri(mezzo.getNumMaxPasseggeri())
-					.setOrario(mezzo.getOrario())
+					.setOrari(mezzo.getOrari())
 					.setFermataAttuale(mezzo.getFermataAttuale()).costruisci();
 
 			mezzoDAO.crea(mezzoDB);
@@ -76,7 +76,7 @@ public class MezzoService {
 			risultato = new PojoMezzoBuilder()
 					.setNumMezzo(mezzoDB.getNumMezzo())
 					.setNumMaxPasseggeri(mezzoDB.getNumMaxPasseggeri())
-					.setOrario(mezzoDB.getOrario())
+					.setOrari(mezzoDB.getOrari())
 					.setFermataAttuale(mezzoDB.getFermataAttuale())
 					.costruisci();
 
@@ -121,7 +121,7 @@ public class MezzoService {
 					.setIdMezzo(mezzoVecchio.getIdMezzo())
 					.setNumMezzo(mezzoVecchio.getNumMezzo())
 					.setNumMaxPasseggeri(mezzo.getNumMaxPasseggeri())
-					.setOrario(mezzo.getOrario())
+					.setOrari(mezzo.getOrari())
 					.setFermataAttuale(mezzo.getFermataAttuale()).costruisci();
 
 			mezzoAggiornato = mezzoDAO.aggiorna(mezzoAggiornato);
@@ -135,7 +135,7 @@ public class MezzoService {
 			risultato = new PojoMezzoBuilder()
 					.setNumMezzo(mezzoAggiornato.getNumMezzo())
 					.setNumMaxPasseggeri(mezzoAggiornato.getNumMaxPasseggeri())
-					.setOrario(mezzoAggiornato.getOrario())
+					.setOrari(mezzoAggiornato.getOrari())
 					.setFermataAttuale(mezzoAggiornato.getFermataAttuale())
 					.costruisci();
 
@@ -212,7 +212,7 @@ public class MezzoService {
 				mezzoSingolo = new PojoMezzoBuilder()
 						.setNumMezzo(mezzoDB.getNumMezzo())
 						.setNumMaxPasseggeri(mezzoDB.getNumMaxPasseggeri())
-						.setOrario(mezzoDB.getOrario())
+						.setOrari(mezzoDB.getOrari())
 						.setFermataAttuale(mezzoDB.getFermataAttuale())
 						.costruisci();
 
@@ -272,7 +272,7 @@ public class MezzoService {
 			risultato = new PojoMezzoBuilder()
 					.setNumMezzo(mezzoDB.getNumMezzo())
 					.setNumMaxPasseggeri(mezzoDB.getNumMaxPasseggeri())
-					.setOrario(mezzoDB.getOrario())
+					.setOrari(mezzoDB.getOrari())
 					.setFermataAttuale(mezzoDB.getFermataAttuale())
 					.costruisci();
 

@@ -1,6 +1,5 @@
 package presentation.pojo;
 
-import java.time.LocalTime;
 import java.util.Set;
 
 import db.entity.Linea;
@@ -9,8 +8,6 @@ import db.entity.Mezzo;
 public class PojoFermata {
 	private Integer numFermata;
 	private String nome;
-	private LocalTime orarioPrevisto;
-	private LocalTime ritardo;
 	private String previsioneMeteo;
 	private Linea linea;
 	private String posMezzo;
@@ -19,14 +16,11 @@ public class PojoFermata {
 	public PojoFermata() {
 	}
 
-	public PojoFermata(Integer numFermata, String nome,
-			LocalTime orarioPrevisto, LocalTime ritardo, String previsioneMeteo,
+	public PojoFermata(Integer numFermata, String nome, String previsioneMeteo,
 			String posMezzo) {
 		super();
 		this.numFermata = numFermata;
 		this.nome = nome;
-		this.orarioPrevisto = orarioPrevisto;
-		this.ritardo = ritardo;
 		this.previsioneMeteo = previsioneMeteo;
 		this.posMezzo = posMezzo;
 	}
@@ -45,22 +39,6 @@ public class PojoFermata {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public LocalTime getOrarioPrevisto() {
-		return orarioPrevisto;
-	}
-
-	public void setOrarioPrevisto(LocalTime orarioPrevisto) {
-		this.orarioPrevisto = orarioPrevisto;
-	}
-
-	public LocalTime getRitardo() {
-		return ritardo;
-	}
-
-	public void setRitardo(LocalTime ritardo) {
-		this.ritardo = ritardo;
 	}
 
 	public String getPrevisioneMeteo() {
@@ -98,9 +76,8 @@ public class PojoFermata {
 	@Override
 	public String toString() {
 		return "PojoFermata [numFermata=" + numFermata + ", nome=" + nome
-				+ ", orarioPrevisto=" + orarioPrevisto + ", ritardo=" + ritardo
-				+ ", previsioneMeteo=" + previsioneMeteo + ", posMezzo="
-				+ posMezzo + "]";
+				+ ", previsioneMeteo=" + previsioneMeteo + ", linea=" + linea
+				+ ", posMezzo=" + posMezzo + ", mezzi=" + mezzi + "]";
 	}
 
 }

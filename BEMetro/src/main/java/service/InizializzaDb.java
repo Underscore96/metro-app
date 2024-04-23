@@ -1,6 +1,7 @@
 package service;
 
 import java.io.InputStream;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,22 +12,31 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import db.dao.FermataDAO;
 import db.dao.LineaDAO;
 import db.dao.MezzoDAO;
+import db.dao.OrarioDAO;
 import db.dao.UtenteDAO;
 import db.entity.Fermata;
 import db.entity.Linea;
 import db.entity.Mezzo;
+import db.entity.Orario;
 import db.entity.Utente;
 import presentation.pojo.PojoFermata;
+import presentation.pojo.PojoLinea;
 import presentation.pojo.PojoMezzo;
+import presentation.pojo.PojoUtente;
+import service.builder.PojoLineaBuilder;
+import service.builder.PojoUtenteBuilder;
 
 public class InizializzaDb {
 	private FermataDAO fermataDAO = new FermataDAO();
 	private LineaDAO lineaDAO = new LineaDAO();
 	private UtenteDAO utenteDAO = new UtenteDAO();
 	private MezzoDAO mezzoDAO = new MezzoDAO();
+	private OrarioDAO orarioDAO = new OrarioDAO();
+	private static final String[] NOMI_FERMATE = {"Brignole", "De Ferrari",
+			"Sarzano", "San Giorgio", "Darsena", "Principe", "Dinegro", "Brin"};
 
 	public Object[] inizDb() {
-		Object[] dbData = new Object[4];
+		Object[] dbData = new Object[5];
 
 		InputStream fermataInputStream = getClass().getClassLoader()
 				.getResourceAsStream("fermata.json");
@@ -45,7 +55,9 @@ public class InizializzaDb {
 
 		List<Fermata> listaFermate = null;
 		List<Linea> listaLinee = null;
+		List<PojoLinea> listaPojoLinee = new ArrayList<>();
 		List<Utente> listaUtenti = null;
+		List<PojoUtente> listaPojoUtenti = new ArrayList<>();
 		List<Mezzo> listaMezzi = null;
 
 		try {
@@ -103,9 +115,30 @@ public class InizializzaDb {
 			}
 
 			dbData[0] = relazioniFermateLinee(listaFermate, listaLinee);
-			dbData[1] = listaLinee;
-			dbData[2] = listaUtenti;
+
+			for (Linea linea : listaLinee) {
+				listaPojoLinee.add(new PojoLineaBuilder()
+						.setNomeLinea(linea.getNomeLinea())
+						.setDirezione(linea.getDirezione())
+						.setFermate(linea.getFermate()).costruisci());
+
+			}
+			dbData[1] = listaPojoLinee;
+
+			for (Utente utente : listaUtenti) {
+				listaPojoUtenti.add(new PojoUtenteBuilder()
+						.setNomeUtente(utente.getNomeUtente())
+						.setPassword(utente.getPassword())
+						.setNome(utente.getNome())
+						.setCognome(utente.getCognome())
+						.setTelefono(utente.getTelefono())
+						.setMail(utente.getMail()).setRuolo(utente.getRuolo())
+						.costruisci());
+			}
+			dbData[2] = listaPojoUtenti;
+
 			dbData[3] = relazioniMezzoFermata(listaMezzi);
+			dbData[4] = aggiornaOrari(listaMezzi);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,7 +176,7 @@ public class InizializzaDb {
 		if (listaMezzi != null) {
 			for (Mezzo mezzo : listaMezzi) {
 				numMezzo = mezzo.getNumMezzo();
-				if (numMezzo == 1)
+				if (numMezzo <= 3)
 					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(1,
 							numMezzo, "aggiungi"));
 				else
@@ -153,5 +186,36 @@ public class InizializzaDb {
 		}
 
 		return listaPojoMezzi;
+	}
+
+	private List<Orario> aggiornaOrari(List<Mezzo> listaMezzi) {
+		List<Orario> listaOrari = new ArrayList<>();
+		Integer minuti = 0;
+
+		for (Mezzo mezzo : listaMezzi) {
+			LocalTime orarioPrevisto = LocalTime.of(8, minuti);
+			minuti = minuti + 10;
+			if (mezzo.getNumMezzo() == 3)
+				minuti = 0;
+
+			for (String nomeFermata : NOMI_FERMATE) {
+				Orario orario = new Orario();
+
+				orario.setMezzo(mezzo);
+				orario.setNomeFermata(nomeFermata);
+				orario.setOrarioPrevisto(orarioPrevisto);
+				orario.setRitardo(LocalTime.of(0, 0));
+
+				orarioDAO.crea(orario);
+				listaOrari.add(orario);
+
+				if (!nomeFermata.equals(NOMI_FERMATE[NOMI_FERMATE.length - 1]))
+					orarioPrevisto = orarioPrevisto.plusMinutes(5);
+				else
+					minuti = 0;
+			}
+		}
+
+		return listaOrari;
 	}
 }

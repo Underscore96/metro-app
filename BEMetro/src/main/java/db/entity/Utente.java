@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Utente")
+@Table(name = "Utenti")
 public class Utente {
 
 	@Id

@@ -1,8 +1,10 @@
 package db.entity;
 
-import java.time.LocalTime;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,24 +32,24 @@ public class Mezzo {
 	@Column(name = "numMaxPasseggeri", length = 10, nullable = true, unique = false)
 	private Integer numMaxPasseggeri;
 
-	@Column(name = "orario", nullable = true, unique = false)
-	private LocalTime orario;
-
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idFermata")
 	@JsonBackReference
 	private Fermata fermataAttuale;
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idOrario")
+	@JsonManagedReference
+	@JsonIgnore
+	private Set<Orario> orari;
+
 	public Mezzo() {
 	}
 
-	public Mezzo(String idMezzo, Integer numMezzo, Integer numMaxPasseggeri,
-			LocalTime orario) {
+	public Mezzo(String idMezzo, Integer numMezzo, Integer numMaxPasseggeri) {
 		super();
 		this.idMezzo = idMezzo;
 		this.numMezzo = numMezzo;
 		this.numMaxPasseggeri = numMaxPasseggeri;
-		this.orario = orario;
 	}
 
 	public String getIdMezzo() {
@@ -73,16 +76,16 @@ public class Mezzo {
 		this.numMaxPasseggeri = numMaxPasseggeri;
 	}
 
-	public LocalTime getOrario() {
-		return orario;
-	}
-
-	public void setOrario(LocalTime orario) {
-		this.orario = orario;
-	}
-
 	public Fermata getFermataAttuale() {
 		return fermataAttuale;
+	}
+
+	public Set<Orario> getOrari() {
+		return orari;
+	}
+
+	public void setOrari(Set<Orario> orari) {
+		this.orari = orari;
 	}
 
 	public void setFermataAttuale(Fermata fermataAttuale) {
@@ -92,7 +95,7 @@ public class Mezzo {
 	@Override
 	public String toString() {
 		return "Mezzo [idMezzo=" + idMezzo + ", numMezzo=" + numMezzo
-				+ ", numMaxPasseggeri=" + numMaxPasseggeri + ", orario="
-				+ orario + ", fermataAttuale=" + fermataAttuale + "]";
+				+ ", numMaxPasseggeri=" + numMaxPasseggeri + ", fermataAttuale="
+				+ fermataAttuale + ", orari=" + orari + "]";
 	}
 }

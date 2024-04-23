@@ -300,10 +300,9 @@ public class LineaService {
 				pojoFermata = new PojoFermataBuilder()
 						.setNumFermata(fermataDB.getNumFermata())
 						.setNome(fermataDB.getNome())
-						.setOrarioPrevisto(fermataDB.getOrarioPrevisto())
-						.setRitardo(fermataDB.getRitardo())
 						.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
-						.setLinea(fermataDB.getLinea()).costruisci();
+						.setLinea(fermataDB.getLinea())
+						.setMezzi(fermataDB.getMezzi()).costruisci();
 
 				risultato.add(pojoFermata);
 			}
@@ -347,7 +346,8 @@ public class LineaService {
 
 			lineaAggiornata = new LineaBuilder()
 					.setIdLinea(lineaVecchia.getIdLinea())
-					.setNomeLinea(nuovoNome).setDirezione(lineaVecchia.getDirezione())
+					.setNomeLinea(nuovoNome)
+					.setDirezione(lineaVecchia.getDirezione())
 					.setFermate(lineaVecchia.getFermate()).costruisci();
 
 			lineaAggiornata = lineaDAO.aggiorna(lineaAggiornata);

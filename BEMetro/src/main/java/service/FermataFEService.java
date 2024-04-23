@@ -140,8 +140,6 @@ public class FermataFEService {
 					.setNome_Linea(nome_linea)
 					.setDirezione(linea.getDirezione())
 					.setPrevisione_meteo(fermata.getPrevisioneMeteo())
-					.setTempo_arrivo(fermata.getOrarioPrevisto())
-					.setRitardo_stimato(fermata.getRitardo())
 					.setPosizione_mezzo(posizione).costruisci();
 
 		} catch (NullPointerException e) {
@@ -263,10 +261,8 @@ public class FermataFEService {
 			fermata = new PojoFermataBuilder()
 					.setNumFermata(fermataFE.getNumero_fermata())
 					.setNome(fermataFE.getNome_fermata())
-					.setOrarioPrevisto(fermataFE.getTempo_arrivo())
-					.setRitardo(fermataFE.getRitardo_stimato())
 					.setPrevisioneMeteo(fermataFE.getPrevisione_meteo())
-					.setLinea(null).costruisci();
+					.setLinea(null).setMezzi(null).costruisci();
 
 			linea = new PojoLineaBuilder()
 					.setNomeLinea(fermataFE.getNome_linea())

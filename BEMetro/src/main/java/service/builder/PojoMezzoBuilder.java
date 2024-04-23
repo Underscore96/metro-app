@@ -1,15 +1,16 @@
 package service.builder;
 
-import java.time.LocalTime;
+import java.util.Set;
 
 import db.entity.Fermata;
+import db.entity.Orario;
 import presentation.pojo.PojoMezzo;
 
 public class PojoMezzoBuilder {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
-	private LocalTime orario;
 	private Fermata fermataAttuale;
+	private Set<Orario> orari;
 
 	public PojoMezzoBuilder setNumMezzo(Integer numMezzo) {
 		this.numMezzo = numMezzo;
@@ -21,13 +22,13 @@ public class PojoMezzoBuilder {
 		return this;
 	}
 
-	public PojoMezzoBuilder setOrario(LocalTime orario) {
-		this.orario = orario;
-		return this;
-	}
-
 	public PojoMezzoBuilder setFermataAttuale(Fermata fermataAttuale) {
 		this.fermataAttuale = fermataAttuale;
+		return this;
+	}
+	
+	public PojoMezzoBuilder setOrari(Set<Orario> orari) {
+		this.orari = orari;
 		return this;
 	}
 
@@ -36,8 +37,8 @@ public class PojoMezzoBuilder {
 
 		nuovoMezzo.setNumMezzo(numMezzo);
 		nuovoMezzo.setNumMaxPasseggeri(numMaxPasseggeri);
-		nuovoMezzo.setOrario(orario);
 		nuovoMezzo.setFermataAttuale(fermataAttuale);
+		nuovoMezzo.setOrari(orari);
 
 		return nuovoMezzo;
 

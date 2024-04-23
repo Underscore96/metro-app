@@ -1,7 +1,9 @@
 package service.builder;
 
 import java.time.LocalTime;
+import java.util.List;
 
+import db.entity.Mezzo;
 import presentation.pojo.PojoFermataFE;
 
 public class PojoFermataFEBuilder {
@@ -11,9 +13,11 @@ public class PojoFermataFEBuilder {
 	private String nome_linea;
 	private String direzione;
 	private String previsione_meteo;
-	private LocalTime tempo_arrivo;
-	private LocalTime ritardo_stimato;
+	private List<LocalTime> tempi_arrivo;
+	private List<LocalTime> ritardi_stimato;
 	private String posizione_mezzo;
+	private Integer numero_mezzi;
+	private List<Mezzo> listaMezzi;
 
 	public PojoFermataFEBuilder setId(Integer id) {
 		this.id = id;
@@ -45,18 +49,29 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setTempo_arrivo(LocalTime tempo_arrivo) {
-		this.tempo_arrivo = tempo_arrivo;
+	public PojoFermataFEBuilder setTempi_arrivo(List<LocalTime> tempi_arrivo) {
+		this.tempi_arrivo = tempi_arrivo;
 		return this;
 	}
 
-	public PojoFermataFEBuilder setRitardo_stimato(LocalTime ritardo_stimato) {
-		this.ritardo_stimato = ritardo_stimato;
+	public PojoFermataFEBuilder setRitardi_stimato(
+			List<LocalTime> ritardi_stimato) {
+		this.ritardi_stimato = ritardi_stimato;
 		return this;
 	}
-	
+
 	public PojoFermataFEBuilder setPosizione_mezzo(String posizione_mezzo) {
 		this.posizione_mezzo = posizione_mezzo;
+		return this;
+	}
+
+	public PojoFermataFEBuilder setNumero_mezzi(Integer numero_mezzi) {
+		this.numero_mezzi = numero_mezzi;
+		return this;
+	}
+
+	public PojoFermataFEBuilder setListaMezzi(List<Mezzo> listaMezzi) {
+		this.listaMezzi = listaMezzi;
 		return this;
 	}
 
@@ -69,9 +84,11 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setNome_linea(nome_linea);
 		nuovoPojoFermataFE.setDirezione(direzione);
 		nuovoPojoFermataFE.setPrevisione_meteo(previsione_meteo);
-		nuovoPojoFermataFE.setTempo_arrivo(tempo_arrivo);
-		nuovoPojoFermataFE.setRitardo_stimato(ritardo_stimato);
+		nuovoPojoFermataFE.setTempi_arrivo(tempi_arrivo);
+		nuovoPojoFermataFE.setRitardi_stimato(ritardi_stimato);
 		nuovoPojoFermataFE.setPosizione_mezzo(posizione_mezzo);
+		nuovoPojoFermataFE.setNumero_mezzi(numero_mezzi);
+		nuovoPojoFermataFE.setListaMezzi(listaMezzi);
 
 		return nuovoPojoFermataFE;
 	}

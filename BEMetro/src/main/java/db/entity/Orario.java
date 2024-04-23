@@ -20,7 +20,7 @@ public class Orario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idFermata", nullable = false, unique = true, length = 20)
+	@Column(name = "idOrario", nullable = false, unique = true, length = 20)
 	private String idOrario;
 
 	@Column(name = "nomeFermata", length = 20, nullable = true, unique = false)

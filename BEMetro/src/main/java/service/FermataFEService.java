@@ -1,8 +1,10 @@
 package service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 
@@ -10,6 +12,8 @@ import db.dao.FermataDAO;
 import db.dao.LineaDAO;
 import db.entity.Fermata;
 import db.entity.Linea;
+import db.entity.Mezzo;
+import db.entity.Orario;
 import exception.CustomException;
 import exception.ErrorMessages;
 import jakarta.ws.rs.core.Response;
@@ -101,6 +105,12 @@ public class FermataFEService {
 		PojoFermataFE risultato = null;
 		String posizione;
 		List<Integer> listaNumFermata = new ArrayList<>();
+		List<Mezzo> listaMezzi = new ArrayList<>();
+		List<Mezzo> listaMezziXOrari = new ArrayList<>();
+		Set<Mezzo> setMezzi;
+		List<LocalTime> listaTempiArrivo = new ArrayList<>();
+		List<LocalTime> listaRitardiStimati = new ArrayList<>();
+		Set<Orario> setOrari;
 
 		try {
 			if (id == null || nome_linea == null || numero_fermata == null)
@@ -134,13 +144,38 @@ public class FermataFEService {
 				posizione = "assente";
 			}
 
+			setMezzi = fermata.getMezzi();
+
+			for (Mezzo m : setMezzi) {
+				listaMezzi.add(m);
+			}
+
+			for (Fermata fer : linea.getFermate()) {
+				setMezzi = fer.getMezzi();
+				for (Mezzo mezzo : setMezzi)
+					listaMezziXOrari.add(mezzo);
+			}
+
+			for (Mezzo m : listaMezziXOrari) {
+				setOrari = m.getOrari();
+
+				for (Orario orario : setOrari) {
+					listaTempiArrivo.add(orario.getOrarioPrevisto());
+					listaRitardiStimati.add(orario.getRitardo());
+				}
+			}
+
 			risultato = new PojoFermataFEBuilder().setId(id)
 					.setNumero_fermata(numero_fermata)
 					.setNome_fermata(fermata.getNome())
 					.setNome_Linea(nome_linea)
 					.setDirezione(linea.getDirezione())
 					.setPrevisione_meteo(fermata.getPrevisioneMeteo())
-					.setPosizione_mezzo(posizione).costruisci();
+					.setPosizione_mezzo(posizione)
+					.setTempi_arrivo(listaTempiArrivo)
+					.setRitardi_stimato(listaRitardiStimati)
+					.setNumero_mezzi(listaNumFermata.size())
+					.setListaMezzi(listaMezzi).costruisci();
 
 		} catch (NullPointerException e) {
 			throw new CustomException(String.format(
@@ -262,7 +297,8 @@ public class FermataFEService {
 					.setNumFermata(fermataFE.getNumero_fermata())
 					.setNome(fermataFE.getNome_fermata())
 					.setPrevisioneMeteo(fermataFE.getPrevisione_meteo())
-					.setLinea(null).setMezzi(null).costruisci();
+					.setPosMezzo(fermataFE.getPosizione_mezzo()).setLinea(null)
+					.setMezzi(null).costruisci();
 
 			linea = new PojoLineaBuilder()
 					.setNomeLinea(fermataFE.getNome_linea())

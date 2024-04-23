@@ -151,7 +151,7 @@ public class InizializzaDb {
 			List<Linea> listalinee) {
 		List<PojoFermata> listaPojoFermate = new ArrayList<>();
 		String[] listaNomiFermate = {"Brignole", "De Ferrari", "Sarzano",
-				"San Giorgio", "Darsena", "Piazza Principe", "Dinegro", "brin"};
+				"San Giorgio", "Darsena", "Principe", "Dinegro", "Brin"};
 		Integer numFermata;
 
 		if (listaFermate != null && listalinee != null) {

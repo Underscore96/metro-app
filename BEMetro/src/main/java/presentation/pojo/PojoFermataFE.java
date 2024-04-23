@@ -1,6 +1,9 @@
 package presentation.pojo;
 
 import java.time.LocalTime;
+import java.util.List;
+
+import db.entity.Mezzo;
 
 public class PojoFermataFE {
 	private Integer id;
@@ -9,17 +12,20 @@ public class PojoFermataFE {
 	private String nome_linea;
 	private String direzione;
 	private String previsione_meteo;
-	private LocalTime tempo_arrivo;
-	private LocalTime ritardo_stimato;
 	private String posizione_mezzo;
+	private List<LocalTime> tempi_arrivo;
+	private List<LocalTime> ritardi_stimato;
+	private Integer numero_mezzi;
+	private List<Mezzo> listaMezzi;
 
 	public PojoFermataFE() {
 	}
 
 	public PojoFermataFE(Integer id, Integer numero_fermata,
 			String nome_fermata, String nome_linea, String direzione,
-			String previsione_meteo, LocalTime tempo_arrivo,
-			LocalTime ritardo_stimato, String posizione_mezzo) {
+			String previsione_meteo, String posizione_mezzo,
+			List<LocalTime> tempi_arrivo, List<LocalTime> ritardi_stimato,
+			Integer numero_mezzi) {
 		super();
 		this.id = id;
 		this.numero_fermata = numero_fermata;
@@ -27,9 +33,10 @@ public class PojoFermataFE {
 		this.nome_linea = nome_linea;
 		this.direzione = direzione;
 		this.previsione_meteo = previsione_meteo;
-		this.tempo_arrivo = tempo_arrivo;
-		this.ritardo_stimato = ritardo_stimato;
 		this.posizione_mezzo = posizione_mezzo;
+		this.tempi_arrivo = tempi_arrivo;
+		this.ritardi_stimato = ritardi_stimato;
+		this.numero_mezzi = numero_mezzi;
 	}
 
 	public Integer getId() {
@@ -80,22 +87,6 @@ public class PojoFermataFE {
 		this.previsione_meteo = previsione_meteo;
 	}
 
-	public LocalTime getTempo_arrivo() {
-		return tempo_arrivo;
-	}
-
-	public void setTempo_arrivo(LocalTime tempo_arrivo) {
-		this.tempo_arrivo = tempo_arrivo;
-	}
-
-	public LocalTime getRitardo_stimato() {
-		return ritardo_stimato;
-	}
-
-	public void setRitardo_stimato(LocalTime ritardo_stimato) {
-		this.ritardo_stimato = ritardo_stimato;
-	}
-
 	public String getPosizione_mezzo() {
 		return posizione_mezzo;
 	}
@@ -104,13 +95,47 @@ public class PojoFermataFE {
 		this.posizione_mezzo = posizione_mezzo;
 	}
 
+	public List<LocalTime> getTempi_arrivo() {
+		return tempi_arrivo;
+	}
+
+	public void setTempi_arrivo(List<LocalTime> tempi_arrivo) {
+		this.tempi_arrivo = tempi_arrivo;
+	}
+
+	public List<LocalTime> getRitardi_stimato() {
+		return ritardi_stimato;
+	}
+
+	public void setRitardi_stimato(List<LocalTime> ritardi_stimato) {
+		this.ritardi_stimato = ritardi_stimato;
+	}
+
+	public Integer getNumero_mezzi() {
+		return numero_mezzi;
+	}
+
+	public void setNumero_mezzi(Integer numero_mezzi) {
+		this.numero_mezzi = numero_mezzi;
+	}
+
+	public List<Mezzo> getListaMezzi() {
+		return listaMezzi;
+	}
+
+	public void setListaMezzi(List<Mezzo> listaMezzi) {
+		this.listaMezzi = listaMezzi;
+	}
+
 	@Override
 	public String toString() {
 		return "PojoFermataFE [id=" + id + ", numero_fermata=" + numero_fermata
 				+ ", nome_fermata=" + nome_fermata + ", nome_linea="
 				+ nome_linea + ", direzione=" + direzione
-				+ ", previsione_meteo=" + previsione_meteo + ", tempo_arrivo="
-				+ tempo_arrivo + ", ritardo_stimato=" + ritardo_stimato
-				+ ", posizione_mezzo=" + posizione_mezzo + "]";
+				+ ", previsione_meteo=" + previsione_meteo
+				+ ", posizione_mezzo=" + posizione_mezzo + ", tempi_arrivo="
+				+ tempi_arrivo + ", ritardi_stimato=" + ritardi_stimato
+				+ ", numero_mezzi=" + numero_mezzi + ", listaMezzi="
+				+ listaMezzi + "]";
 	}
 }

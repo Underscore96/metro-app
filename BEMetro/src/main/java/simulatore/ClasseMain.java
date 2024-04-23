@@ -26,15 +26,16 @@ public class ClasseMain {
 
 		scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
 	}
-	private static void updateData() {
+
+	public static void updateData() {
 		List<PojoFermata> elencoFermate = FermataService.trovaTutteLeFermate();
 
 		LocalTime orarioPrevisto = generaOrarioRandom();
 		Long minutiRitardo = random.nextLong(30);
 		for (PojoFermata fermata : elencoFermate) {
-			orarioPrevisto = orarioPrevisto.plusMinutes(5);
-			fermata.setOrarioPrevisto(orarioPrevisto);
-			fermata.setRitardo(orarioPrevisto.plusMinutes(minutiRitardo));
+			// orarioPrevisto = orarioPrevisto.plusMinutes(5);
+			// fermata.setOrarioPrevisto(orarioPrevisto);
+			// fermata.setRitardo(orarioPrevisto.plusMinutes(minutiRitardo));
 			fermata.setPrevisioneMeteo(previsioneMeteo());
 
 			FermataService.aggiornaFermata(fermata);

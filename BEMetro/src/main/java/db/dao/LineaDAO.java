@@ -120,6 +120,7 @@ public class LineaDAO {
 			sessione.beginTransaction();
 
 			sessione.remove(linea);
+			
 			sessione.getTransaction().commit();
 
 		} catch (HibernateException e) {

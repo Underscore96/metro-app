@@ -1,6 +1,6 @@
 package service.builder;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Fermata;
 import db.entity.Orario;
@@ -10,7 +10,7 @@ public class PojoMezzoBuilder {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
 	private Fermata fermataAttuale;
-	private Set<Orario> orari;
+	private List<Orario> orari;
 
 	public PojoMezzoBuilder setNumMezzo(Integer numMezzo) {
 		this.numMezzo = numMezzo;
@@ -26,8 +26,8 @@ public class PojoMezzoBuilder {
 		this.fermataAttuale = fermataAttuale;
 		return this;
 	}
-	
-	public PojoMezzoBuilder setOrari(Set<Orario> orari) {
+
+	public PojoMezzoBuilder setOrari(List<Orario> orari) {
 		this.orari = orari;
 		return this;
 	}

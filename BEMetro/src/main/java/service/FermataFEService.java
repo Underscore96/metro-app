@@ -3,13 +3,14 @@ package service;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import org.hibernate.HibernateException;
 
 import db.dao.FermataDAO;
 import db.dao.LineaDAO;
+import db.dao.MezzoDAO;
 import db.entity.Fermata;
 import db.entity.Linea;
 import db.entity.Mezzo;
@@ -27,6 +28,7 @@ import service.builder.PojoLineaBuilder;
 public class FermataFEService {
 	private static FermataDAO fermataDAO = new FermataDAO();
 	private static LineaDAO lineaDAO = new LineaDAO();
+	private static MezzoDAO mezzoDAO = new MezzoDAO();
 	private static final String NUMFERMATA = "numFermata";
 	private static final String NOMELINEA = "nomeLinea";
 	private static final String FERMATA_BE = "FermataBE";
@@ -104,13 +106,8 @@ public class FermataFEService {
 		Fermata fermata = null;
 		PojoFermataFE risultato = null;
 		String posizione;
-		List<Integer> listaNumFermata = new ArrayList<>();
 		List<Mezzo> listaMezzi = new ArrayList<>();
-		List<Mezzo> listaMezziXOrari = new ArrayList<>();
-		Set<Mezzo> setMezzi;
-		List<LocalTime> listaTempiArrivo = new ArrayList<>();
 		List<LocalTime> listaRitardiStimati = new ArrayList<>();
-		Set<Orario> setOrari;
 
 		try {
 			if (id == null || nome_linea == null || numero_fermata == null)
@@ -118,52 +115,25 @@ public class FermataFEService {
 						"Null value encountered in id, or nome_linea, or numero_fermata. id, or  nome_linea, or numero_fermata argument cannot be null. Please check for null references.",
 						Response.Status.BAD_REQUEST);
 
-			List<Fermata> controlloFermate = fermataDAO
+			List<Fermata> listaFermateTrovate = fermataDAO
 					.leggiDaNumFermata(numero_fermata);
-			List<Linea> controlloLinee = lineaDAO.leggiDaNomeLinea(nome_linea);
+			List<Linea> listaLineeTrovate = lineaDAO
+					.leggiDaNomeLinea(nome_linea);
 
-			if (controlloFermate.isEmpty())
+			if (listaFermateTrovate.isEmpty())
 				throw new CustomException("FERMATA NON PRESENTE NEL DATABASE",
 						Response.Status.NOT_FOUND);
 			else
-				fermata = controlloFermate.get(0);
+				fermata = listaFermateTrovate.get(0);
 
-			if (controlloLinee.isEmpty()) {
+			if (listaLineeTrovate.isEmpty()) {
 				throw new CustomException("LINEA NON PRESENTE NEL DATABASE",
 						Response.Status.NOT_FOUND);
 			} else {
-				linea = controlloLinee.get(0);
+				linea = listaLineeTrovate.get(0);
 			}
 
-			fermata.getMezzi().forEach(m -> listaNumFermata
-					.add(m.getFermataAttuale().getNumFermata()));
-
-			if (!listaNumFermata.isEmpty()) {
-				posizione = "presente";
-			} else {
-				posizione = "assente";
-			}
-
-			setMezzi = fermata.getMezzi();
-
-			for (Mezzo m : setMezzi) {
-				listaMezzi.add(m);
-			}
-
-			for (Fermata fer : linea.getFermate()) {
-				setMezzi = fer.getMezzi();
-				for (Mezzo mezzo : setMezzi)
-					listaMezziXOrari.add(mezzo);
-			}
-
-			for (Mezzo m : listaMezziXOrari) {
-				setOrari = m.getOrari();
-
-				for (Orario orario : setOrari) {
-					listaTempiArrivo.add(orario.getOrarioPrevisto());
-					listaRitardiStimati.add(orario.getRitardo());
-				}
-			}
+			posizione = presenzaMezzo(fermata);
 
 			risultato = new PojoFermataFEBuilder().setId(id)
 					.setNumero_fermata(numero_fermata)
@@ -172,10 +142,10 @@ public class FermataFEService {
 					.setDirezione(linea.getDirezione())
 					.setPrevisione_meteo(fermata.getPrevisioneMeteo())
 					.setPosizione_mezzo(posizione)
-					.setTempi_arrivo(listaTempiArrivo)
+					.setTempi_arrivo(stimaTempiPrevisti(fermata))
 					.setRitardi_stimato(listaRitardiStimati)
-					.setNumero_mezzi(listaNumFermata.size())
-					.setListaMezzi(listaMezzi).costruisci();
+					.setNumero_mezzi(fermata.getMezzi().size())
+					.setListaMezzi(listaMezzi).costruisci(); // da sistemare
 
 		} catch (NullPointerException e) {
 			throw new CustomException(String.format(
@@ -196,6 +166,67 @@ public class FermataFEService {
 		}
 
 		return risultato;
+	}
+
+	private static List<LocalTime> stimaTempiPrevisti(Fermata fermata) {
+		List<Orario> listaOrari = null;
+		List<LocalTime> listaTempiArrivo = new ArrayList<>();
+		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
+		String daStampare = "";
+		String daStampare2 = "";
+		List<String> listaDaStampare = new ArrayList<>();
+		try {
+			for (Mezzo m : listaMezzi) {
+				daStampare = "mezzo: " + m.getNumMezzo()
+						+ " - DIR fermata - mezzo: "
+						+ fermata.getLinea().getDirezione() + "\\"
+						+ m.getFermataAttuale().getLinea().getDirezione()
+						+ " - COMP: "
+						+ m.getFermataAttuale().getLinea().getDirezione()
+								.equals(fermata.getLinea().getDirezione())
+						+ "\n";
+				listaDaStampare.add(daStampare);
+
+				if (m.getFermataAttuale().getLinea().getDirezione()
+						.equals(fermata.getLinea().getDirezione()))
+					listaOrari = m.getOrari();
+
+				if (listaOrari != null && !listaOrari.isEmpty()) {
+					for (Orario orario : listaOrari) {
+						listaDaStampare.add(daStampare2);
+						if (Objects.equals(orario.getNumFermata(),
+								fermata.getNumFermata()))
+							listaTempiArrivo.add(orario.getOrarioPrevisto());
+
+						daStampare2 = "orario: " + orario
+								+ " - listaTempiArrivo: " + listaTempiArrivo
+								+ " - fermata: " + fermata.getNome() + " - "
+								+ fermata.getNumFermata() + "\n";
+						// listaRitardiStimati.add(orario.getRitardo());
+					}
+				}
+				listaOrari = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(listaDaStampare);
+		return listaTempiArrivo;
+	}
+
+	private static String presenzaMezzo(Fermata fermata) {
+		String posizione;
+		List<Integer> listaNumFermata = new ArrayList<>();
+		fermata.getMezzi().forEach(m -> listaNumFermata
+				.add(m.getFermataAttuale().getNumFermata()));
+
+		if (!listaNumFermata.isEmpty()) {
+			posizione = "presente";
+		} else {
+			posizione = "assente";
+		}
+		return posizione;
 	}
 
 	public static String rimuoviFermataFE(PojoFermataFE fermataFE,

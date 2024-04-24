@@ -1,6 +1,6 @@
 package service.builder;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Fermata;
 import db.entity.Mezzo;
@@ -11,7 +11,7 @@ public class MezzoBuilder {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
 	private Fermata fermataAttuale;
-	private Set<Orario> orari;
+	private List<Orario> orari;
 
 	public MezzoBuilder setIdMezzo(String idMezzo) {
 		this.idMezzo = idMezzo;
@@ -33,7 +33,7 @@ public class MezzoBuilder {
 		return this;
 	}
 
-	public MezzoBuilder setOrari(Set<Orario> orari) {
+	public MezzoBuilder setOrari(List<Orario> orari) {
 		this.orari = orari;
 		return this;
 	}

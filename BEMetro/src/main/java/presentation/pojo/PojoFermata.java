@@ -1,6 +1,6 @@
 package presentation.pojo;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Linea;
 import db.entity.Mezzo;
@@ -11,7 +11,7 @@ public class PojoFermata {
 	private String previsioneMeteo;
 	private Linea linea;
 	private String posMezzo;
-	private Set<Mezzo> mezzi;
+	private List<Mezzo> mezzi;
 
 	public PojoFermata() {
 	}
@@ -65,11 +65,11 @@ public class PojoFermata {
 		this.linea = linea;
 	}
 
-	public Set<Mezzo> getMezzi() {
+	public List<Mezzo> getMezzi() {
 		return mezzi;
 	}
 
-	public void setMezzi(Set<Mezzo> mezzi) {
+	public void setMezzi(List<Mezzo> mezzi) {
 		this.mezzi = mezzi;
 	}
 

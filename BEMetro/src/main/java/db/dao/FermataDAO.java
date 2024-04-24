@@ -156,8 +156,7 @@ public class FermataDAO {
 		return result;
 	}
 
-	public List<Fermata> trovaConAttributi(String nome,
-			String previsioneMeteo) {
+	public List<Fermata> trovaConAttributi(String nome) {
 		List<Fermata> risultati = new ArrayList<>();
 		CriteriaBuilder criteriaBuilder;
 		CriteriaQuery<Fermata> criteriaQuery;
@@ -174,11 +173,6 @@ public class FermataDAO {
 
 			if (nome != null) {
 				predicates.add(criteriaBuilder.equal(root.get("nome"), nome));
-			}
-
-			if (previsioneMeteo != null) {
-				predicates.add(criteriaBuilder
-						.equal(root.get("previsioneMeteo"), previsioneMeteo));
 			}
 
 			criteriaQuery.select(root)

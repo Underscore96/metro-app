@@ -23,8 +23,8 @@ public class Orario {
 	@Column(name = "idOrario", nullable = false, unique = true, length = 20)
 	private String idOrario;
 
-	@Column(name = "nomeFermata", length = 20, nullable = true, unique = false)
-	private String nomeFermata;
+	@Column(name = "numFermata", length = 20, nullable = true, unique = false)
+	private Integer numFermata;
 
 	@Column(name = "orarioPrevisto", nullable = true, unique = false)
 	private LocalTime orarioPrevisto;
@@ -40,11 +40,11 @@ public class Orario {
 	public Orario() {
 	}
 
-	public Orario(String idOrario, String nomeFermata, LocalTime orarioPrevisto,
+	public Orario(String idOrario, Integer numFermata, LocalTime orarioPrevisto,
 			LocalTime ritardo) {
 		super();
 		this.idOrario = idOrario;
-		this.nomeFermata = nomeFermata;
+		this.numFermata = numFermata;
 		this.orarioPrevisto = orarioPrevisto;
 		this.ritardo = ritardo;
 	}
@@ -57,12 +57,12 @@ public class Orario {
 		this.idOrario = idOrario;
 	}
 
-	public String getNomeFermata() {
-		return nomeFermata;
+	public Integer getNumFermata() {
+		return numFermata;
 	}
 
-	public void setNomeFermata(String nomeFermata) {
-		this.nomeFermata = nomeFermata;
+	public void setNumFermata(Integer numFermata) {
+		this.numFermata = numFermata;
 	}
 
 	public LocalTime getOrarioPrevisto() {
@@ -91,8 +91,8 @@ public class Orario {
 
 	@Override
 	public String toString() {
-		return "Orario [idOrario=" + idOrario + ", nomeFermata=" + nomeFermata
+		return "Orario [idOrario=" + idOrario + ", numFermata=" + numFermata
 				+ ", orarioPrevisto=" + orarioPrevisto + ", ritardo=" + ritardo
-				+ ", mezzo=" + mezzo + "]";
+				+ ", mezzo=" + mezzo.getNumMezzo() + "]";
 	}
 }

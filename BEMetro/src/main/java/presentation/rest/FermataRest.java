@@ -125,14 +125,12 @@ public class FermataRest {
 	@GET
 	@Path("attributi")
 	@Produces("application/Json")
-	public Response trovaConAttributi(@QueryParam("nome") String nome,
-			@QueryParam("previsioneMeteo") String previsioneMeteo) {
+	public Response trovaConAttributi(@QueryParam("nome") String nome) {
 		List<PojoFermata> listaFermate = null;
 		Response risultati = null;
 
 		try {
-			listaFermate = FermataService.trovaConAttributi(nome,
-					previsioneMeteo);
+			listaFermate = FermataService.trovaConAttributi(nome);
 
 			risultati = Response.ok(listaFermate).build();
 		} finally {

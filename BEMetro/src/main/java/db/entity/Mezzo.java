@@ -1,6 +1,6 @@
 package db.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,10 +37,10 @@ public class Mezzo {
 	@JsonBackReference
 	private Fermata fermataAttuale;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idOrario")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mezzo")
 	@JsonManagedReference
 	@JsonIgnore
-	private Set<Orario> orari;
+	private List<Orario> orari;
 
 	public Mezzo() {
 	}
@@ -80,11 +80,11 @@ public class Mezzo {
 		return fermataAttuale;
 	}
 
-	public Set<Orario> getOrari() {
+	public List<Orario> getOrari() {
 		return orari;
 	}
 
-	public void setOrari(Set<Orario> orari) {
+	public void setOrari(List<Orario> orari) {
 		this.orari = orari;
 	}
 

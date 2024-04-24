@@ -156,7 +156,7 @@ public class OrarioDAO {
 		return result;
 	}
 
-	public List<Orario> trovaOrarioFermata(String nomeFermata,
+	public List<Orario> trovaOrarioFermata(Integer numFermata,
 			String direzione) {
 		List<Orario> risultati = new ArrayList<>();
 		CriteriaBuilder criteriaBuilder;
@@ -172,9 +172,9 @@ public class OrarioDAO {
 			criteriaQuery = criteriaBuilder.createQuery(Orario.class);
 			root = criteriaQuery.from(Orario.class);
 
-			if (nomeFermata != null) {
-				predicates.add(criteriaBuilder.equal(root.get("nomeFermata"),
-						nomeFermata));
+			if (numFermata != null) {
+				predicates.add(criteriaBuilder.equal(root.get("numFermata"),
+						numFermata));
 			}
 
 			if (direzione != null) {

@@ -1,6 +1,6 @@
 package service.builder;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Linea;
 import db.entity.Mezzo;
@@ -12,7 +12,7 @@ public class PojoFermataBuilder {
 	private String previsioneMeteo;
 	private String posMezzo;
 	private Linea linea;
-	private Set<Mezzo> mezzi;
+	private List<Mezzo> mezzi;
 
 	public PojoFermataBuilder setNumFermata(Integer numFermata) {
 		this.numFermata = numFermata;
@@ -39,7 +39,7 @@ public class PojoFermataBuilder {
 		return this;
 	}
 
-	public PojoFermataBuilder setMezzi(Set<Mezzo> mezzi) {
+	public PojoFermataBuilder setMezzi(List<Mezzo> mezzi) {
 		this.mezzi = mezzi;
 		return this;
 	}

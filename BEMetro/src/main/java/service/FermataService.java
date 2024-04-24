@@ -253,15 +253,13 @@ public class FermataService {
 		return risultati;
 	}
 
-	public static List<PojoFermata> trovaConAttributi(String nome,
-			String previsioneMeteo) {
+	public static List<PojoFermata> trovaConAttributi(String nome) {
 		PojoFermata fermataSingola = null;
 		List<PojoFermata> risultati = new ArrayList<>();
 		List<Fermata> listaFermateDB;
 
 		try {
-			listaFermateDB = fermataDAO.trovaConAttributi(nome,
-					previsioneMeteo);
+			listaFermateDB = fermataDAO.trovaConAttributi(nome);
 
 			for (Fermata fermataDB : listaFermateDB) {
 

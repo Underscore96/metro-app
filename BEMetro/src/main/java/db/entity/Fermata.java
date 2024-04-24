@@ -1,6 +1,6 @@
 package db.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,7 +46,7 @@ public class Fermata {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "fermataAttuale")
 	@JsonManagedReference
 	@JsonIgnore
-	private Set<Mezzo> mezzi;
+	private List<Mezzo> mezzi;
 
 	public Fermata() {
 	}
@@ -101,11 +101,11 @@ public class Fermata {
 		this.linea = linea;
 	}
 
-	public Set<Mezzo> getMezzi() {
+	public List<Mezzo> getMezzi() {
 		return mezzi;
 	}
 
-	public void setMezzi(Set<Mezzo> mezzi) {
+	public void setMezzi(List<Mezzo> mezzi) {
 		this.mezzi = mezzi;
 	}
 

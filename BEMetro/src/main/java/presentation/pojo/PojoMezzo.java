@@ -1,6 +1,6 @@
 package presentation.pojo;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Fermata;
 import db.entity.Orario;
@@ -8,14 +8,14 @@ import db.entity.Orario;
 public class PojoMezzo {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
-	private Set<Orario> orari;
+	private List<Orario> orari;
 	private Fermata fermataAttuale;
 
 	public PojoMezzo() {
 	}
 
 	public PojoMezzo(Integer numMezzo, Integer numMaxPasseggeri,
-			Set<Orario> orari) {
+			List<Orario> orari) {
 		this.numMezzo = numMezzo;
 		this.numMaxPasseggeri = numMaxPasseggeri;
 		this.orari = orari;
@@ -37,11 +37,11 @@ public class PojoMezzo {
 		this.numMaxPasseggeri = numMaxPasseggeri;
 	}
 
-	public Set<Orario> getOrari() {
+	public List<Orario> getOrari() {
 		return orari;
 	}
 
-	public void setOrari(Set<Orario> orari) {
+	public void setOrari(List<Orario> orari) {
 		this.orari = orari;
 	}
 

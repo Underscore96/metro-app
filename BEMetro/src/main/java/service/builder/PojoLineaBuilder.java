@@ -1,6 +1,6 @@
 package service.builder;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Fermata;
 import presentation.pojo.PojoLinea;
@@ -8,7 +8,7 @@ import presentation.pojo.PojoLinea;
 public class PojoLineaBuilder {
 	private String nomeLinea;
 	private String direzione;
-	private Set<Fermata> fermate;
+	private List<Fermata> fermate;
 
 	public PojoLineaBuilder setNomeLinea(String nomeLinea) {
 		this.nomeLinea = nomeLinea;
@@ -20,7 +20,7 @@ public class PojoLineaBuilder {
 		return this;
 	}
 
-	public PojoLineaBuilder setFermate(Set<Fermata> fermate) {
+	public PojoLineaBuilder setFermate(List<Fermata> fermate) {
 		this.fermate = fermate;
 		return this;
 	}

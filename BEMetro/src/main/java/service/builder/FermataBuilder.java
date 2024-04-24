@@ -1,6 +1,6 @@
 package service.builder;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Fermata;
 import db.entity.Linea;
@@ -13,7 +13,7 @@ public class FermataBuilder {
 	private String previsioneMeteo;
 	private String posMezzo;
 	private Linea linea;
-	private Set<Mezzo> mezzi;
+	private List<Mezzo> mezzi;
 
 	public FermataBuilder setIdFermata(String idFermata) {
 		this.idFermata = idFermata;
@@ -45,7 +45,7 @@ public class FermataBuilder {
 		return this;
 	}
 
-	public FermataBuilder setMezzi(Set<Mezzo> mezzi) {
+	public FermataBuilder setMezzi(List<Mezzo> mezzi) {
 		this.mezzi = mezzi;
 		return this;
 	}

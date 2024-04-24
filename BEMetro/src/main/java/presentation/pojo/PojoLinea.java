@@ -1,13 +1,13 @@
 package presentation.pojo;
 
-import java.util.Set;
+import java.util.List;
 
 import db.entity.Fermata;
 
 public class PojoLinea {
 	private String nomeLinea;
 	private String direzione;
-	private Set<Fermata> fermate;
+	private List<Fermata> fermate;
 
 	public PojoLinea() {
 	}
@@ -18,7 +18,8 @@ public class PojoLinea {
 		this.direzione = direzione;
 	}
 
-	public PojoLinea(String nomeLinea, String direzione, Set<Fermata> fermate) {
+	public PojoLinea(String nomeLinea, String direzione,
+			List<Fermata> fermate) {
 		super();
 		this.nomeLinea = nomeLinea;
 		this.direzione = direzione;
@@ -41,11 +42,11 @@ public class PojoLinea {
 		this.direzione = direzione;
 	}
 
-	public Set<Fermata> getFermate() {
+	public List<Fermata> getFermate() {
 		return fermate;
 	}
 
-	public void setFermate(Set<Fermata> fermate) {
+	public void setFermate(List<Fermata> fermate) {
 		this.fermate = fermate;
 	}
 

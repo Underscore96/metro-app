@@ -138,7 +138,7 @@ public class InizializzaDb {
 			dbData[2] = listaPojoUtenti;
 
 			dbData[3] = relazioniMezzoFermata(listaMezzi);
-			dbData[4] = aggiornaOrari(listaMezzi);
+			dbData[4] = generaOrari();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,10 +159,10 @@ public class InizializzaDb {
 				numFermata = fermata.getNumFermata();
 				if (numFermata <= listaNomiFermate.length)
 					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "verde"));
+							.aggiornaRelazioneFermata(numFermata, "blu"));
 				else
 					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "blu"));
+							.aggiornaRelazioneFermata(numFermata, "verde"));
 			}
 		}
 
@@ -188,21 +188,32 @@ public class InizializzaDb {
 		return listaPojoMezzi;
 	}
 
-	private List<Orario> aggiornaOrari(List<Mezzo> listaMezzi) {
+	private List<Orario> generaOrari() {
+		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
 		List<Orario> listaOrari = new ArrayList<>();
 		Integer minuti = 0;
 
 		for (Mezzo mezzo : listaMezzi) {
+			String direzioneMezzo = mezzo.getFermataAttuale().getLinea().getDirezione();
 			LocalTime orarioPrevisto = LocalTime.of(8, minuti);
 			minuti = minuti + 10;
 			if (mezzo.getNumMezzo() == 3)
 				minuti = 0;
 
 			for (String nomeFermata : NOMI_FERMATE) {
+				Integer numFermata = null;
 				Orario orario = new Orario();
+				
+				List<Fermata> listaXNomeFermata = fermataDAO
+						.trovaConAttributi(nomeFermata);
+				
+				for (Fermata fermata : listaXNomeFermata) {
+					if (direzioneMezzo.equals(fermata.getLinea().getDirezione()))
+						numFermata = fermata.getNumFermata();
+				}
 
 				orario.setMezzo(mezzo);
-				orario.setNomeFermata(nomeFermata);
+				orario.setNumFermata(numFermata);
 				orario.setOrarioPrevisto(orarioPrevisto);
 				orario.setRitardo(LocalTime.of(0, 0));
 

@@ -1,9 +1,9 @@
 package service.builder;
 
-import java.time.LocalTime;
 import java.util.List;
 
 import presentation.pojo.PojoFermataFE;
+import presentation.pojo.PojoOrarioFE;
 
 public class PojoFermataFEBuilder {
 	private Integer id;
@@ -13,8 +13,7 @@ public class PojoFermataFEBuilder {
 	private String direzione;
 	private String previsioneMeteo;
 	private String posizioneMezzo;
-	private List<LocalTime> tempiArrivo;
-	private List<LocalTime> ritardiStimato;
+	private List<PojoOrarioFE> orariMezzi;
 	private Integer numeroMezzi;
 	private List<Integer> numIdMezzi;
 
@@ -28,8 +27,8 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setNomeFermata(String nomeFermata) {
-		this.nomeFermata = nomeFermata;
+	public PojoFermataFEBuilder setOrariMezzi(List<PojoOrarioFE> orariMezzi) {
+		this.orariMezzi = orariMezzi;
 		return this;
 	}
 
@@ -48,14 +47,8 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setTempiArrivo(List<LocalTime> tempiArrivo) {
-		this.tempiArrivo = tempiArrivo;
-		return this;
-	}
-
-	public PojoFermataFEBuilder setRitardiStimato(
-			List<LocalTime> ritardiStimato) {
-		this.ritardiStimato = ritardiStimato;
+	public PojoFermataFEBuilder setNomeFermata(String nomeFermata) {
+		this.nomeFermata = nomeFermata;
 		return this;
 	}
 
@@ -83,8 +76,7 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setNomeLinea(nomeLinea);
 		nuovoPojoFermataFE.setDirezione(direzione);
 		nuovoPojoFermataFE.setPrevisioneMeteo(previsioneMeteo);
-		nuovoPojoFermataFE.setTempiArrivo(tempiArrivo);
-		nuovoPojoFermataFE.setRitardiStimato(ritardiStimato);
+		nuovoPojoFermataFE.setOrariMezzi(orariMezzi);
 		nuovoPojoFermataFE.setPosizioneMezzo(posizioneMezzo);
 		nuovoPojoFermataFE.setNumeroMezzi(numeroMezzi);
 		nuovoPojoFermataFE.setNumIdMezzi(numIdMezzi);

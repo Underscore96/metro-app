@@ -1,6 +1,8 @@
 package service;
 
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -192,38 +194,48 @@ public class InizializzaDb {
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
 		List<Orario> listaOrari = new ArrayList<>();
 		Integer minuti = 0;
-
+		List<Integer> minList = new ArrayList<>();
+		LocalDate data = LocalDate.now();
+		LocalTime tempoPrevisto;
+		LocalDateTime dataOrarioPrevisto;
+		LocalTime ritardo = LocalTime.of(0, 0);
+		LocalDateTime dataRitardo = LocalDateTime.of(data, ritardo);
 		for (Mezzo mezzo : listaMezzi) {
-			String direzioneMezzo = mezzo.getFermataAttuale().getLinea().getDirezione();
-			LocalTime orarioPrevisto = LocalTime.of(8, minuti);
+			String direzioneMezzo = mezzo.getFermataAttuale().getLinea()
+					.getDirezione();
+			tempoPrevisto = LocalTime.of(8, minuti);
+			dataOrarioPrevisto = LocalDateTime.of(data, tempoPrevisto);
 			minuti = minuti + 10;
+			minList.add(minuti);
+			minList.add(mezzo.getNumMezzo());
 			if (mezzo.getNumMezzo() == 3)
 				minuti = 0;
 
 			for (String nomeFermata : NOMI_FERMATE) {
 				Integer numFermata = null;
 				Orario orario = new Orario();
-				
-				List<Fermata> listaXNomeFermata = fermataDAO
+
+				List<Fermata> fermateTrovate = fermataDAO
 						.trovaConAttributi(nomeFermata);
-				
-				for (Fermata fermata : listaXNomeFermata) {
-					if (direzioneMezzo.equals(fermata.getLinea().getDirezione()))
+
+				for (Fermata fermata : fermateTrovate) {
+					if (direzioneMezzo
+							.equals(fermata.getLinea().getDirezione()))
 						numFermata = fermata.getNumFermata();
 				}
 
 				orario.setMezzo(mezzo);
 				orario.setNumFermata(numFermata);
-				orario.setOrarioPrevisto(orarioPrevisto);
-				orario.setRitardo(LocalTime.of(0, 0));
-
+				orario.setOrarioPrevisto(dataOrarioPrevisto);
+				orario.setRitardo(dataRitardo);
 				orarioDAO.crea(orario);
 				listaOrari.add(orario);
 
-				if (!nomeFermata.equals(NOMI_FERMATE[NOMI_FERMATE.length - 1]))
-					orarioPrevisto = orarioPrevisto.plusMinutes(5);
-				else
-					minuti = 0;
+				if (!nomeFermata
+						.equals(NOMI_FERMATE[NOMI_FERMATE.length - 1])) {
+					tempoPrevisto = tempoPrevisto.plusMinutes(5);
+					dataOrarioPrevisto = LocalDateTime.of(data, tempoPrevisto);
+				}
 			}
 		}
 

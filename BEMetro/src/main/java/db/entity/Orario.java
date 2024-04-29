@@ -1,6 +1,6 @@
 package db.entity;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -27,10 +27,10 @@ public class Orario {
 	private Integer numFermata;
 
 	@Column(name = "orarioPrevisto", nullable = true, unique = false)
-	private LocalTime orarioPrevisto;
+	private LocalDateTime orarioPrevisto;
 
 	@Column(name = "ritardo", nullable = true, unique = false)
-	private LocalTime ritardo;
+	private LocalDateTime ritardo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idMezzo")
@@ -40,8 +40,8 @@ public class Orario {
 	public Orario() {
 	}
 
-	public Orario(String idOrario, Integer numFermata, LocalTime orarioPrevisto,
-			LocalTime ritardo) {
+	public Orario(String idOrario, Integer numFermata,
+			LocalDateTime orarioPrevisto, LocalDateTime ritardo) {
 		super();
 		this.idOrario = idOrario;
 		this.numFermata = numFermata;
@@ -65,19 +65,19 @@ public class Orario {
 		this.numFermata = numFermata;
 	}
 
-	public LocalTime getOrarioPrevisto() {
+	public LocalDateTime getOrarioPrevisto() {
 		return orarioPrevisto;
 	}
 
-	public void setOrarioPrevisto(LocalTime orarioPrevisto) {
+	public void setOrarioPrevisto(LocalDateTime orarioPrevisto) {
 		this.orarioPrevisto = orarioPrevisto;
 	}
 
-	public LocalTime getRitardo() {
+	public LocalDateTime getRitardo() {
 		return ritardo;
 	}
 
-	public void setRitardo(LocalTime ritardo) {
+	public void setRitardo(LocalDateTime ritardo) {
 		this.ritardo = ritardo;
 	}
 

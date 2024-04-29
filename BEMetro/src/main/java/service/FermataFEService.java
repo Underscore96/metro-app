@@ -1,6 +1,5 @@
 package service;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +20,7 @@ import jakarta.ws.rs.core.Response;
 import presentation.pojo.PojoFermata;
 import presentation.pojo.PojoFermataFE;
 import presentation.pojo.PojoLinea;
+import presentation.pojo.PojoOrarioFE;
 import service.builder.PojoFermataBuilder;
 import service.builder.PojoFermataFEBuilder;
 import service.builder.PojoLineaBuilder;
@@ -144,8 +144,9 @@ public class FermataFEService {
 					.setNomeLinea(nomeLinea).setDirezione(linea.getDirezione())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
 					.setPosizioneMezzo(posizione)
-					.setTempiArrivo(stimaTempiPrevisti(fermata))
-					.setRitardiStimato(stimaRitardiStimati(fermata))
+					.setOrariMezzi(stimaTempiPrevisti(fermata))
+					// .setTempiArrivo(stimaTempiPrevisti(fermata))
+					// .setRitardiStimato(stimaRitardiStimati(fermata))
 					.setNumeroMezzi(fermata.getMezzi().size())
 					.setNumIdMezzi(numIdMezzi).costruisci();
 
@@ -170,24 +171,13 @@ public class FermataFEService {
 		return risultato;
 	}
 
-	private static List<LocalTime> stimaTempiPrevisti(Fermata fermata) {
+	private static List<PojoOrarioFE> stimaTempiPrevisti(Fermata fermata) {
 		List<Orario> listaOrari = null;
-		List<LocalTime> listaTempiArrivo = new ArrayList<>();
+		PojoOrarioFE pojoOrarioFE = new PojoOrarioFE();
+		List<PojoOrarioFE> listaTempiArrivo = new ArrayList<>();
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
-		String daStampare = "";
-		String daStampare2 = "";
-		List<String> listaDaStampare = new ArrayList<>();
 		try {
 			for (Mezzo m : listaMezzi) {
-				daStampare = "mezzo: " + m.getNumMezzo()
-						+ " - DIR fermata - mezzo: "
-						+ fermata.getLinea().getDirezione() + "\\"
-						+ m.getFermataAttuale().getLinea().getDirezione()
-						+ " - COMP: "
-						+ m.getFermataAttuale().getLinea().getDirezione()
-								.equals(fermata.getLinea().getDirezione())
-						+ "\n";
-				listaDaStampare.add(daStampare);
 
 				if (m.getFermataAttuale().getLinea().getDirezione()
 						.equals(fermata.getLinea().getDirezione()))
@@ -195,15 +185,15 @@ public class FermataFEService {
 
 				if (listaOrari != null && !listaOrari.isEmpty()) {
 					for (Orario orario : listaOrari) {
-						listaDaStampare.add(daStampare2);
 						if (Objects.equals(orario.getNumFermata(),
-								fermata.getNumFermata()))
-							listaTempiArrivo.add(orario.getOrarioPrevisto());
-
-						daStampare2 = "orario: " + orario
-								+ " - listaTempiArrivo: " + listaTempiArrivo
-								+ " - fermata: " + fermata.getNome() + " - "
-								+ fermata.getNumFermata() + "\n";
+								fermata.getNumFermata())) {
+							pojoOrarioFE.setNumMezzo(
+									orario.getMezzo().getNumMezzo());
+							pojoOrarioFE.setOrarioPrevisto(
+									orario.getOrarioPrevisto());
+							pojoOrarioFE.setRitardo(orario.getRitardo());
+							listaTempiArrivo.add(pojoOrarioFE);
+						}
 					}
 				}
 				listaOrari = null;
@@ -212,34 +202,7 @@ public class FermataFEService {
 			e.printStackTrace();
 		}
 
-		System.out.println(listaDaStampare);
 		return listaTempiArrivo;
-	}
-
-	private static List<LocalTime> stimaRitardiStimati(Fermata fermata) {
-		List<Orario> listaOrari = null;
-		List<LocalTime> listaRitardiStimati = new ArrayList<>();
-		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
-		try {
-			for (Mezzo m : listaMezzi) {
-
-				if (m.getFermataAttuale().getLinea().getDirezione()
-						.equals(fermata.getLinea().getDirezione()))
-					listaOrari = m.getOrari();
-
-				if (listaOrari != null && !listaOrari.isEmpty()) {
-					for (Orario orario : listaOrari) {
-						if (Objects.equals(orario.getNumFermata(),
-								fermata.getNumFermata()))
-							listaRitardiStimati.add(orario.getRitardo());
-					}
-				}
-				listaOrari = null;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return listaRitardiStimati;
 	}
 
 	private static String presenzaMezzo(Fermata fermata) {
@@ -386,5 +349,4 @@ public class FermataFEService {
 
 		return pojoArray;
 	}
-
 }

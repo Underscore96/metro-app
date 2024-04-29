@@ -1,6 +1,5 @@
 package presentation.pojo;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public class PojoFermataFE {
@@ -11,8 +10,7 @@ public class PojoFermataFE {
 	private String direzione;
 	private String previsioneMeteo;
 	private String posizioneMezzo;
-	private List<LocalTime> tempiArrivo;
-	private List<LocalTime> ritardiStimato;
+	private List<PojoOrarioFE> orariMezzi;
 	private Integer numeroMezzi;
 	private List<Integer> numIdMezzi;
 
@@ -21,8 +19,7 @@ public class PojoFermataFE {
 
 	public PojoFermataFE(Integer id, Integer numFermata, String nomeFermata,
 			String nomeLinea, String direzione, String previsioneMeteo,
-			String posizioneMezzo, List<LocalTime> tempiArrivo,
-			List<LocalTime> ritardiStimato, Integer numeroMezzi) {
+			String posizioneMezzo, Integer numeroMezzi) {
 		super();
 		this.id = id;
 		this.numFermata = numFermata;
@@ -31,8 +28,6 @@ public class PojoFermataFE {
 		this.direzione = direzione;
 		this.previsioneMeteo = previsioneMeteo;
 		this.posizioneMezzo = posizioneMezzo;
-		this.tempiArrivo = tempiArrivo;
-		this.ritardiStimato = ritardiStimato;
 		this.numeroMezzi = numeroMezzi;
 	}
 
@@ -84,20 +79,12 @@ public class PojoFermataFE {
 		this.posizioneMezzo = posizioneMezzo;
 	}
 
-	public List<LocalTime> getTempiArrivo() {
-		return tempiArrivo;
+	public List<PojoOrarioFE> getOrariMezzi() {
+		return orariMezzi;
 	}
 
-	public void setTempiArrivo(List<LocalTime> tempiArrivo) {
-		this.tempiArrivo = tempiArrivo;
-	}
-
-	public List<LocalTime> getRitardiStimato() {
-		return ritardiStimato;
-	}
-
-	public void setRitardiStimato(List<LocalTime> ritardiStimato) {
-		this.ritardiStimato = ritardiStimato;
+	public void setOrariMezzi(List<PojoOrarioFE> orariMezzi) {
+		this.orariMezzi = orariMezzi;
 	}
 
 	public Integer getNumeroMezzi() {
@@ -130,8 +117,7 @@ public class PojoFermataFE {
 				+ ", nomeFermata=" + nomeFermata + ", nomeLinea=" + nomeLinea
 				+ ", direzione=" + direzione + ", previsioneMeteo="
 				+ previsioneMeteo + ", posizioneMezzo=" + posizioneMezzo
-				+ ", tempiArrivo=" + tempiArrivo + ", ritardiStimato="
-				+ ritardiStimato + ", numeroMezzi=" + numeroMezzi
+				+ ", orariMezzi=" + orariMezzi + ", numeroMezzi=" + numeroMezzi
 				+ ", numIdMezzi=" + numIdMezzi + "]";
 	}
 }

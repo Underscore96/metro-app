@@ -14,8 +14,6 @@ public class PojoFermataFEBuilder {
 	private String previsioneMeteo;
 	private String posizioneMezzo;
 	private List<PojoOrarioFE> orariMezzi;
-	private Integer numeroMezzi;
-	private List<Integer> numIdMezzi;
 
 	public PojoFermataFEBuilder setId(Integer id) {
 		this.id = id;
@@ -57,16 +55,6 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setNumeroMezzi(Integer numeroMezzi) {
-		this.numeroMezzi = numeroMezzi;
-		return this;
-	}
-
-	public PojoFermataFEBuilder setNumIdMezzi(List<Integer> numIdMezzi) {
-		this.numIdMezzi = numIdMezzi;
-		return this;
-	}
-
 	public PojoFermataFE costruisci() {
 		PojoFermataFE nuovoPojoFermataFE = new PojoFermataFE();
 
@@ -78,8 +66,6 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setPrevisioneMeteo(previsioneMeteo);
 		nuovoPojoFermataFE.setOrariMezzi(orariMezzi);
 		nuovoPojoFermataFE.setPosizioneMezzo(posizioneMezzo);
-		nuovoPojoFermataFE.setNumeroMezzi(numeroMezzi);
-		nuovoPojoFermataFE.setNumIdMezzi(numIdMezzi);
 
 		return nuovoPojoFermataFE;
 	}

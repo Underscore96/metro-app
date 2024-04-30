@@ -106,7 +106,6 @@ public class FermataFEService {
 		Fermata fermata = null;
 		PojoFermataFE risultato = null;
 		String posizione;
-		List<Integer> numIdMezzi = new ArrayList<>();
 
 		try {
 			if (id == null || nomeLinea == null || numFermata == null)
@@ -134,21 +133,12 @@ public class FermataFEService {
 
 			posizione = presenzaMezzo(fermata);
 
-			for (Mezzo mezzo : fermata.getMezzi()) {
-				numIdMezzi.add(mezzo.getNumMezzo());
-
-			}
-
 			risultato = new PojoFermataFEBuilder().setId(id)
 					.setNumFermata(numFermata).setNomeFermata(fermata.getNome())
 					.setNomeLinea(nomeLinea).setDirezione(linea.getDirezione())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
 					.setPosizioneMezzo(posizione)
-					.setOrariMezzi(stimaTempiPrevisti(fermata))
-					// .setTempiArrivo(stimaTempiPrevisti(fermata))
-					// .setRitardiStimato(stimaRitardiStimati(fermata))
-					.setNumeroMezzi(fermata.getMezzi().size())
-					.setNumIdMezzi(numIdMezzi).costruisci();
+					.setOrariMezzi(stimaTempiPrevisti(fermata)).costruisci();
 
 		} catch (NullPointerException e) {
 			throw new CustomException(String.format(
@@ -173,7 +163,6 @@ public class FermataFEService {
 
 	private static List<PojoOrarioFE> stimaTempiPrevisti(Fermata fermata) {
 		List<Orario> listaOrari = null;
-		PojoOrarioFE pojoOrarioFE = new PojoOrarioFE();
 		List<PojoOrarioFE> listaTempiArrivo = new ArrayList<>();
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
 		try {
@@ -185,13 +174,17 @@ public class FermataFEService {
 
 				if (listaOrari != null && !listaOrari.isEmpty()) {
 					for (Orario orario : listaOrari) {
+						PojoOrarioFE pojoOrarioFE = new PojoOrarioFE();
+
 						if (Objects.equals(orario.getNumFermata(),
 								fermata.getNumFermata())) {
+
 							pojoOrarioFE.setNumMezzo(
 									orario.getMezzo().getNumMezzo());
 							pojoOrarioFE.setOrarioPrevisto(
 									orario.getOrarioPrevisto());
 							pojoOrarioFE.setRitardo(orario.getRitardo());
+
 							listaTempiArrivo.add(pojoOrarioFE);
 						}
 					}

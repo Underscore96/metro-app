@@ -83,6 +83,7 @@ public class InizializzaDb {
 				LocalTime orarioIniziale = LocalTime.of(8, 0);
 				LocalDateTime dataTime = LocalDateTime.of(dataAttuale,
 						orarioIniziale);
+
 				if (fermataDAO.leggiDaNumFermata(fermata.getNumFermata())
 						.isEmpty()) {
 					fermata.setOrarioAttuale(dataTime);
@@ -199,19 +200,25 @@ public class InizializzaDb {
 	private List<Orario> generaOrari() {
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
 		List<Orario> listaOrari = new ArrayList<>();
+		Integer contatoreNumOrario = 1;
 		Integer minuti = 0;
 		List<Integer> minList = new ArrayList<>();
+
 		LocalDate data = LocalDate.now();
 		LocalTime tempoPrevisto;
 		LocalDateTime dataOrarioPrevisto;
+
 		for (Mezzo mezzo : listaMezzi) {
+
 			String direzioneMezzo = mezzo.getFermataAttuale().getLinea()
 					.getDirezione();
 			tempoPrevisto = LocalTime.of(8, minuti);
 			dataOrarioPrevisto = LocalDateTime.of(data, tempoPrevisto);
+
 			minuti = minuti + 10;
 			minList.add(minuti);
 			minList.add(mezzo.getNumMezzo());
+
 			if (mezzo.getNumMezzo() == 3)
 				minuti = 0;
 
@@ -228,11 +235,23 @@ public class InizializzaDb {
 						numFermata = fermata.getNumFermata();
 				}
 
+				orario.setNumOrario(contatoreNumOrario);
 				orario.setMezzo(mezzo);
 				orario.setNumFermata(numFermata);
 				orario.setOrarioPrevisto(dataOrarioPrevisto);
 				orario.setRitardo(dataOrarioPrevisto);
-				orarioDAO.crea(orario);
+
+				List<Orario> orarioDaAggiornare = orarioDAO
+						.leggiDaNumOrario(contatoreNumOrario);
+				
+				if (orarioDaAggiornare == null
+						|| orarioDaAggiornare.isEmpty()) {
+					orarioDAO.crea(orario);
+				} else {
+					orarioDAO.aggiorna(orarioDaAggiornare.get(0));
+				}
+				
+				contatoreNumOrario++;
 				listaOrari.add(orario);
 
 				if (!nomeFermata

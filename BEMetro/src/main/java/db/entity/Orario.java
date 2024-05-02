@@ -23,6 +23,9 @@ public class Orario {
 	@Column(name = "idOrario", nullable = false, unique = true, length = 20)
 	private String idOrario;
 
+	@Column(name = "numOrario", length = 10, nullable = false, unique = true)
+	private Integer numOrario;
+
 	@Column(name = "numFermata", length = 20, nullable = true, unique = false)
 	private Integer numFermata;
 
@@ -40,10 +43,11 @@ public class Orario {
 	public Orario() {
 	}
 
-	public Orario(String idOrario, Integer numFermata,
+	public Orario(String idOrario, Integer numOrario, Integer numFermata,
 			LocalDateTime orarioPrevisto, LocalDateTime ritardo) {
 		super();
 		this.idOrario = idOrario;
+		this.numOrario = numOrario;
 		this.numFermata = numFermata;
 		this.orarioPrevisto = orarioPrevisto;
 		this.ritardo = ritardo;
@@ -55,6 +59,14 @@ public class Orario {
 
 	public void setIdOrario(String idOrario) {
 		this.idOrario = idOrario;
+	}
+
+	public Integer getNumOrario() {
+		return numOrario;
+	}
+
+	public void setNumOrario(Integer numOrario) {
+		this.numOrario = numOrario;
 	}
 
 	public Integer getNumFermata() {
@@ -91,7 +103,7 @@ public class Orario {
 
 	@Override
 	public String toString() {
-		return "Orario [idOrario=" + idOrario + ", numFermata=" + numFermata
+		return "Orario [idOrario=" + idOrario + ", numOrario=" + numOrario + ", numFermata=" + numFermata
 				+ ", orarioPrevisto=" + orarioPrevisto + ", ritardo=" + ritardo
 				+ ", mezzo=" + mezzo.getNumMezzo() + "]";
 	}

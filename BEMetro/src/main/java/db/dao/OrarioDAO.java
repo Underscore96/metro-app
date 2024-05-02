@@ -83,6 +83,35 @@ public class OrarioDAO {
 		return result;
 	}
 
+	public List<Orario> leggiDaNumOrario(Integer numOrario) {
+		List<Orario> result = new ArrayList<>();
+		CriteriaBuilder builder;
+		CriteriaQuery<Orario> criteria;
+		Root<Orario> root;
+
+		try {
+			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
+			sessione.beginTransaction();
+
+			builder = sessione.getCriteriaBuilder();
+			criteria = builder.createQuery(Orario.class);
+			root = criteria.from(Orario.class);
+
+			criteria.select(root)
+					.where(builder.equal(root.get("numOrario"), numOrario));
+			result = sessione.createQuery(criteria).getResultList();
+
+		} catch (HibernateException e) {
+			sessione.getTransaction().rollback();
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			if (sessione != null)
+				sessione.close();
+		}
+		return result;
+	}
+
 	public Orario aggiorna(Orario orario) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();

@@ -11,8 +11,10 @@ import org.hibernate.Session;
 import db.dao.SimulazioneDAO;
 import db.entity.Simulazione;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
@@ -161,5 +163,42 @@ public class SimulazioneRest {
 		} finally {
 			semaphore.release();
 		}
+	}
+
+	@PUT
+	@Path("/aggiorna")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response aggiornaLinea(Simulazione simulazione) {
+		Simulazione simulazioneAggiornata = null;
+		Response risposta = null;
+
+		try {
+			simulazioneAggiornata = simulazioneDAO
+					.aggiornaSimulazione(simulazione);
+			risposta = Response.ok(simulazioneAggiornata).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
+	}
+
+	@DELETE
+	@Path("/cancella")
+	@Produces("application/json")
+	public Response cancellaLinea(Simulazione simulazione) {
+		Response risposta = null;
+
+		try {
+			simulazioneDAO.cancellaSimulazione(simulazione);
+			risposta = Response.ok().build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
 	}
 }

@@ -1,5 +1,6 @@
 package db.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -32,6 +33,9 @@ public class Fermata {
 	@Column(name = "nome", length = 40, nullable = true, unique = false)
 	private String nome;
 
+	@Column(name = "orarioAttuale", nullable = true, unique = false)
+	private LocalDateTime orarioAttuale;
+
 	@Column(name = "previsioneMeteo", length = 40, nullable = true, unique = false)
 	private String previsioneMeteo;
 
@@ -52,11 +56,13 @@ public class Fermata {
 	}
 
 	public Fermata(String idFermata, Integer numFermata, String nome,
-			String previsioneMeteo, String posMezzo) {
+			LocalDateTime orarioAttuale, String previsioneMeteo,
+			String posMezzo) {
 		super();
 		this.idFermata = idFermata;
 		this.numFermata = numFermata;
 		this.nome = nome;
+		this.orarioAttuale = orarioAttuale;
 		this.previsioneMeteo = previsioneMeteo;
 		this.posMezzo = posMezzo;
 	}
@@ -83,6 +89,14 @@ public class Fermata {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public LocalDateTime getOrarioAttuale() {
+		return orarioAttuale;
+	}
+
+	public void setOrarioAttuale(LocalDateTime orarioAttuale) {
+		this.orarioAttuale = orarioAttuale;
 	}
 
 	public String getPrevisioneMeteo() {
@@ -120,8 +134,8 @@ public class Fermata {
 	@Override
 	public String toString() {
 		return "Fermata [idFermata=" + idFermata + ", numFermata=" + numFermata
-				+ ", nome=" + nome + ", previsioneMeteo=" + previsioneMeteo
-				+ ", posMezzo=" + posMezzo + ", linea=" + linea + ", mezzi="
-				+ mezzi + "]";
+				+ ", nome=" + nome + ", orarioAttuale=" + orarioAttuale
+				+ ", previsioneMeteo=" + previsioneMeteo + ", posMezzo="
+				+ posMezzo + ", linea=" + linea + ", mezzi=" + mezzi + "]";
 	}
 }

@@ -18,6 +18,9 @@ public class Simulazione {
 	@Column(name = "statoEsecuzione", nullable = false, unique = false)
 	private Boolean statoEsecuzione;
 
+	@Column(name = "numCicli", nullable = true, unique = false)
+	private Integer numCicli;
+
 	public String getIdSimulazione() {
 		return idSimulazione;
 	}
@@ -34,9 +37,18 @@ public class Simulazione {
 		this.statoEsecuzione = statoEsecuzione;
 	}
 
+	public Integer getNumCicli() {
+		return numCicli;
+	}
+
+	public void setNumCicli(Integer numCicli) {
+		this.numCicli = numCicli;
+	}
+
 	@Override
 	public String toString() {
 		return "Simulazione [idSimulazione=" + idSimulazione
-				+ ", statoEsecuzione=" + statoEsecuzione + "]";
+				+ ", statoEsecuzione=" + statoEsecuzione + ", numCicli="
+				+ numCicli + "]";
 	}
 }

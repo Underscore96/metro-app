@@ -1,5 +1,6 @@
 package presentation.pojo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PojoFermataFE {
@@ -8,23 +9,27 @@ public class PojoFermataFE {
 	private String nomeFermata;
 	private String nomeLinea;
 	private String direzione;
+	private LocalDateTime orarioAttuale;
 	private String previsioneMeteo;
 	private String posizioneMezzo;
+	private Integer numMezzi;
 	private List<PojoOrarioFE> orariMezzi;
 
 	public PojoFermataFE() {
 	}
 
 	public PojoFermataFE(Integer id, Integer numFermata, String nomeFermata,
-			String nomeLinea, String direzione, String previsioneMeteo,
-			String posizioneMezzo) {
+			String nomeLinea, String direzione, LocalDateTime orarioAttuale,
+			String previsioneMeteo, Integer numMezzi, String posizioneMezzo) {
 		super();
 		this.id = id;
 		this.numFermata = numFermata;
 		this.nomeFermata = nomeFermata;
 		this.nomeLinea = nomeLinea;
 		this.direzione = direzione;
+		this.orarioAttuale = orarioAttuale;
 		this.previsioneMeteo = previsioneMeteo;
+		this.numMezzi = numMezzi;
 		this.posizioneMezzo = posizioneMezzo;
 	}
 
@@ -60,6 +65,22 @@ public class PojoFermataFE {
 		this.nomeLinea = nomeLinea;
 	}
 
+	public String getDirezione() {
+		return direzione;
+	}
+
+	public void setDirezione(String direzione) {
+		this.direzione = direzione;
+	}
+
+	public LocalDateTime getOrarioAttuale() {
+		return orarioAttuale;
+	}
+
+	public void setOrarioAttuale(LocalDateTime orarioAttuale) {
+		this.orarioAttuale = orarioAttuale;
+	}
+
 	public String getPrevisioneMeteo() {
 		return previsioneMeteo;
 	}
@@ -76,6 +97,14 @@ public class PojoFermataFE {
 		this.posizioneMezzo = posizioneMezzo;
 	}
 
+	public Integer getNumMezzi() {
+		return numMezzi;
+	}
+
+	public void setNumMezzi(Integer numMezzi) {
+		this.numMezzi = numMezzi;
+	}
+
 	public List<PojoOrarioFE> getOrariMezzi() {
 		return orariMezzi;
 	}
@@ -84,20 +113,13 @@ public class PojoFermataFE {
 		this.orariMezzi = orariMezzi;
 	}
 
-	public String getDirezione() {
-		return direzione;
-	}
-
-	public void setDirezione(String direzione) {
-		this.direzione = direzione;
-	}
-
 	@Override
 	public String toString() {
 		return "PojoFermataFE [id=" + id + ", numFermata=" + numFermata
 				+ ", nomeFermata=" + nomeFermata + ", nomeLinea=" + nomeLinea
-				+ ", direzione=" + direzione + ", previsioneMeteo="
-				+ previsioneMeteo + ", posizioneMezzo=" + posizioneMezzo
-				+ ", orariMezzi=" + orariMezzi + "]";
+				+ ", direzione=" + direzione + ", orarioAttuale="
+				+ orarioAttuale + ", previsioneMeteo=" + previsioneMeteo
+				+ ", posizioneMezzo=" + posizioneMezzo + ", numMezzi="
+				+ numMezzi + ", orariMezzi=" + orariMezzi + "]";
 	}
 }

@@ -79,11 +79,17 @@ public class InizializzaDb {
 					});
 
 			for (Fermata fermata : listaFermate) {
+				LocalDate dataAttuale = LocalDate.now();
+				LocalTime orarioIniziale = LocalTime.of(8, 0);
+				LocalDateTime dataTime = LocalDateTime.of(dataAttuale,
+						orarioIniziale);
 				if (fermataDAO.leggiDaNumFermata(fermata.getNumFermata())
-						.isEmpty())
+						.isEmpty()) {
+					fermata.setOrarioAttuale(dataTime);
 					fermataDAO.crea(fermata);
-				else {
+				} else {
 					FermataService.cancellaFermata(fermata.getNumFermata());
+					fermata.setOrarioAttuale(dataTime);
 					fermataDAO.crea(fermata);
 				}
 			}
@@ -198,8 +204,6 @@ public class InizializzaDb {
 		LocalDate data = LocalDate.now();
 		LocalTime tempoPrevisto;
 		LocalDateTime dataOrarioPrevisto;
-		LocalTime ritardo = LocalTime.of(0, 0);
-		LocalDateTime dataRitardo = LocalDateTime.of(data, ritardo);
 		for (Mezzo mezzo : listaMezzi) {
 			String direzioneMezzo = mezzo.getFermataAttuale().getLinea()
 					.getDirezione();
@@ -227,7 +231,7 @@ public class InizializzaDb {
 				orario.setMezzo(mezzo);
 				orario.setNumFermata(numFermata);
 				orario.setOrarioPrevisto(dataOrarioPrevisto);
-				orario.setRitardo(dataRitardo);
+				orario.setRitardo(dataOrarioPrevisto);
 				orarioDAO.crea(orario);
 				listaOrari.add(orario);
 

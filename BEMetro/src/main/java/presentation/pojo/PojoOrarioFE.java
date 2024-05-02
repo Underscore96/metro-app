@@ -1,11 +1,9 @@
 package presentation.pojo;
 
-import java.time.LocalDateTime;
-
 public class PojoOrarioFE {
 	private Integer numMezzo;
-	private LocalDateTime orarioPrevisto;
-	private LocalDateTime ritardo;
+	private String orarioPrevisto;
+	private String ritardo;
 
 	public Integer getNumMezzo() {
 		return numMezzo;
@@ -15,19 +13,19 @@ public class PojoOrarioFE {
 		this.numMezzo = numMezzo;
 	}
 
-	public LocalDateTime getOrarioPrevisto() {
+	public String getOrarioPrevisto() {
 		return orarioPrevisto;
 	}
 
-	public void setOrarioPrevisto(LocalDateTime orarioPrevisto) {
+	public void setOrarioPrevisto(String orarioPrevisto) {
 		this.orarioPrevisto = orarioPrevisto;
 	}
 
-	public LocalDateTime getRitardo() {
+	public String getRitardo() {
 		return ritardo;
 	}
 
-	public void setRitardo(LocalDateTime ritardo) {
+	public void setRitardo(String ritardo) {
 		this.ritardo = ritardo;
 	}
 

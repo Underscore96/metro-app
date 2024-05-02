@@ -15,6 +15,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import simulatore.ClasseMain;
@@ -63,10 +64,10 @@ public class SimulazioneRest {
 	@GET
 	@Path("/inizia")
 	@Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-	public String startTask() {
+	public String startTask(@QueryParam("id") String id) {
 		Simulazione sim = null;
 		List<Simulazione> listaSimulazioni = simulazioneDAO
-				.leggiDaIdSimulazione("1");
+				.leggiDaIdSimulazione(id);
 
 		if (!listaSimulazioni.isEmpty()) {
 			sim = listaSimulazioni.get(0);
@@ -103,7 +104,7 @@ public class SimulazioneRest {
 						scheduler.shutdown();
 						return;
 					}
-					ClasseMain.updateData();
+					ClasseMain.updateData("1");
 				}
 			};
 
@@ -125,10 +126,10 @@ public class SimulazioneRest {
 	@GET
 	@Path("/interrompi")
 	@Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-	public String stopTask() {
+	public String stopTask(@QueryParam("id") String id) {
 		Simulazione sim = null;
 		List<Simulazione> listaSimulazioni = simulazioneDAO
-				.leggiDaIdSimulazione("1");
+				.leggiDaIdSimulazione(id);
 
 		if (!listaSimulazioni.isEmpty()) {
 			sim = listaSimulazioni.get(0);

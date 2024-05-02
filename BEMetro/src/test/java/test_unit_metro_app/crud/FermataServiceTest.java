@@ -3,6 +3,7 @@ package test_unit_metro_app.crud;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,42 +121,48 @@ class FermataServiceTest {
 
 	@Test
 	void Should_ConvertireAFermata_When_Passo_PojoFermata() {
-		Fermata expected = new Fermata("30001", 30000, "Brignole", "Piove",
-				"presente");
+		Fermata expected = new Fermata("30001", 30000, "Brignole",
+				LocalDateTime.of(2024, 4, 29, 8, 30), "Piove", "presente");
 
-		PojoFermata pojoFermata = new PojoFermata(30000, "Brignole", "Piove",
-				"presente");
+		PojoFermata pojoFermata = new PojoFermata(30000, "Brignole",
+				LocalDateTime.of(2024, 4, 29, 8, 30), "Piove", "presente");
 
 		Fermata actual = new FermataBuilder().setIdFermata("30001")
 				.setNumFermata(pojoFermata.getNumFermata())
 				.setNome(pojoFermata.getNome())
+				.setOrarioAttuale(pojoFermata.getOrarioAttuale())
+				.setPosMezzo(pojoFermata.getPosMezzo())
 				.setPrevisioneMeteo(pojoFermata.getPrevisioneMeteo())
 				.costruisci();
 
 		assertThat(actual)
-				.extracting("numFermata", "nome", "orarioPrevisto", "ritardo",
+				.extracting("numFermata", "nome", "orarioAttuale", "posMezzo",
 						"previsioneMeteo")
 				.containsExactly(expected.getNumFermata(), expected.getNome(),
+						expected.getOrarioAttuale(), expected.getPosMezzo(),
 						expected.getPrevisioneMeteo());
 	}
 
 	@Test
 	void Should_ConvertireAPojoFermata_When_Passo_Fermata() {
-		PojoFermata expected = new PojoFermata(30000, "Brignole", "Piove",
-				"presente");
+		PojoFermata expected = new PojoFermata(30000, "Brignole",
+				LocalDateTime.of(2024, 4, 29, 8, 30), "Piove", "presente");
 
-		Fermata fermata1 = new Fermata("30000", 30000, "Brignole", "Piove",
-				"presente");
+		Fermata fermata = new Fermata("30000", 30000, "Brignole",
+				LocalDateTime.of(2024, 4, 29, 8, 30), "Piove", "presente");
 
 		PojoFermata actual = new PojoFermataBuilder()
-				.setNumFermata(fermata1.getNumFermata())
-				.setNome(fermata1.getNome())
-				.setPrevisioneMeteo(fermata1.getPrevisioneMeteo()).costruisci();
+				.setNumFermata(fermata.getNumFermata())
+				.setNome(fermata.getNome())
+				.setOrarioAttuale(fermata.getOrarioAttuale())
+				.setPosMezzo(fermata.getPosMezzo())
+				.setPrevisioneMeteo(fermata.getPrevisioneMeteo()).costruisci();
 
 		assertThat(actual)
-				.extracting("numFermata", "nome", "orarioPrevisto", "ritardo",
+				.extracting("numFermata", "nome", "orarioAttuale", "posMezzo",
 						"previsioneMeteo")
 				.containsExactly(expected.getNumFermata(), expected.getNome(),
+						expected.getOrarioAttuale(), expected.getPosMezzo(),
 						expected.getPrevisioneMeteo());
 	}
 }

@@ -1,5 +1,6 @@
 package service.builder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import db.entity.Linea;
@@ -9,6 +10,7 @@ import presentation.pojo.PojoFermata;
 public class PojoFermataBuilder {
 	private Integer numFermata;
 	private String nome;
+	private LocalDateTime orarioAttuale;
 	private String previsioneMeteo;
 	private String posMezzo;
 	private Linea linea;
@@ -21,6 +23,11 @@ public class PojoFermataBuilder {
 
 	public PojoFermataBuilder setNome(String nome) {
 		this.nome = nome;
+		return this;
+	}
+
+	public PojoFermataBuilder setOrarioAttuale(LocalDateTime orarioAttuale) {
+		this.orarioAttuale = orarioAttuale;
 		return this;
 	}
 
@@ -49,6 +56,7 @@ public class PojoFermataBuilder {
 
 		nuovaFermata.setNumFermata(numFermata);
 		nuovaFermata.setNome(nome);
+		nuovaFermata.setOrarioAttuale(orarioAttuale);
 		nuovaFermata.setPrevisioneMeteo(previsioneMeteo);
 		nuovaFermata.setPosMezzo(posMezzo);
 		nuovaFermata.setLinea(linea);

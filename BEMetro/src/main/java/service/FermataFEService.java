@@ -43,6 +43,7 @@ public class FermataFEService {
 		Object[] pojoDalFE;
 		List<Linea> controlloLinee;
 		List<Fermata> controlloFermate;
+		List<Mezzo> listaMezzi;
 		try {
 			if (fermataFE.getNumFermata() == null
 					|| fermataFE.getNomeLinea() == null)
@@ -73,8 +74,15 @@ public class FermataFEService {
 				FermataService.aggiornaRelazioneFermata(
 						pojoFermata.getNumFermata(), pojolinea.getNomeLinea());
 			} else {
+				FermataService.aggiornaFermata(pojoFermata);
 				FermataService.aggiornaRelazioneFermata(
 						pojoFermata.getNumFermata(), pojolinea.getNomeLinea());
+			}
+			listaMezzi = pojoFermata.getMezzi();
+
+			if (!listaMezzi.isEmpty() && listaMezzi.get(0) != null) {
+				for (Mezzo mezzo : listaMezzi)
+					mezzoDAO.aggiorna(mezzo);
 			}
 
 			risultato = "FERMATA E LINEA AGGIORNATA";
@@ -136,8 +144,10 @@ public class FermataFEService {
 			risultato = new PojoFermataFEBuilder().setId(id)
 					.setNumFermata(numFermata).setNomeFermata(fermata.getNome())
 					.setNomeLinea(nomeLinea).setDirezione(linea.getDirezione())
+					.setOrarioAttuale(fermata.getOrarioAttuale())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
 					.setPosizioneMezzo(posizione)
+					.setNumMezzi(fermata.getMezzi().size())
 					.setOrariMezzi(stimaTempiPrevisti(fermata)).costruisci();
 
 		} catch (NullPointerException e) {
@@ -182,8 +192,9 @@ public class FermataFEService {
 							pojoOrarioFE.setNumMezzo(
 									orario.getMezzo().getNumMezzo());
 							pojoOrarioFE.setOrarioPrevisto(
-									orario.getOrarioPrevisto());
-							pojoOrarioFE.setRitardo(orario.getRitardo());
+									orario.getOrarioPrevisto().toString());
+							pojoOrarioFE
+									.setRitardo(orario.getRitardo().toString());
 
 							listaTempiArrivo.add(pojoOrarioFE);
 						}
@@ -310,13 +321,22 @@ public class FermataFEService {
 			fermata = new PojoFermataBuilder()
 					.setNumFermata(fermataFE.getNumFermata())
 					.setNome(fermataFE.getNomeFermata())
+					.setOrarioAttuale(fermataFE.getOrarioAttuale())
 					.setPrevisioneMeteo(fermataFE.getPrevisioneMeteo())
-					.setPosMezzo(fermataFE.getPosizioneMezzo()).setLinea(null)
-					.setMezzi(null).costruisci();
+					.setPosMezzo(fermataFE.getPosizioneMezzo())
+					.setLinea(lineaDAO
+							.leggiDaNomeLinea(fermataFE.getNomeLinea()).get(0))
+					.setMezzi(fermataDAO
+							.leggiDaNumFermata(fermataFE.getNumFermata()).get(0)
+							.getMezzi())
+					.costruisci();
 
 			linea = new PojoLineaBuilder()
 					.setNomeLinea(fermataFE.getNomeLinea())
-					.setDirezione(fermataFE.getDirezione()).setFermate(null)
+					.setDirezione(fermataFE.getDirezione())
+					.setFermate(
+							lineaDAO.leggiDaNomeLinea(fermataFE.getNomeLinea())
+									.get(0).getFermate())
 					.costruisci();
 
 			pojoArray[0] = fermata;

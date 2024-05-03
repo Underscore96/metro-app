@@ -7,6 +7,10 @@ import { FormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { TimebarComponent } from "../timebar/timebar.component";
+import * as d3 from 'd3';
+import { MatCardModule } from '@angular/material/card';
+import moment from 'moment';
 
 
 @Component({
@@ -14,7 +18,7 @@ import {MatButtonModule} from '@angular/material/button';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule]
+    imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule, TimebarComponent, MatCardModule]
 })
 export class HomeComponent implements OnInit{
 
@@ -22,6 +26,9 @@ export class HomeComponent implements OnInit{
   fermate: any[] = [];
   isTableOpen: boolean = false;
   lastFetchTimestamp: any;
+  direction: 'forward' | 'backward' | null = null; 
+
+  
 
   constructor(private http: HttpClient) {}
 
@@ -42,9 +49,10 @@ export class HomeComponent implements OnInit{
 
    searchFermata() {
     if (this.searchTerm.trim() !== '') {
-      this.http.get<any[]>('http://localhost:8080/Metro/rest/fermata/tutte')
+      this.http.get<any[]>('http://localhost:8080/Metro/rest/fermataFE/tutte')
         .subscribe(data => {
-          this.fermate = data.filter(item => item.numFermata.toString() === this.searchTerm);
+          this.fermate = data.filter(fermata => fermata.numFermata.toString() === this.searchTerm);
+          this.direction = this.getDirection();
         });
     } else {
       this.fermate = [];
@@ -53,43 +61,35 @@ export class HomeComponent implements OnInit{
 
 
   getFermate() {
-    this.http.get('http://localhost:8080/Metro/rest/fermata/tutte').subscribe(
+    this.http.get('http://localhost:8080/Metro/rest/fermataFE/tutte').subscribe(
       (data: any) => {
         console.log(data);
-        if (data.length > 0) {
-          console.log('ritardo:', typeof data[0].fermata.ritardo);
-          console.log('arrivo:', typeof data[0].orarioPrevisto);
-        }
-        this.lastFetchTimestamp = new Date(); 
-      },
-      (error) => {
-        console.log('error fetching data');
-        this.lastFetchTimestamp = null; 
-      }
-    );
+        // console.log(data.map(fermata => fermata.tempi_arrivo));
+        
+      })
   }
   
 
-  formatArrivalTime(timeArray: number[]): string {
-    if (!Array.isArray(timeArray) || timeArray.length !== 2) {
-        return 'N/A'; 
-    }
-    const hours = ('0' + timeArray[0]).slice(-2);
-    const minutes = ('0' + timeArray[1]).slice(-2);
-    return `${hours}:${minutes}`;
+  formatArrivalTime(arrival: string): string {
+    return moment(arrival).format('LT');
 }
 
-formatDelayTime(delayArray: number[]): string {
-  if (!Array.isArray(delayArray) || delayArray.length !== 2) {
-      return 'N/A'; // Handle invalid delay format
+
+
+  formatDelayTime(ritardo: string, orarioPrevisto: string): string {
+    const delay = moment(ritardo).diff(moment(orarioPrevisto), 'minutes');
+    return `${delay} min`;
   }
-  const hours = delayArray[0];
-  const minutes = delayArray[1];
-  const totalMinutes = hours * 60 + minutes;
-  return `${totalMinutes} min`;
+  
+
+
+getDirection(): 'forward' | 'backward' | null {
+  if (this.searchTerm.trim() !== '') {
+    const searchTermNum = parseInt(this.searchTerm);
+    return searchTermNum >= 1 && searchTermNum <= 8 ? 'forward' : 'backward';
+  }
+  return null;
 }
-
-
 
 }
 

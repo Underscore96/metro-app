@@ -58,6 +58,27 @@ th {
 
 
 
+.timebar-cell {
+  position: absolute;
+  bottom: 0px;
+  top: 150px;
+  right: 50px;
+  z-index: 2;
+}
+
+.arrival-time {
+  margin-right: 50px; /* Adjust the value as needed */
+}
+
+
+
+
+
+
+
+
+
+
 
 
 //subway animation 
@@ -240,3 +261,50 @@ body {
   height: 100vh;
   justify-content: center;
 }
+
+
+//card
+body {
+  background: #eee;
+  font-family: 'Lily Script One';
+}
+
+.card {
+  position: absolute;
+  background-color: white;
+  top: 250%;
+  left: 50%;
+  width: 200px;
+  height: 100px;
+  margin: -100px; /* Adjust the margin to center the card vertically and horizontally */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  padding: 20px; /* Add padding for content */
+  text-align: center; /* Center align text */
+}
+
+.card p {
+  margin: 5px 0; /* Add some margin between paragraphs */
+  font-size: 14px; /* Adjust font size */
+}
+
+.card p:first-child {
+  font-weight: bold; /* Make the first paragraph bold */
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: white transparent transparent transparent;
+}
+
+
+
+
+
+

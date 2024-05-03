@@ -3,6 +3,8 @@
 
 
 
+
+
   
 
 
@@ -26,25 +28,64 @@
       </thead>
       <tbody>
           <tr *ngFor="let fermata of fermate">
-            <td>{{ fermata.linea.direzione }}</td>
-            <td>{{ formatArrivalTime(fermata.orarioPrevisto) }}</td>
-            <td>{{ formatDelayTime(fermata.ritardo) }}</td>
-
-            <td>{{ fermata.nome }}</td>
-            <!-- <td>{{ fermata.previsioneMeteo }}</td> -->
+            <td>{{ fermata.direzione }}</td>
             <td>
+              <ng-container *ngFor="let arrival of fermata.orariMezzi">
+                <li>
+                  <span>{{ formatArrivalTime(arrival.orarioPrevisto) }}</span>
+                  <!-- <span class="delay">{{ formatDelayTime(arrival.ritardo, arrival.orarioPrevisto) }}</span> -->
+                </li> 
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let arrival of fermata.orariMezzi">
+                <li>
+                  <span>{{ formatDelayTime(arrival.ritardo, arrival.orarioPrevisto) }}</span>
+                </li> 
+              </ng-container>
+            </td>
+              <!-- <li><td>{{ formatDelayTime(fermata.orariMezzi[0].ritardo, fermata.orariMezzi[0].orarioPrevisto) }}</td></li> -->
+
+              <!-- <ng-container *ngFor="let arrivo of fermata.orariMezzi.orarioPrevisto">
+                <td>{{ fermata.orariMezzi.orarioPrevisto }}</td> -->
+               <!-- <li> {{ formatArrivalTime(arrivo) }}</li> -->
+                
+              <!-- </ng-container>
+            </td> -->
+            <!-- <td> {{ fermata.tempiArrivo}}</td> -->
+       
+          
+            <td>{{ fermata.nomeFermata }}</td>
+            <td>
+              
+
             <mat-icon *ngIf="fermata.previsioneMeteo === 'sole'">wb_sunny</mat-icon>
             <mat-icon *ngIf="fermata.previsioneMeteo === 'pioggia'">
             umbrella</mat-icon>
             <mat-icon *ngIf="fermata.previsioneMeteo === 'nuvolo'">
               wb_cloudy</mat-icon>
+
+              <td colspan="5" class="timebar-cell">
+                <app-timebar [direction]="getDirection()"></app-timebar>
+
+                <td class="card"> Info:
+                    <p>➤  Direzione</p>
+                    <p>🟡 la metro è qui</p>
+                   </td>
             
-          </td>
+
           </tr>
+        
+          
       </tbody>
+
+      
     </table>
+    
   </div>
 </form>
+
+
 
 <!-- subway -->
 <div class="train">

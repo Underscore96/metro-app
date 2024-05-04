@@ -82,6 +82,68 @@ public class ClasseMain {
 		}
 	}
 
+	private static void aggiornaOrariFermata(PojoFermataFE fermata) {
+		OrarioDAO orarioDAO = new OrarioDAO();
+
+		List<PojoOrarioFE> elencoOrariFermata = fermata.getOrariMezzi();
+
+		for (Integer i = 0; i < elencoOrariFermata.size(); i++) {
+
+			PojoOrarioFE orarioMezzo = elencoOrariFermata.get(i);
+
+			List<Orario> listaOrariDaAggiornare = mezzoDAO
+					.leggiDaNumMezzo(orarioMezzo.getNumMezzo()).get(0)
+					.getOrari();
+
+			Integer ritardoRandom = 0;
+			Integer randomValue = random.nextInt(11);
+			if (randomValue > 7) {
+				ritardoRandom = randomValue <= 9 ? 2 : -1;
+			}
+			LocalDateTime ritardoAggiornato = LocalDateTime
+					.parse(orarioMezzo.getRitardo()).plusMinutes(ritardoRandom);
+
+			for (Orario orario : listaOrariDaAggiornare) {
+				if (Objects.equals(orario.getNumFermata(),
+						fermata.getNumFermata())) {
+					orario.setRitardo(ritardoAggiornato);
+					orarioDAO.aggiorna(orario);
+				}
+			}
+
+			orarioMezzo.setOrarioPrevisto(ritardoAggiornato.toString());
+			elencoOrariFermata.set(i, orarioMezzo);
+		}
+		fermata.setOrariMezzi(elencoOrariFermata);
+	}
+
+	private static String previsioneMeteo() {
+		Integer meteo = random.nextInt(3);
+
+		switch (meteo) {
+			case 1 :
+				return "pioggia";
+			case 2 :
+				return "sole";
+			case 3 :
+				return "nuvolo";
+			default :
+				return "sole";
+		}
+	}
+
+	private static void registraPosizioneMezzi(
+			Map<Integer, Fermata> mezziPerFermata, PojoFermataFE fermataFE) {
+		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
+		for (Mezzo m : listaMezzi) {
+			mezziPerFermata.put(m.getNumMezzo(), m.getFermataAttuale());
+		}
+
+		if (fermataFE.getPosizioneMezzo().equals(PRES)) {
+			fermataFE.setPosizioneMezzo(ASS);
+		}
+	}
+
 	private static void aggPosizioneMezzi(Map<Integer, Fermata> mezziPerFermata,
 			Integer numCicli) {
 		Set<Integer> setNumMezzi = mezziPerFermata.keySet();
@@ -168,69 +230,6 @@ public class ClasseMain {
 				MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata() + 1,
 						numMezzo, "");
 			}
-		}
-	}
-
-	private static void registraPosizioneMezzi(
-			Map<Integer, Fermata> mezziPerFermata, PojoFermataFE fermataFE) {
-		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
-		for (Mezzo m : listaMezzi) {
-			mezziPerFermata.put(m.getNumMezzo(), m.getFermataAttuale());
-		}
-
-		if (fermataFE.getPosizioneMezzo().equals(PRES)) {
-			fermataFE.setPosizioneMezzo(ASS);
-		}
-	}
-
-	private static void aggiornaOrariFermata(PojoFermataFE fermata) {
-		OrarioDAO orarioDAO = new OrarioDAO();
-
-		List<PojoOrarioFE> elencoOrariFermata = fermata.getOrariMezzi();
-
-		for (Integer i = 0; i < elencoOrariFermata.size(); i++) {
-
-			PojoOrarioFE orarioMezzo = elencoOrariFermata.get(i);
-
-			List<Orario> listaOrariDaAggiornare = mezzoDAO
-					.leggiDaNumMezzo(orarioMezzo.getNumMezzo()).get(0)
-					.getOrari();
-
-			Integer ritardoRandom = 0;
-			Integer randomValue = random.nextInt(11);
-			if (randomValue > 7) {
-				ritardoRandom = randomValue <= 9 ? 2 : -1;
-			}
-			LocalDateTime ritardoAggiornato = LocalDateTime
-					.parse(orarioMezzo.getRitardo()).plusMinutes(ritardoRandom);
-
-			for (Orario orario : listaOrariDaAggiornare) {
-				if (Objects.equals(orario.getNumFermata(),
-						fermata.getNumFermata())) {
-					orario.setRitardo(ritardoAggiornato);
-					orarioDAO.aggiorna(orario);
-				}
-			}
-
-			orarioMezzo.setOrarioPrevisto(ritardoAggiornato.toString());
-			elencoOrariFermata.set(i, orarioMezzo);
-		}
-		fermata.setOrariMezzi(elencoOrariFermata);
-
-	}
-
-	private static String previsioneMeteo() {
-		Integer meteo = random.nextInt(3);
-
-		switch (meteo) {
-			case 1 :
-				return "pioggia";
-			case 2 :
-				return "sole";
-			case 3 :
-				return "nuvolo";
-			default :
-				return "sole";
 		}
 	}
 }

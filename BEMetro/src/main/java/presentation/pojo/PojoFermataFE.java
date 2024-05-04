@@ -1,6 +1,5 @@
 package presentation.pojo;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class PojoFermataFE {
@@ -9,7 +8,7 @@ public class PojoFermataFE {
 	private String nomeFermata;
 	private String nomeLinea;
 	private String direzione;
-	private LocalDateTime orarioAttuale;
+	private String orarioAttuale;
 	private String previsioneMeteo;
 	private String posizioneMezzo;
 	private Integer numMezzi;
@@ -19,7 +18,7 @@ public class PojoFermataFE {
 	}
 
 	public PojoFermataFE(Integer id, Integer numFermata, String nomeFermata,
-			String nomeLinea, String direzione, LocalDateTime orarioAttuale,
+			String nomeLinea, String direzione, String orarioAttuale,
 			String previsioneMeteo, Integer numMezzi, String posizioneMezzo) {
 		super();
 		this.id = id;
@@ -73,11 +72,11 @@ public class PojoFermataFE {
 		this.direzione = direzione;
 	}
 
-	public LocalDateTime getOrarioAttuale() {
+	public String getOrarioAttuale() {
 		return orarioAttuale;
 	}
 
-	public void setOrarioAttuale(LocalDateTime orarioAttuale) {
+	public void setOrarioAttuale(String orarioAttuale) {
 		this.orarioAttuale = orarioAttuale;
 	}
 

@@ -1,6 +1,5 @@
 package db.entity;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -34,7 +33,7 @@ public class Fermata {
 	private String nome;
 
 	@Column(name = "orarioAttuale", nullable = true, unique = false)
-	private LocalDateTime orarioAttuale;
+	private String orarioAttuale;
 
 	@Column(name = "previsioneMeteo", length = 40, nullable = true, unique = false)
 	private String previsioneMeteo;
@@ -56,8 +55,7 @@ public class Fermata {
 	}
 
 	public Fermata(String idFermata, Integer numFermata, String nome,
-			LocalDateTime orarioAttuale, String previsioneMeteo,
-			String posMezzo) {
+			String orarioAttuale, String previsioneMeteo, String posMezzo) {
 		super();
 		this.idFermata = idFermata;
 		this.numFermata = numFermata;
@@ -91,11 +89,11 @@ public class Fermata {
 		this.nome = nome;
 	}
 
-	public LocalDateTime getOrarioAttuale() {
+	public String getOrarioAttuale() {
 		return orarioAttuale;
 	}
 
-	public void setOrarioAttuale(LocalDateTime orarioAttuale) {
+	public void setOrarioAttuale(String orarioAttuale) {
 		this.orarioAttuale = orarioAttuale;
 	}
 

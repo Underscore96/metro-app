@@ -1,6 +1,5 @@
 package service.builder;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import db.entity.Fermata;
@@ -11,7 +10,7 @@ public class FermataBuilder {
 	private String idFermata;
 	private Integer numFermata;
 	private String nome;
-	private LocalDateTime orarioAttuale;
+	private String orarioAttuale;
 	private String previsioneMeteo;
 	private String posMezzo;
 	private Linea linea;
@@ -32,7 +31,7 @@ public class FermataBuilder {
 		return this;
 	}
 
-	public FermataBuilder setOrarioAttuale(LocalDateTime orarioAttuale) {
+	public FermataBuilder setOrarioAttuale(String orarioAttuale) {
 		this.orarioAttuale = orarioAttuale;
 		return this;
 	}

@@ -95,6 +95,6 @@ public class Mezzo {
 	@Override
 	public String toString() {
 		return "Mezzo [idMezzo=" + idMezzo + ", numMezzo=" + numMezzo
-				+ ", numMaxPasseggeri=" + numMaxPasseggeri + "]";
+				+ ", numMaxPasseggeri=" + numMaxPasseggeri + ", orari=" + orari + "]";
 	}
 }

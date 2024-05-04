@@ -175,14 +175,17 @@ public class FermataFEService {
 		List<Orario> listaOrari = null;
 		List<PojoOrarioFE> listaTempiArrivo = new ArrayList<>();
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
+
 		try {
 			for (Mezzo m : listaMezzi) {
 
 				if (m.getFermataAttuale().getLinea().getDirezione()
-						.equals(fermata.getLinea().getDirezione()))
+						.equals(fermata.getLinea().getDirezione())) {
 					listaOrari = m.getOrari();
+				}
 
 				if (listaOrari != null && !listaOrari.isEmpty()) {
+
 					for (Orario orario : listaOrari) {
 						PojoOrarioFE pojoOrarioFE = new PojoOrarioFE();
 
@@ -302,6 +305,7 @@ public class FermataFEService {
 							fermata.getNumFermata()));
 			idNum++;
 		}
+
 		return listaFermateFE;
 	}
 

@@ -55,6 +55,11 @@ public class ClasseMain {
 
 		if (listSim != null && !listSim.isEmpty()) {
 			sim = listSim.get(0);
+			if (sim.getNumCicli() != null)
+				numCicli = sim.getNumCicli();
+			else
+				sim.setNumCicli(1);
+			simulazioneDAO.aggiornaSimulazione(sim);
 			numCicli = sim.getNumCicli();
 		}
 

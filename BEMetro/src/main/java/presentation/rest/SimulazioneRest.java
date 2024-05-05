@@ -27,7 +27,6 @@ public class SimulazioneRest {
 	static SimulazioneDAO simulazioneDAO = new SimulazioneDAO();
 	private static ScheduledExecutorService scheduler = null;
 	private Semaphore semaphore = new Semaphore(1);
-	private static Boolean running = null;
 	Session sessione = null;
 
 	@GET
@@ -73,26 +72,23 @@ public class SimulazioneRest {
 
 		if (!listaSimulazioni.isEmpty()) {
 			sim = listaSimulazioni.get(0);
-			running = sim.getStatoEsecuzione();
 		}
 
 		try {
 			semaphore.acquire();
 
-			// controllo lo stato di persistenza di running
+			// controllo lo stato di persistenza di esecuzione
 			if (sim != null) {
 				if (Boolean.TRUE.equals(sim.getStatoEsecuzione())) {
 					return "La simulazione è già in esecuzione.";
 				} else {
 					sim.setStatoEsecuzione(true);
 					simulazioneDAO.aggiornaSimulazione(sim);
-					running = sim.getStatoEsecuzione();
 				}
 			} else {
 				Simulazione simCreata = new Simulazione();
 				simCreata.setStatoEsecuzione(true);
 				simulazioneDAO.creaSimulazione(simCreata);
-				running = simCreata.getStatoEsecuzione();
 			}
 
 			// se l'applicativo non è già attivo viene eseguito l'applicativo
@@ -102,7 +98,9 @@ public class SimulazioneRest {
 			Runnable task = new Runnable() {
 				@Override
 				public void run() {
-					if (Boolean.FALSE.equals(running)) {
+					if (Boolean.FALSE
+							.equals(simulazioneDAO.leggiDaIdSimulazione("1")
+									.get(0).getStatoEsecuzione())) {
 						scheduler.shutdown();
 						return;
 					}
@@ -128,28 +126,41 @@ public class SimulazioneRest {
 	@GET
 	@Path("/interrompi")
 	@Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-	public String stopTask(@QueryParam("id") String id) {
+	public String stopTask(@QueryParam("id") String id,
+			@QueryParam("resetta") Boolean resetta) {
+		Boolean statoEsecuzione = null;
 		Simulazione sim = null;
 		List<Simulazione> listaSimulazioni = simulazioneDAO
 				.leggiDaIdSimulazione(id);
 
 		if (!listaSimulazioni.isEmpty()) {
 			sim = listaSimulazioni.get(0);
-			running = sim.getStatoEsecuzione();
+			statoEsecuzione = sim.getStatoEsecuzione();
 		}
 
 		try {
 			semaphore.acquire();
-			if (sim != null && running) {
+			Integer numCicli = 0;
+			if (sim != null && statoEsecuzione != null
+					&& Boolean.TRUE.equals(statoEsecuzione)) {
 				sim.setStatoEsecuzione(false);
+				numCicli = sim.getNumCicli();
+				statoEsecuzione = sim.getStatoEsecuzione();
+				if (Boolean.TRUE.equals(resetta))
+					sim.setNumCicli(1);
 				simulazioneDAO.aggiornaSimulazione(sim);
-				running = sim.getStatoEsecuzione();
+				Integer numCicliAttuale = numCicli - 1;
 
 				ScheduledExecutorService currentScheduler = scheduler;
 				if (currentScheduler != null && !currentScheduler.isShutdown())
 					scheduler.shutdownNow();
-
-				return "Simulazione interrotta.";
+				if (numCicli > 1)
+					return "Simulazione interrotta al ciclo num: "
+							+ numCicliAttuale
+							+ " , lo stato della simulazione è: "
+							+ statoEsecuzione;
+				else
+					return "Simulazione interrotta.";
 
 			} else {
 				return "La simulazione è già interrotta o non è mai stata eseguita.";

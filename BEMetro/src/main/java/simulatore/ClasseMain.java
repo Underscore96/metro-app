@@ -33,6 +33,9 @@ public class ClasseMain {
 	private static final String ASS = "assente";
 	private static final String PRES = "presente";
 
+	private ClasseMain() {
+	}
+
 	public static void main(String[] args) {
 		ScheduledExecutorService scheduler = Executors
 				.newScheduledThreadPool(1);
@@ -48,17 +51,21 @@ public class ClasseMain {
 	}
 
 	public static void updateData(String idSimulazione) {
-		Simulazione sim = null;
+		Simulazione sim = new Simulazione();
 		Integer numCicli = 1;
 		List<Simulazione> listSim = simulazioneDAO
 				.leggiDaIdSimulazione(idSimulazione);
 
 		if (listSim != null && !listSim.isEmpty()) {
 			sim = listSim.get(0);
-			if (sim.getNumCicli() != null)
+
+			if (sim.getNumCicli() != null) {
 				numCicli = sim.getNumCicli();
-			else
-				sim.setNumCicli(1);
+
+			}
+		} else {
+			sim.setNumCicli(1);
+			sim.setStatoEsecuzione(false);
 			simulazioneDAO.aggiornaSimulazione(sim);
 			numCicli = sim.getNumCicli();
 		}
@@ -76,7 +83,7 @@ public class ClasseMain {
 			FermataFEService.aggiornaFermataFE(fermataFE);
 		}
 		aggPosizioneMezzi(mezziPerFermata, numCicli);
-		if (sim != null) {
+		if (Boolean.TRUE.equals(sim.getStatoEsecuzione())) {
 			sim.setNumCicli(numCicli + 1);
 			simulazioneDAO.aggiornaSimulazione(sim);
 		}
@@ -147,7 +154,6 @@ public class ClasseMain {
 	private static void aggPosizioneMezzi(Map<Integer, Fermata> mezziPerFermata,
 			Integer numCicli) {
 		Set<Integer> setNumMezzi = mezziPerFermata.keySet();
-
 		if (numCicli == 1) {
 			Map<Integer, Fermata> mezziPerFermata1 = new HashMap<>();
 			Set<Integer> setNumMezzi1 = new HashSet<>();
@@ -161,7 +167,8 @@ public class ClasseMain {
 			setNumMezzi1.add(1);
 			setNumMezzi1.add(4);
 
-			aggiornaRelazioni(mezziPerFermata1, setNumMezzi1);
+			aggiornaRelazioniIniziali(mezziPerFermata1, setNumMezzi1);
+			return;
 		}
 		if (numCicli == 2) {
 			Map<Integer, Fermata> mezziPerFermata2 = new HashMap<>();
@@ -182,7 +189,8 @@ public class ClasseMain {
 			setNumMezzi2.add(5);
 			setNumMezzi2.add(4);
 
-			aggiornaRelazioni(mezziPerFermata2, setNumMezzi2);
+			aggiornaRelazioniIniziali(mezziPerFermata2, setNumMezzi2);
+			return;
 		}
 		if (numCicli == 3) {
 			Map<Integer, Fermata> mezziPerFermata3 = new HashMap<>();
@@ -212,6 +220,20 @@ public class ClasseMain {
 			aggiornaRelazioni(mezziPerFermata3, setNumMezzi3);
 		} else {
 			aggiornaRelazioni(mezziPerFermata, setNumMezzi);
+		}
+	}
+
+	private static void aggiornaRelazioniIniziali(
+			Map<Integer, Fermata> mezziPerFermata, Set<Integer> setNumMezzi) {
+
+		for (Integer numMezzo : setNumMezzi) {
+			Fermata fer = mezziPerFermata.get(numMezzo);
+
+			MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata(), numMezzo,
+					"rimuovi");
+
+			MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata() + 1,
+					numMezzo, "");
 		}
 	}
 

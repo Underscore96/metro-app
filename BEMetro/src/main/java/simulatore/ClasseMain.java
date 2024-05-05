@@ -1,6 +1,7 @@
 package simulatore;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,13 +14,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import db.dao.FermataDAO;
+import db.dao.LineaDAO;
 import db.dao.MezzoDAO;
 import db.dao.OrarioDAO;
 import db.dao.SimulazioneDAO;
 import db.entity.Fermata;
+import db.entity.Linea;
 import db.entity.Mezzo;
 import db.entity.Orario;
 import db.entity.Simulazione;
+import exception.CustomException;
+import jakarta.ws.rs.core.Response;
 import presentation.pojo.PojoFermataFE;
 import presentation.pojo.PojoOrarioFE;
 import service.FermataFEService;
@@ -29,9 +34,12 @@ public class ClasseMain {
 	private static MezzoDAO mezzoDAO = new MezzoDAO();
 	private static SimulazioneDAO simulazioneDAO = new SimulazioneDAO();
 	private static FermataDAO fermataDAO = new FermataDAO();
+	private static OrarioDAO orarioDAO = new OrarioDAO();
+	private static LineaDAO lineaDAO = new LineaDAO();
 	private static Random random = new Random();
 	private static final String ASS = "assente";
 	private static final String PRES = "presente";
+	private static final String RIM = "rimuovi";
 
 	private ClasseMain() {
 	}
@@ -157,8 +165,8 @@ public class ClasseMain {
 
 	private static void aggiornaOraAttuale(PojoFermataFE fermataFE) {
 		String stringaOrarioAttuale = fermataFE.getOrarioAttuale();
-		LocalDateTime OrarioAttuale = LocalDateTime.parse(stringaOrarioAttuale);
-		fermataFE.setOrarioAttuale(OrarioAttuale.plusMinutes(5).toString());
+		LocalDateTime orarioAttuale = LocalDateTime.parse(stringaOrarioAttuale);
+		fermataFE.setOrarioAttuale(orarioAttuale.plusMinutes(5).toString());
 	}
 
 	private static void aggPosizioneMezzi(Map<Integer, Fermata> mezziPerFermata,
@@ -227,7 +235,7 @@ public class ClasseMain {
 			setNumMezzi3.add(5);
 			setNumMezzi3.add(4);
 
-			aggiornaRelazioni(mezziPerFermata3, setNumMezzi3);
+			aggiornaRelazioniIniziali(mezziPerFermata3, setNumMezzi3);
 		} else {
 			aggiornaRelazioni(mezziPerFermata, setNumMezzi);
 		}
@@ -240,7 +248,7 @@ public class ClasseMain {
 			Fermata fer = mezziPerFermata.get(numMezzo);
 
 			MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata(), numMezzo,
-					"rimuovi");
+					RIM);
 
 			MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata() + 1,
 					numMezzo, "");
@@ -253,15 +261,62 @@ public class ClasseMain {
 		for (Integer numMezzo : setNumMezzi) {
 			fer = mezziPerFermata.get(numMezzo);
 
+			if (fer.getNumFermata() == 8) {
+				MezzoService.aggiornaRelazioneMezzo(8, numMezzo, RIM);
+				MezzoService.aggiornaRelazioneMezzo(9, numMezzo, "");
+				generaOrari(numMezzo, "Brignole");
+			}
 			if (fer.getNumFermata() == 16) {
-				MezzoService.aggiornaRelazioneMezzo(16, numMezzo, "rimuovi");
+				MezzoService.aggiornaRelazioneMezzo(16, numMezzo, RIM);
 				MezzoService.aggiornaRelazioneMezzo(1, numMezzo, "");
+				generaOrari(numMezzo, "Brin");
 			} else {
 				MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata(),
-						numMezzo, "rimuovi");
+						numMezzo, RIM);
 				MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata() + 1,
 						numMezzo, "");
 			}
+		}
+	}
+
+	private static void generaOrari(Integer numMezzo, String direzione) {
+		List<Mezzo> listaMezzi = mezzoDAO.leggiDaNumMezzo(numMezzo);
+		List<Orario> listaOrari = new ArrayList<>();
+		Mezzo mezzo = null;
+		Integer numFermata = null;
+		List<Fermata> fermateTrovate = null;
+		Integer index = 0;
+		Linea linea;
+		if (listaMezzi != null && !listaMezzi.isEmpty()) {
+			mezzo = listaMezzi.get(0);
+		}
+
+		List<Linea> lineeTrovate = lineaDAO.trovaConAttributi(direzione);
+
+		if (lineeTrovate != null && !lineeTrovate.isEmpty()) {
+			linea = lineeTrovate.get(0);
+			fermateTrovate = linea.getFermate();
+		}
+
+		if (mezzo != null && mezzo.getOrari() != null) {
+			for (Orario orario : mezzo.getOrari()) {
+				orario.setOrarioPrevisto(
+						orario.getOrarioPrevisto().plusMinutes(40));
+				orario.setRitardo(orario.getRitardo().plusMinutes(40));
+
+				if (fermateTrovate != null)
+					numFermata = fermateTrovate.get(index).getNumFermata();
+				else
+					throw new CustomException(
+							"ERRORE NELL'AGGIORNAMENTO DEGLI ORARI",
+							Response.Status.NOT_FOUND);
+				orario.setNumFermata(numFermata);
+				orarioDAO.aggiorna(orario);
+				listaOrari.add(orario);
+				index++;
+			}
+			mezzo.setOrari(listaOrari);
+			mezzoDAO.aggiorna(mezzo);
 		}
 	}
 }

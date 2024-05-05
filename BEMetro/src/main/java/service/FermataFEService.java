@@ -178,12 +178,10 @@ public class FermataFEService {
 
 		try {
 			for (Mezzo m : listaMezzi) {
-
 				if (m.getFermataAttuale().getLinea().getDirezione()
 						.equals(fermata.getLinea().getDirezione())) {
 					listaOrari = m.getOrari();
 				}
-
 				if (listaOrari != null && !listaOrari.isEmpty()) {
 
 					for (Orario orario : listaOrari) {

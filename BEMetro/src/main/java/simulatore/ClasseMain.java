@@ -76,7 +76,7 @@ public class ClasseMain {
 
 		for (PojoFermataFE fermataFE : elencoFermate) {
 
-			aggiornaOrariFermata(fermataFE);			
+			aggiornaOrariFermata(fermataFE);
 			previsioneMeteo(fermataFE);
 			registraPosizioneMezzi(mezziPerFermata, fermataFE);
 			aggiornaOraAttuale(fermataFE);
@@ -88,10 +88,6 @@ public class ClasseMain {
 			sim.setNumCicli(numCicli + 1);
 			simulazioneDAO.aggiornaSimulazione(sim);
 		}
-	}
-
-	private static void aggiornaOraAttuale(PojoFermataFE fermataFE) {
-		fermataFE.getOrarioAttuale();
 	}
 
 	private static void aggiornaOrariFermata(PojoFermataFE fermata) {
@@ -157,6 +153,12 @@ public class ClasseMain {
 		if (fermataFE.getPosizioneMezzo().equals(PRES)) {
 			fermataFE.setPosizioneMezzo(ASS);
 		}
+	}
+
+	private static void aggiornaOraAttuale(PojoFermataFE fermataFE) {
+		String stringaOrarioAttuale = fermataFE.getOrarioAttuale();
+		LocalDateTime OrarioAttuale = LocalDateTime.parse(stringaOrarioAttuale);
+		fermataFE.setOrarioAttuale(OrarioAttuale.plusMinutes(5).toString());
 	}
 
 	private static void aggPosizioneMezzi(Map<Integer, Fermata> mezziPerFermata,

@@ -266,7 +266,7 @@ public class InizializzaDb {
 			ora = LocalTime.of(8, minuti);
 			dataOra = LocalDateTime.of(data, ora);
 
-			minuti = minuti + 10;
+			minuti = minuti + 5;
 			minList.add(minuti);
 			minList.add(mezzo.getNumMezzo());
 

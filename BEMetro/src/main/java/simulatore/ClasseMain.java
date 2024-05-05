@@ -76,10 +76,11 @@ public class ClasseMain {
 
 		for (PojoFermataFE fermataFE : elencoFermate) {
 
-			aggiornaOrariFermata(fermataFE);
-			fermataFE.setPrevisioneMeteo(previsioneMeteo());
-
+			aggiornaOrariFermata(fermataFE);			
+			previsioneMeteo(fermataFE);
 			registraPosizioneMezzi(mezziPerFermata, fermataFE);
+			aggiornaOraAttuale(fermataFE);
+
 			FermataFEService.aggiornaFermataFE(fermataFE);
 		}
 		aggPosizioneMezzi(mezziPerFermata, numCicli);
@@ -87,6 +88,10 @@ public class ClasseMain {
 			sim.setNumCicli(numCicli + 1);
 			simulazioneDAO.aggiornaSimulazione(sim);
 		}
+	}
+
+	private static void aggiornaOraAttuale(PojoFermataFE fermataFE) {
+		fermataFE.getOrarioAttuale();
 	}
 
 	private static void aggiornaOrariFermata(PojoFermataFE fermata) {
@@ -124,18 +129,21 @@ public class ClasseMain {
 		fermata.setOrariMezzi(elencoOrariFermata);
 	}
 
-	private static String previsioneMeteo() {
-		Integer meteo = random.nextInt(3);
+	private static void previsioneMeteo(PojoFermataFE fermataFE) {
+		Integer randomGenerator = random.nextInt(3);
 
-		switch (meteo) {
+		switch (randomGenerator) {
 			case 1 :
-				return "pioggia";
+				fermataFE.setPrevisioneMeteo("pioggia");
+				break;
 			case 2 :
-				return "sole";
+				fermataFE.setPrevisioneMeteo("sole");
+				break;
 			case 3 :
-				return "nuvolo";
+				fermataFE.setPrevisioneMeteo("nuvolo");
+				break;
 			default :
-				return "sole";
+				fermataFE.setPrevisioneMeteo("sole");
 		}
 	}
 

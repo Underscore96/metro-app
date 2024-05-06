@@ -10,6 +10,7 @@ public class MezzoBuilder {
 	private String idMezzo;
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
+	private String stato;
 	private Fermata fermataAttuale;
 	private List<Orario> orari;
 
@@ -25,6 +26,11 @@ public class MezzoBuilder {
 
 	public MezzoBuilder setNumMaxPasseggeri(Integer numMaxPasseggeri) {
 		this.numMaxPasseggeri = numMaxPasseggeri;
+		return this;
+	}
+
+	public MezzoBuilder setStato(String stato) {
+		this.stato = stato;
 		return this;
 	}
 
@@ -44,6 +50,7 @@ public class MezzoBuilder {
 		nuovoMezzo.setIdMezzo(idMezzo);
 		nuovoMezzo.setNumMezzo(numMezzo);
 		nuovoMezzo.setNumMaxPasseggeri(numMaxPasseggeri);
+		nuovoMezzo.setStato(stato);
 		nuovoMezzo.setFermataAttuale(fermataAttuale);
 		nuovoMezzo.setOrari(orari);
 

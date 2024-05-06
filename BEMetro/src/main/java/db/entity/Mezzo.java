@@ -32,6 +32,9 @@ public class Mezzo {
 	@Column(name = "numMaxPasseggeri", length = 10, nullable = true, unique = false)
 	private Integer numMaxPasseggeri;
 
+	@Column(name = "stato", length = 20, nullable = true, unique = false)
+	private String stato;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idFermata")
 	@JsonBackReference
@@ -76,8 +79,20 @@ public class Mezzo {
 		this.numMaxPasseggeri = numMaxPasseggeri;
 	}
 
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
 	public Fermata getFermataAttuale() {
 		return fermataAttuale;
+	}
+
+	public void setFermataAttuale(Fermata fermataAttuale) {
+		this.fermataAttuale = fermataAttuale;
 	}
 
 	public List<Orario> getOrari() {
@@ -88,13 +103,11 @@ public class Mezzo {
 		this.orari = orari;
 	}
 
-	public void setFermataAttuale(Fermata fermataAttuale) {
-		this.fermataAttuale = fermataAttuale;
-	}
-
 	@Override
 	public String toString() {
 		return "Mezzo [idMezzo=" + idMezzo + ", numMezzo=" + numMezzo
-				+ ", numMaxPasseggeri=" + numMaxPasseggeri + ", orari=" + orari + "]";
+				+ ", numMaxPasseggeri=" + numMaxPasseggeri + ", stato=" + stato
+				+ ", fermataAttuale=" + fermataAttuale + ", orari=" + orari
+				+ "]";
 	}
 }

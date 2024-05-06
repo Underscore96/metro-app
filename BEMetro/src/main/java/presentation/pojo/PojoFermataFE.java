@@ -12,7 +12,7 @@ public class PojoFermataFE {
 	private String previsioneMeteo;
 	private String posizioneMezzo;
 	private Integer numMezzi;
-	private List<Integer> listaNumMezzi;
+	private List<PojoStatoMezzoFE> statiMezzi;
 	private List<PojoOrarioFE> orariMezzi;
 
 	public PojoFermataFE() {
@@ -21,7 +21,7 @@ public class PojoFermataFE {
 	public PojoFermataFE(Integer id, Integer numFermata, String nomeFermata,
 			String nomeLinea, String direzione, String orarioAttuale,
 			String previsioneMeteo, Integer numMezzi,
-			List<Integer> listaNumMezzi, String posizioneMezzo) {
+			List<PojoStatoMezzoFE> statiMezzi, String posizioneMezzo) {
 		super();
 		this.id = id;
 		this.numFermata = numFermata;
@@ -31,7 +31,7 @@ public class PojoFermataFE {
 		this.orarioAttuale = orarioAttuale;
 		this.previsioneMeteo = previsioneMeteo;
 		this.numMezzi = numMezzi;
-		this.listaNumMezzi = listaNumMezzi;
+		this.statiMezzi = statiMezzi;
 		this.posizioneMezzo = posizioneMezzo;
 	}
 
@@ -107,12 +107,12 @@ public class PojoFermataFE {
 		this.numMezzi = numMezzi;
 	}
 
-	public List<Integer> getListaNumMezzi() {
-		return listaNumMezzi;
+	public List<PojoStatoMezzoFE> getStatiMezzi() {
+		return statiMezzi;
 	}
 
-	public void setListaNumMezzi(List<Integer> listaNumMezzi) {
-		this.listaNumMezzi = listaNumMezzi;
+	public void setStatiMezzi(List<PojoStatoMezzoFE> statiMezzi) {
+		this.statiMezzi = statiMezzi;
 	}
 
 	public List<PojoOrarioFE> getOrariMezzi() {
@@ -130,7 +130,7 @@ public class PojoFermataFE {
 				+ ", direzione=" + direzione + ", orarioAttuale="
 				+ orarioAttuale + ", previsioneMeteo=" + previsioneMeteo
 				+ ", posizioneMezzo=" + posizioneMezzo + ", numMezzi="
-				+ numMezzi + ", listaNumMezzi=" + listaNumMezzi
-				+ ", orariMezzi=" + orariMezzi + "]";
+				+ numMezzi + ", statiMezzi=" + statiMezzi + ", orariMezzi="
+				+ orariMezzi + "]";
 	}
 }

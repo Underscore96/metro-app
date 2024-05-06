@@ -21,6 +21,7 @@ import presentation.pojo.PojoFermata;
 import presentation.pojo.PojoFermataFE;
 import presentation.pojo.PojoLinea;
 import presentation.pojo.PojoOrarioFE;
+import presentation.pojo.PojoStatoMezzoFE;
 import service.builder.PojoFermataBuilder;
 import service.builder.PojoFermataFEBuilder;
 import service.builder.PojoLineaBuilder;
@@ -139,7 +140,7 @@ public class FermataFEService {
 				linea = listaLineeTrovate.get(0);
 			}
 
-			posizione = presenzaMezzo(fermata);
+			posizione = fermata.getPosMezzo();
 
 			risultato = new PojoFermataFEBuilder().setId(id)
 					.setNumFermata(numFermata).setNomeFermata(fermata.getNome())
@@ -148,7 +149,7 @@ public class FermataFEService {
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
 					.setPosizioneMezzo(posizione)
 					.setNumMezzi(fermata.getMezzi().size())
-					.setListaNumMezzi(generaListaMezzi(fermata))
+					.setStatiMezzi(generaStatiMezzi(fermata))
 					.setOrariMezzi(stimaTempiPrevisti(fermata)).costruisci();
 
 		} catch (NullPointerException e) {
@@ -172,15 +173,19 @@ public class FermataFEService {
 		return risultato;
 	}
 
-	private static List<Integer> generaListaMezzi(Fermata fermata) {
-		List<Integer> listaNumMezzi = new ArrayList<>();
+	private static List<PojoStatoMezzoFE> generaStatiMezzi(Fermata fermata) {
+		List<PojoStatoMezzoFE> listaStatiMezzi = new ArrayList<>();
 		List<Mezzo> listaMezzi;
 		listaMezzi = fermata.getMezzi();
 
 		for (Mezzo m : listaMezzi) {
-			listaNumMezzi.add(m.getNumMezzo());
+			PojoStatoMezzoFE statoMezzo = new PojoStatoMezzoFE();
+			statoMezzo.setIdMezzo(m.getNumMezzo());
+			statoMezzo.setStato(m.getStato());
+
+			listaStatiMezzi.add(statoMezzo);
 		}
-		return listaNumMezzi;
+		return listaStatiMezzi;
 	}
 
 	private static List<PojoOrarioFE> stimaTempiPrevisti(Fermata fermata) {
@@ -220,20 +225,6 @@ public class FermataFEService {
 		}
 
 		return listaTempiArrivo;
-	}
-
-	private static String presenzaMezzo(Fermata fermata) {
-		String posizione;
-		List<Integer> listaNumFermata = new ArrayList<>();
-		fermata.getMezzi().forEach(m -> listaNumFermata
-				.add(m.getFermataAttuale().getNumFermata()));
-
-		if (!listaNumFermata.isEmpty()) {
-			posizione = "presente";
-		} else {
-			posizione = "assente";
-		}
-		return posizione;
 	}
 
 	public static String rimuoviFermataFE(PojoFermataFE fermataFE,

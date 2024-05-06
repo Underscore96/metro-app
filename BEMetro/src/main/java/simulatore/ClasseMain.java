@@ -19,6 +19,7 @@ import db.entity.Orario;
 import db.entity.Simulazione;
 import presentation.pojo.PojoFermataFE;
 import presentation.pojo.PojoOrarioFE;
+import presentation.pojo.PojoStatoMezzoFE;
 import service.FermataFEService;
 
 public class ClasseMain {
@@ -145,7 +146,11 @@ public class ClasseMain {
 			mezziPerFermata.put(m.getNumMezzo(), m.getFermataAttuale());
 		}
 
-		if (fermataFE.getPosizioneMezzo().equals(PRES)) {
+		List<PojoStatoMezzoFE> listastatiMezzi = fermataFE.getStatiMezzi();
+
+		if (!listastatiMezzi.isEmpty()) {
+			fermataFE.setPosizioneMezzo(PRES);
+		} else {
 			fermataFE.setPosizioneMezzo(ASS);
 		}
 	}

@@ -9,6 +9,7 @@ import presentation.pojo.PojoMezzo;
 public class PojoMezzoBuilder {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
+	private String stato;
 	private Fermata fermataAttuale;
 	private List<Orario> orari;
 
@@ -19,6 +20,11 @@ public class PojoMezzoBuilder {
 
 	public PojoMezzoBuilder setNumMaxPasseggeri(Integer numMaxPasseggeri) {
 		this.numMaxPasseggeri = numMaxPasseggeri;
+		return this;
+	}
+
+	public PojoMezzoBuilder setStato(String stato) {
+		this.stato = stato;
 		return this;
 	}
 
@@ -37,6 +43,7 @@ public class PojoMezzoBuilder {
 
 		nuovoMezzo.setNumMezzo(numMezzo);
 		nuovoMezzo.setNumMaxPasseggeri(numMaxPasseggeri);
+		nuovoMezzo.setStato(stato);
 		nuovoMezzo.setFermataAttuale(fermataAttuale);
 		nuovoMezzo.setOrari(orari);
 

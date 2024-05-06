@@ -8,8 +8,9 @@ import db.entity.Orario;
 public class PojoMezzo {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
-	private List<Orario> orari;
+	private String stato;
 	private Fermata fermataAttuale;
+	private List<Orario> orari;
 
 	public PojoMezzo() {
 	}
@@ -37,12 +38,12 @@ public class PojoMezzo {
 		this.numMaxPasseggeri = numMaxPasseggeri;
 	}
 
-	public List<Orario> getOrari() {
-		return orari;
+	public String getStato() {
+		return stato;
 	}
 
-	public void setOrari(List<Orario> orari) {
-		this.orari = orari;
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 
 	public Fermata getFermataAttuale() {
@@ -53,10 +54,18 @@ public class PojoMezzo {
 		this.fermataAttuale = fermataAttuale;
 	}
 
+	public List<Orario> getOrari() {
+		return orari;
+	}
+
+	public void setOrari(List<Orario> orari) {
+		this.orari = orari;
+	}
+
 	@Override
 	public String toString() {
 		return "PojoMezzo [numMezzo=" + numMezzo + ", numMaxPasseggeri="
-				+ numMaxPasseggeri + ", orari=" + orari + ", fermataAttuale="
-				+ fermataAttuale + "]";
+				+ numMaxPasseggeri + ", stato=" + stato + ", fermataAttuale="
+				+ fermataAttuale + ", orari=" + orari + "]";
 	}
 }

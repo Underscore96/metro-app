@@ -36,6 +36,9 @@ public class InizializzaDb {
 	private OrarioDAO orarioDAO = new OrarioDAO();
 	private static final String[] NOMI_FERMATE = {"Brignole", "De Ferrari",
 			"Sarzano", "San Giorgio", "Darsena", "Principe", "Dinegro", "Brin"};
+	private static final String[] NOMI_FERMATE_REVERSE = {"Brin", "Dinegro",
+			"Principe", "Darsena", "San Giorgio", "Sarzano", "De Ferrari",
+			"Brignole"};
 
 	public Object[] inizDb() {
 		Object[] dbData = new Object[5];
@@ -210,14 +213,12 @@ public class InizializzaDb {
 	private List<PojoFermata> relazioniFermateLinee(List<Fermata> listaFermate,
 			List<Linea> listalinee) {
 		List<PojoFermata> listaPojoFermate = new ArrayList<>();
-		String[] listaNomiFermate = {"Brignole", "De Ferrari", "Sarzano",
-				"San Giorgio", "Darsena", "Principe", "Dinegro", "Brin"};
 		Integer numFermata;
 
 		if (listaFermate != null && listalinee != null) {
 			for (Fermata fermata : listaFermate) {
 				numFermata = fermata.getNumFermata();
-				if (numFermata <= listaNomiFermate.length)
+				if (numFermata <= NOMI_FERMATE.length)
 					listaPojoFermate.add(FermataService
 							.aggiornaRelazioneFermata(numFermata, "blu"));
 				else
@@ -252,7 +253,6 @@ public class InizializzaDb {
 		Integer minuti = 0;
 		Integer contatoreNumOrario = 1;
 		List<Orario> listaOrari = new ArrayList<>();
-		List<Integer> minList = new ArrayList<>();
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
 
 		LocalDate data = LocalDate.now();
@@ -266,9 +266,10 @@ public class InizializzaDb {
 			ora = LocalTime.of(8, minuti);
 			dataOra = LocalDateTime.of(data, ora);
 
-			minuti = minuti + 5;
-			minList.add(minuti);
-			minList.add(mezzo.getNumMezzo());
+			if (mezzo.getNumMezzo() == 1 || mezzo.getNumMezzo() == 4)
+				minuti = minuti + 15;
+			else
+				minuti = minuti + 10;
 
 			if (mezzo.getNumMezzo() == 3)
 				minuti = 0;
@@ -279,23 +280,16 @@ public class InizializzaDb {
 		return listaOrari;
 	}
 
-	private Integer trovaNumFermata(String direzioneMezzo, String nomeFermata) {
-		Integer numFermata = null;
-		List<Fermata> fermateTrovate = fermataDAO
-				.trovaConAttributi(nomeFermata);
-
-		for (Fermata fermata : fermateTrovate) {
-			if (direzioneMezzo.equals(fermata.getLinea().getDirezione()))
-				numFermata = fermata.getNumFermata();
-		}
-
-		return numFermata;
-	}
-
 	private Integer creaOrario(Integer contatoreNumOrario,
 			List<Orario> listaOrari, LocalDate data, LocalTime ora,
 			LocalDateTime dataOra, Mezzo mezzo, String direzioneMezzo) {
-		for (String nomeFermata : NOMI_FERMATE) {
+		String[] arrNomi;
+		if (direzioneMezzo.equals("Brignole"))
+			arrNomi = NOMI_FERMATE_REVERSE;
+		else
+			arrNomi = NOMI_FERMATE;
+
+		for (String nomeFermata : arrNomi) {
 			Integer numFermata = trovaNumFermata(direzioneMezzo, nomeFermata);
 			Orario orario = new Orario();
 
@@ -318,13 +312,26 @@ public class InizializzaDb {
 
 			listaOrari.add(orario);
 
-			if (!nomeFermata.equals(NOMI_FERMATE[NOMI_FERMATE.length - 1])) {
-				ora = ora.plusMinutes(5);
+			if (!nomeFermata.equals(arrNomi[arrNomi.length - 1])) {
+				ora = ora.plusMinutes(10);
 				dataOra = LocalDateTime.of(data, ora);
 			}
 
 			contatoreNumOrario++;
 		}
 		return contatoreNumOrario;
+	}
+
+	private Integer trovaNumFermata(String direzioneMezzo, String nomeFermata) {
+		Integer numFermata = null;
+		List<Fermata> fermateTrovate = fermataDAO
+				.trovaConAttributi(nomeFermata);
+
+		for (Fermata fermata : fermateTrovate) {
+			if (direzioneMezzo.equals(fermata.getLinea().getDirezione()))
+				numFermata = fermata.getNumFermata();
+		}
+
+		return numFermata;
 	}
 }

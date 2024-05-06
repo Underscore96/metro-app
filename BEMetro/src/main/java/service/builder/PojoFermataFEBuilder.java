@@ -4,6 +4,7 @@ import java.util.List;
 
 import presentation.pojo.PojoFermataFE;
 import presentation.pojo.PojoOrarioFE;
+import presentation.pojo.PojoStatoMezzoFE;
 
 public class PojoFermataFEBuilder {
 	private Integer id;
@@ -15,7 +16,7 @@ public class PojoFermataFEBuilder {
 	private String previsioneMeteo;
 	private String posizioneMezzo;
 	private Integer numMezzi;
-	private List<Integer> listaNumMezzi;
+	private List<PojoStatoMezzoFE> statiMezzi;
 	private List<PojoOrarioFE> orariMezzi;
 
 	public PojoFermataFEBuilder setId(Integer id) {
@@ -63,8 +64,9 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setListaNumMezzi(List<Integer> listaNumMezzi) {
-		this.listaNumMezzi = listaNumMezzi;
+	public PojoFermataFEBuilder setStatiMezzi(
+			List<PojoStatoMezzoFE> statiMezzi) {
+		this.statiMezzi = statiMezzi;
 		return this;
 	}
 
@@ -85,7 +87,7 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setPrevisioneMeteo(previsioneMeteo);
 		nuovoPojoFermataFE.setOrariMezzi(orariMezzi);
 		nuovoPojoFermataFE.setNumMezzi(numMezzi);
-		nuovoPojoFermataFE.setListaNumMezzi(listaNumMezzi);
+		nuovoPojoFermataFE.setStatiMezzi(statiMezzi);
 		nuovoPojoFermataFE.setPosizioneMezzo(posizioneMezzo);
 
 		return nuovoPojoFermataFE;

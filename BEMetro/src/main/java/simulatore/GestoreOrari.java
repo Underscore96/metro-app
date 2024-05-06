@@ -40,8 +40,8 @@ public class GestoreOrari {
 		if (mezzo != null && mezzo.getOrari() != null) {
 			for (Orario orario : mezzo.getOrari()) {
 				orario.setOrarioPrevisto(
-						orario.getOrarioPrevisto().plusMinutes(40));
-				orario.setRitardo(orario.getRitardo().plusMinutes(40));
+						orario.getOrarioPrevisto().plusMinutes(85));
+				orario.setRitardo(orario.getRitardo().plusMinutes(85));
 
 				if (fermateTrovate != null)
 					numFermata = fermateTrovate.get(index).getNumFermata();

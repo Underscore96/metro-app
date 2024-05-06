@@ -1,26 +1,32 @@
 [
 	{
 		"numMezzo": 1,
-		"numMaxPasseggeri": 100
+		"numMaxPasseggeri": 100,
+		"stato": "in stazione"
 	},
 	{
 		"numMezzo": 2,
-		"numMaxPasseggeri": 100
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo"
 	},
 	{
 		"numMezzo": 3,
-		"numMaxPasseggeri": 100
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo"
 	},
 	{
 		"numMezzo": 4,
-		"numMaxPasseggeri": 100
+		"numMaxPasseggeri": 100,
+		"stato": "in stazione"
 	},
 	{
 		"numMezzo": 5,
-		"numMaxPasseggeri": 100
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo"
 	},
 	{
 		"numMezzo": 6,
-		"numMaxPasseggeri": 100
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo"
 	}
 ]

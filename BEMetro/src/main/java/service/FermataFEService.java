@@ -148,6 +148,7 @@ public class FermataFEService {
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
 					.setPosizioneMezzo(posizione)
 					.setNumMezzi(fermata.getMezzi().size())
+					.setListaNumMezzi(generaListaMezzi(fermata))
 					.setOrariMezzi(stimaTempiPrevisti(fermata)).costruisci();
 
 		} catch (NullPointerException e) {
@@ -169,6 +170,17 @@ public class FermataFEService {
 		}
 
 		return risultato;
+	}
+
+	private static List<Integer> generaListaMezzi(Fermata fermata) {
+		List<Integer> listaNumMezzi = new ArrayList<>();
+		List<Mezzo> listaMezzi;
+		listaMezzi = fermata.getMezzi();
+
+		for (Mezzo m : listaMezzi) {
+			listaNumMezzi.add(m.getNumMezzo());
+		}
+		return listaNumMezzi;
 	}
 
 	private static List<PojoOrarioFE> stimaTempiPrevisti(Fermata fermata) {

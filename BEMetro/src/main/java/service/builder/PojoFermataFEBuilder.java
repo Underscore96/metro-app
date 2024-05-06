@@ -15,6 +15,7 @@ public class PojoFermataFEBuilder {
 	private String previsioneMeteo;
 	private String posizioneMezzo;
 	private Integer numMezzi;
+	private List<Integer> listaNumMezzi;
 	private List<PojoOrarioFE> orariMezzi;
 
 	public PojoFermataFEBuilder setId(Integer id) {
@@ -27,8 +28,8 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setOrariMezzi(List<PojoOrarioFE> orariMezzi) {
-		this.orariMezzi = orariMezzi;
+	public PojoFermataFEBuilder setNomeFermata(String nomeFermata) {
+		this.nomeFermata = nomeFermata;
 		return this;
 	}
 
@@ -52,8 +53,8 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setNomeFermata(String nomeFermata) {
-		this.nomeFermata = nomeFermata;
+	public PojoFermataFEBuilder setPosizioneMezzo(String posizioneMezzo) {
+		this.posizioneMezzo = posizioneMezzo;
 		return this;
 	}
 
@@ -62,8 +63,13 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setPosizioneMezzo(String posizioneMezzo) {
-		this.posizioneMezzo = posizioneMezzo;
+	public PojoFermataFEBuilder setListaNumMezzi(List<Integer> listaNumMezzi) {
+		this.listaNumMezzi = listaNumMezzi;
+		return this;
+	}
+
+	public PojoFermataFEBuilder setOrariMezzi(List<PojoOrarioFE> orariMezzi) {
+		this.orariMezzi = orariMezzi;
 		return this;
 	}
 
@@ -79,6 +85,7 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setPrevisioneMeteo(previsioneMeteo);
 		nuovoPojoFermataFE.setOrariMezzi(orariMezzi);
 		nuovoPojoFermataFE.setNumMezzi(numMezzi);
+		nuovoPojoFermataFE.setListaNumMezzi(listaNumMezzi);
 		nuovoPojoFermataFE.setPosizioneMezzo(posizioneMezzo);
 
 		return nuovoPojoFermataFE;

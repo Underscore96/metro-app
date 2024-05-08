@@ -11,6 +11,7 @@ import { TimebarComponent } from "../timebar/timebar.component";
 import * as d3 from 'd3';
 import { MatCardModule } from '@angular/material/card';
 import moment from 'moment';
+import { MapComponent } from "../map/map.component";
 
 
 @Component({
@@ -18,7 +19,7 @@ import moment from 'moment';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule, TimebarComponent, MatCardModule]
+    imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule, TimebarComponent, MatCardModule, MapComponent]
 })
 export class HomeComponent implements OnInit{
 
@@ -27,6 +28,8 @@ export class HomeComponent implements OnInit{
   isTableOpen: boolean = false;
   lastFetchTimestamp: any;
   direction: 'forward' | 'backward' | null = null; 
+  showMap: boolean = false;
+
 
   
 
@@ -91,5 +94,15 @@ getDirection(): 'forward' | 'backward' | null {
   return null;
 }
 
+isArrivalTimeGreaterThanCurrentTime(arrivalTime: string, orarioAttuale: string): boolean {
+  const arrival = moment(arrivalTime);
+  const currentTime = moment(orarioAttuale);
+  return arrival.isBefore(currentTime);
+}
+
+
+toggleMapVisibility(): void {
+  this.showMap = !this.showMap;
+}
 }
 

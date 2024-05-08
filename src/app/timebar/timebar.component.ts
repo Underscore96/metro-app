@@ -56,6 +56,11 @@ fermataData: any[] = [];
     const line = d3.line<any>()
       .x((d, i) => x(i))
       .y(y);
+
+   
+
+
+      
       
     const path = g.append('path')
       .datum(filteredFermataData)
@@ -70,11 +75,41 @@ fermataData: any[] = [];
       .attr('class', 'dot')
       .attr('transform', (d, i) => `translate(${x(i)}, ${y})`);
 
-    dots.append('circle')
+      const colorScale = d3.scaleOrdinal()
+      .domain(filteredFermataData.flatMap(d => d.statiMezzi))
+      .range(['purple', 'green', 'yellow']);
+  
+      dots.append('circle')
       .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', 5)
-      .style('fill', d => d.posizioneMezzo === 'presente' ? 'yellow' : 'steelblue' );
+      .attr('fill', function(this: SVGCircleElement, d: any): any {
+          const posizioneMezzo = d.posizioneMezzo;
+          if (posizioneMezzo === "presente") {
+              const idMezzi = d.statiMezzi;
+              if (idMezzi && posizioneMezzo) {
+             
+                  const color = colorScale(idMezzi);
+                  return color;
+              }
+          } else if (posizioneMezzo === "assente") {
+              
+              return 'steelblue';
+          }
+          
+      });
+
+
+   
+   
+
+
+   
+
+     
+   
+     
+
      
 
       dots.append('text')
@@ -107,6 +142,8 @@ fermataData: any[] = [];
         }
         return null; 
       });
+
+    
 
       dots.each((d, i, nodes) => {
         if (i < nodes.length - 1) {

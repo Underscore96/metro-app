@@ -4,7 +4,6 @@
 
 
 
-
   
 
 
@@ -31,9 +30,8 @@
             <td>{{ fermata.direzione }}</td>
             <td>
               <ng-container *ngFor="let arrival of fermata.orariMezzi">
-                <li>
+                <li [style.background-color]="isArrivalTimeGreaterThanCurrentTime(arrival.orarioPrevisto, fermata.orarioAttuale) ? 'red' : 'transparent'">
                   <span>{{ formatArrivalTime(arrival.orarioPrevisto) }}</span>
-                  <!-- <span class="delay">{{ formatDelayTime(arrival.ritardo, arrival.orarioPrevisto) }}</span> -->
                 </li> 
               </ng-container>
             </td>
@@ -64,6 +62,7 @@
             umbrella</mat-icon>
             <mat-icon *ngIf="fermata.previsioneMeteo === 'nuvolo'">
               wb_cloudy</mat-icon>
+          
 
               <td colspan="5" class="timebar-cell">
                 <app-timebar [direction]="getDirection()"></app-timebar>
@@ -71,6 +70,7 @@
                 <td class="card"> Info:
                     <p>➤  Direzione</p>
                     <p>🟡 la metro è qui</p>
+                  
                    </td>
             
 
@@ -97,3 +97,10 @@
   <div class="ties"></div>
   <div class="ties"></div>
 </div>
+
+
+
+<app-map *ngIf="showMap"></app-map>
+<span class="material-symbols-outlined" (click)="toggleMapVisibility()">
+  map
+</span>

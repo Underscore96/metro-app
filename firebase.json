@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/metro-app",
+    "public": "dist/metro-app/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

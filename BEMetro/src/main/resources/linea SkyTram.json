@@ -1,0 +1,18 @@
+[
+	{
+		"nomeLinea": "verde",
+		"direzione": "Brignole"
+	},
+	{
+		"nomeLinea": "blu",
+		"direzione": "Brin"
+	},
+	{
+		"nomeLinea": "rossa",
+		"direzione": "Brignole"
+	},
+	{
+		"nomeLinea": "gialla",
+		"direzione": "Molassana"
+	}
+]

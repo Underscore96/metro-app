@@ -16,7 +16,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Fermate")
 public class Fermata {
@@ -51,9 +59,6 @@ public class Fermata {
 	@JsonIgnore
 	private List<Mezzo> mezzi;
 
-	public Fermata() {
-	}
-
 	public Fermata(String idFermata, Integer numFermata, String nome,
 			String orarioAttuale, String previsioneMeteo, String posMezzo) {
 		super();
@@ -63,77 +68,5 @@ public class Fermata {
 		this.orarioAttuale = orarioAttuale;
 		this.previsioneMeteo = previsioneMeteo;
 		this.posMezzo = posMezzo;
-	}
-
-	public String getIdFermata() {
-		return idFermata;
-	}
-
-	public void setIdFermata(String idFermata) {
-		this.idFermata = idFermata;
-	}
-
-	public Integer getNumFermata() {
-		return numFermata;
-	}
-
-	public void setNumFermata(Integer numFermata) {
-		this.numFermata = numFermata;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getOrarioAttuale() {
-		return orarioAttuale;
-	}
-
-	public void setOrarioAttuale(String orarioAttuale) {
-		this.orarioAttuale = orarioAttuale;
-	}
-
-	public String getPrevisioneMeteo() {
-		return previsioneMeteo;
-	}
-
-	public void setPrevisioneMeteo(String previsioneMeteo) {
-		this.previsioneMeteo = previsioneMeteo;
-	}
-
-	public Linea getLinea() {
-		return linea;
-	}
-
-	public void setLinea(Linea linea) {
-		this.linea = linea;
-	}
-
-	public List<Mezzo> getMezzi() {
-		return mezzi;
-	}
-
-	public void setMezzi(List<Mezzo> mezzi) {
-		this.mezzi = mezzi;
-	}
-
-	public String getPosMezzo() {
-		return posMezzo;
-	}
-
-	public void setPosMezzo(String posMezzo) {
-		this.posMezzo = posMezzo;
-	}
-
-	@Override
-	public String toString() {
-		return "Fermata [idFermata=" + idFermata + ", numFermata=" + numFermata
-				+ ", nome=" + nome + ", orarioAttuale=" + orarioAttuale
-				+ ", previsioneMeteo=" + previsioneMeteo + ", posMezzo="
-				+ posMezzo + ", linea=" + linea + ", mezzi=" + mezzi + "]";
 	}
 }

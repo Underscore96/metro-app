@@ -16,7 +16,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "mezzi")
 public class Mezzo {
@@ -45,69 +53,10 @@ public class Mezzo {
 	@JsonIgnore
 	private List<Orario> orari;
 
-	public Mezzo() {
-	}
-
 	public Mezzo(String idMezzo, Integer numMezzo, Integer numMaxPasseggeri) {
 		super();
 		this.idMezzo = idMezzo;
 		this.numMezzo = numMezzo;
 		this.numMaxPasseggeri = numMaxPasseggeri;
-	}
-
-	public String getIdMezzo() {
-		return idMezzo;
-	}
-
-	public void setIdMezzo(String idMezzo) {
-		this.idMezzo = idMezzo;
-	}
-
-	public Integer getNumMezzo() {
-		return numMezzo;
-	}
-
-	public void setNumMezzo(Integer numMezzo) {
-		this.numMezzo = numMezzo;
-	}
-
-	public Integer getNumMaxPasseggeri() {
-		return numMaxPasseggeri;
-	}
-
-	public void setNumMaxPasseggeri(Integer numMaxPasseggeri) {
-		this.numMaxPasseggeri = numMaxPasseggeri;
-	}
-
-	public String getStato() {
-		return stato;
-	}
-
-	public void setStato(String stato) {
-		this.stato = stato;
-	}
-
-	public Fermata getFermataAttuale() {
-		return fermataAttuale;
-	}
-
-	public void setFermataAttuale(Fermata fermataAttuale) {
-		this.fermataAttuale = fermataAttuale;
-	}
-
-	public List<Orario> getOrari() {
-		return orari;
-	}
-
-	public void setOrari(List<Orario> orari) {
-		this.orari = orari;
-	}
-
-	@Override
-	public String toString() {
-		return "Mezzo [idMezzo=" + idMezzo + ", numMezzo=" + numMezzo
-				+ ", numMaxPasseggeri=" + numMaxPasseggeri + ", stato=" + stato
-				+ ", fermataAttuale=" + fermataAttuale + ", orari=" + orari
-				+ "]";
 	}
 }

@@ -6,7 +6,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
-import service.InizializzaDb;
+import service.inizializzadb.inizDb;
 
 @Path("/gestioneDB")
 public class GestioneDBRest {
@@ -25,8 +25,8 @@ public class GestioneDBRest {
 		Response risposta = null;
 		Object[] risultato;
 		try {
-			InizializzaDb inizializzatore = new InizializzaDb();
-			risultato = inizializzatore.inizDb();
+			inizDb inizializzatore = new inizDb();
+			risultato = inizializzatore.startProcess();
 
 			risposta = Response.ok(risultato).build();
 		} catch (Exception e) {

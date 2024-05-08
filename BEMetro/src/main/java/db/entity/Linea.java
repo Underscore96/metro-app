@@ -14,7 +14,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Linee")
 public class Linea {
@@ -35,60 +43,10 @@ public class Linea {
 	@JsonIgnore
 	private List<Fermata> fermate;
 
-	public Linea() {
-	}
-
 	public Linea(String idLinea, String nomeLinea, String direzione) {
 		super();
 		this.idLinea = idLinea;
 		this.nomeLinea = nomeLinea;
 		this.direzione = direzione;
-	}
-
-	public Linea(String idLinea, String nomeLinea, String direzione,
-			List<Fermata> fermate) {
-		super();
-		this.idLinea = idLinea;
-		this.nomeLinea = nomeLinea;
-		this.direzione = direzione;
-		this.fermate = fermate;
-	}
-
-	public String getIdLinea() {
-		return idLinea;
-	}
-
-	public void setIdLinea(String idLinea) {
-		this.idLinea = idLinea;
-	}
-
-	public String getNomeLinea() {
-		return nomeLinea;
-	}
-
-	public void setNomeLinea(String nomeLinea) {
-		this.nomeLinea = nomeLinea;
-	}
-
-	public String getDirezione() {
-		return direzione;
-	}
-
-	public void setDirezione(String direzione) {
-		this.direzione = direzione;
-	}
-
-	public List<Fermata> getFermate() {
-		return fermate;
-	}
-
-	public void setFermate(List<Fermata> fermate) {
-		this.fermate = fermate;
-	}
-
-	@Override
-	public String toString() {
-		return "Linea [idLinea=" + idLinea + ", nomeLinea=" + nomeLinea
-				+ ", direzione=" + direzione + "]";
 	}
 }

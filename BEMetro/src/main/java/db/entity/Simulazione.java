@@ -6,7 +6,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Simulazione")
 public class Simulazione {
@@ -20,35 +28,4 @@ public class Simulazione {
 
 	@Column(name = "numCicli", nullable = true, unique = false)
 	private Integer numCicli;
-
-	public String getIdSimulazione() {
-		return idSimulazione;
-	}
-
-	public void setIdSimulazione(String idSimulazione) {
-		this.idSimulazione = idSimulazione;
-	}
-
-	public Boolean getStatoEsecuzione() {
-		return statoEsecuzione;
-	}
-
-	public void setStatoEsecuzione(Boolean statoEsecuzione) {
-		this.statoEsecuzione = statoEsecuzione;
-	}
-
-	public Integer getNumCicli() {
-		return numCicli;
-	}
-
-	public void setNumCicli(Integer numCicli) {
-		this.numCicli = numCicli;
-	}
-
-	@Override
-	public String toString() {
-		return "Simulazione [idSimulazione=" + idSimulazione
-				+ ", statoEsecuzione=" + statoEsecuzione + ", numCicli="
-				+ numCicli + "]";
-	}
 }

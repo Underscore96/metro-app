@@ -13,7 +13,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Orari")
 public class Orario {
@@ -40,9 +48,6 @@ public class Orario {
 	@JsonBackReference
 	private Mezzo mezzo;
 
-	public Orario() {
-	}
-
 	public Orario(String idOrario, Integer numOrario, Integer numFermata,
 			LocalDateTime orarioPrevisto, LocalDateTime ritardo) {
 		super();
@@ -51,60 +56,5 @@ public class Orario {
 		this.numFermata = numFermata;
 		this.orarioPrevisto = orarioPrevisto;
 		this.ritardo = ritardo;
-	}
-
-	public String getIdOrario() {
-		return idOrario;
-	}
-
-	public void setIdOrario(String idOrario) {
-		this.idOrario = idOrario;
-	}
-
-	public Integer getNumOrario() {
-		return numOrario;
-	}
-
-	public void setNumOrario(Integer numOrario) {
-		this.numOrario = numOrario;
-	}
-
-	public Integer getNumFermata() {
-		return numFermata;
-	}
-
-	public void setNumFermata(Integer numFermata) {
-		this.numFermata = numFermata;
-	}
-
-	public LocalDateTime getOrarioPrevisto() {
-		return orarioPrevisto;
-	}
-
-	public void setOrarioPrevisto(LocalDateTime orarioPrevisto) {
-		this.orarioPrevisto = orarioPrevisto;
-	}
-
-	public LocalDateTime getRitardo() {
-		return ritardo;
-	}
-
-	public void setRitardo(LocalDateTime ritardo) {
-		this.ritardo = ritardo;
-	}
-
-	public Mezzo getMezzo() {
-		return mezzo;
-	}
-
-	public void setMezzo(Mezzo mezzo) {
-		this.mezzo = mezzo;
-	}
-
-	@Override
-	public String toString() {
-		return "Orario [idOrario=" + idOrario + ", numOrario=" + numOrario + ", numFermata=" + numFermata
-				+ ", orarioPrevisto=" + orarioPrevisto + ", ritardo=" + ritardo
-				+ ", mezzo=" + mezzo.getNumMezzo() + "]";
 	}
 }

@@ -1,212 +1,242 @@
 [
 	{
 		"numFermata": 1,
-		"nome": "Brignole",
+		"nome": "Brin",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "presente"
 	},
 	{
 		"numFermata": 2,
-		"nome": "De Ferrari",
+		"nome": "Dinegro",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 3,
-		"nome": "Sarzano",
+		"nome": "Principe",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "nuvolo",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 4,
-		"nome": "San Giorgio",
+		"nome": "Darsena",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "nuvolo",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 5,
-		"nome": "Darsena",
+		"nome": "San Giorgio",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 6,
-		"nome": "Principe",
+		"nome": "Sarzano",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 7,
-		"nome": "Dinegro",
+		"nome": "De Ferrari",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 8,
-		"nome": "Brin",
+		"nome": "Brignole",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 9,
-		"nome": "Brin",
+		"nome": "Marassi",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
-		"posMezzo": "presente"
+		"previsioneMeteo": "pioggia",
+		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 10,
-		"nome": "Dinegro",
+		"nome": "Parenzo",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 11,
-		"nome": "Principe",
+		"nome": "Staglieno",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 12,
-		"nome": "Darsena",
+		"nome": "Adriatico",
+		"direzione": "Levante",
+		"orarioAttuale": "2024-04-30T08:00",
+		"previsioneMeteo": "nuvolo",
+		"posMezzo": "assente"
+	},
+	{
+		"numFermata": 13,
+		"nome": "Bligny",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
-		"numFermata": 13,
-		"nome": "San Giorgio",
-		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "nuvolo",
-		"posMezzo": "assente"
-	},
-	{
 		"numFermata": 14,
-		"nome": "Sarzano",
+		"nome": "San Gottardo",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "nuvolo",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 15,
-		"nome": "De Ferrari",
+		"nome": "Molassana",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 16,
-		"nome": "Brignole",
+		"nome": "Molassana",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 17,
-		"nome": "Marassi",
+		"nome": "San Gottardo",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 18,
-		"nome": "Parenzo",
+		"nome": "Bligny",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 19,
-		"nome": "Staglieno",
+		"nome": "Adriatico",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 20,
-		"nome": "Adriatico",
+		"nome": "Staglieno",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 21,
-		"nome": "Bligny",
+		"nome": "Parenzo",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 22,
-		"nome": "San Gottardo",
+		"nome": "Marassi",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 23,
-		"nome": "Molassana",
+		"nome": "Brignole",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
-		"posMezzo": "assente"
+		"previsioneMeteo": "pioggia",
+		"posMezzo": "presente"
 	},
 	{
 		"numFermata": 24,
-		"nome": "Molassana",
+		"nome": "De Ferrari",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
-		"posMezzo": "assente"
-	},
-	{
-		"numFermata": 25,
-		"nome": "San Gottardo",
-		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "sole",
+		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 26,
-		"nome": "Bligny",
+		"nome": "Sarzano",
+		"direzione": "Ponente",
+		"orarioAttuale": "2024-04-30T08:00",
+		"previsioneMeteo": "nuvolo",
+		"posMezzo": "assente"
+	},
+	{
+		"numFermata": 26,
+		"nome": "San Giorgio",
+		"direzione": "Ponente",
+		"orarioAttuale": "2024-04-30T08:00",
+		"previsioneMeteo": "nuvolo",
+		"posMezzo": "assente"
+	},
+	{
+		"numFermata": 27,
+		"nome": "Darsena",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
-		"numFermata": 27,
-		"nome": "Adriatico",
-		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "nuvolo",
-		"posMezzo": "assente"
-	},
-	{
 		"numFermata": 28,
-		"nome": "Staglieno",
+		"nome": "Principe",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "nuvolo",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 29,
-		"nome": "Parenzo",
+		"nome": "Dinegro",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	},
 	{
 		"numFermata": 30,
-		"nome": "Marassi",
+		"nome": "Brin",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
-		"previsioneMeteo": "pioggia",
+		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
 	}
 ]

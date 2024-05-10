@@ -30,7 +30,7 @@ import service.UtenteService;
 import service.builder.PojoLineaBuilder;
 import service.builder.PojoUtenteBuilder;
 
-public class inizDb {
+public class InizDb {
 	private FermataDAO fermataDAO = new FermataDAO();
 	private LineaDAO lineaDAO = new LineaDAO();
 	private UtenteDAO utenteDAO = new UtenteDAO();
@@ -38,9 +38,6 @@ public class inizDb {
 	private static final String[] NOMI_FERMATE_DIR_BRIN = {"Brignole",
 			"De Ferrari", "Sarzano", "San Giorgio", "Darsena", "Principe",
 			"Dinegro", "Brin"};
-	private static final String[] NOMI_FERMATE_DIR_MOLASSANA = {"Marassi",
-			"Parenzo", "Staglieno", "Adriatico", "Bligny", "San Gottardo",
-			"Molassana"};
 
 	public Object[] startProcess() {
 		Object[] dbData = new Object[5];

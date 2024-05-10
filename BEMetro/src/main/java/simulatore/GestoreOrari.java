@@ -18,7 +18,8 @@ public class GestoreOrari {
 	private static MezzoDAO mezzoDAO = new MezzoDAO();
 	private static LineaDAO lineaDAO = new LineaDAO();
 
-	public static void generaOrari(Integer numMezzo, String direzione) {
+	public static void generaOrari(Integer numMezzo, String nomeLinea) {
+		System.out.println("ECCOMI1");
 		List<Mezzo> listaMezzi = mezzoDAO.leggiDaNumMezzo(numMezzo);
 		List<Orario> listaOrari = new ArrayList<>();
 		Mezzo mezzo = null;
@@ -29,30 +30,35 @@ public class GestoreOrari {
 		if (listaMezzi != null && !listaMezzi.isEmpty()) {
 			mezzo = listaMezzi.get(0);
 		}
-
-		List<Linea> lineeTrovate = lineaDAO.trovaConAttributi(direzione);
+		System.out.println("ECCOMI2");
+		List<Linea> lineeTrovate = lineaDAO.leggiDaNomeLinea(nomeLinea);
 
 		if (lineeTrovate != null && !lineeTrovate.isEmpty()) {
 			linea = lineeTrovate.get(0);
 			fermateTrovate = linea.getFermate();
+			System.out.println("ECCOMI3B" + fermateTrovate.toString());
 		}
-
+		System.out.println("ECCOMI3");
 		if (mezzo != null && mezzo.getOrari() != null) {
 			for (Orario orario : mezzo.getOrari()) {
 				orario.setOrarioPrevisto(
-						orario.getOrarioPrevisto().plusMinutes(85));
-				orario.setRitardo(orario.getRitardo().plusMinutes(85));
+						orario.getOrarioPrevisto().plusMinutes(80));
+				orario.setRitardo(orario.getRitardo().plusMinutes(80));
 
-				if (fermateTrovate != null)
+				if (fermateTrovate != null) {
+					System.out.println("ECCOMI4A");
 					numFermata = fermateTrovate.get(index).getNumFermata();
-				else
+				} else {
+					System.out.println("ECCOMI4B");
 					throw new CustomException(
 							"ERRORE NELL'AGGIORNAMENTO DEGLI ORARI",
 							Response.Status.NOT_FOUND);
+				}
 				orario.setNumFermata(numFermata);
 				orarioDAO.aggiorna(orario);
 				listaOrari.add(orario);
 				index++;
+				System.out.println("ECCOMI5");
 			}
 			mezzo.setOrari(listaOrari);
 			mezzoDAO.aggiorna(mezzo);

@@ -7,7 +7,7 @@ import presentation.pojo.PojoLinea;
 
 public class PojoLineaBuilder {
 	private String nomeLinea;
-	private String direzione;
+	private String destinazione;
 	private List<Fermata> fermate;
 
 	public PojoLineaBuilder setNomeLinea(String nomeLinea) {
@@ -15,8 +15,8 @@ public class PojoLineaBuilder {
 		return this;
 	}
 
-	public PojoLineaBuilder setDirezione(String direzione) {
-		this.direzione = direzione;
+	public PojoLineaBuilder setDestinazione(String destinazione) {
+		this.destinazione = destinazione;
 		return this;
 	}
 
@@ -29,7 +29,7 @@ public class PojoLineaBuilder {
 		PojoLinea nuovaLinea = new PojoLinea();
 
 		nuovaLinea.setNomeLinea(nomeLinea);
-		nuovaLinea.setDirezione(direzione);
+		nuovaLinea.setDestinazione(destinazione);
 		nuovaLinea.setFermate(fermate);
 
 		return nuovaLinea;

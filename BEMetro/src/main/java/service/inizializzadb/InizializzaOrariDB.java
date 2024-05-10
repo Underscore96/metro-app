@@ -38,8 +38,12 @@ public class InizializzaOrariDB {
 
 		for (Mezzo mezzo : listaMezzi) {
 
-			String direzioneMezzo = mezzo.getFermataAttuale().getLinea()
-					.getDirezione();
+			String destinazioneFermata;
+			if (mezzo.getFermataAttuale().getNumFermata() == 1)
+				destinazioneFermata = "Ponente";
+			else
+				destinazioneFermata = "Levante";
+
 			ora = LocalTime.of(8, minuti);
 			dataOra = LocalDateTime.of(data, ora);
 
@@ -52,22 +56,22 @@ public class InizializzaOrariDB {
 				minuti = 0;
 
 			contatoreNumOrario = creaOrario(contatoreNumOrario, listaOrari,
-					data, ora, dataOra, mezzo, direzioneMezzo);
+					data, ora, dataOra, mezzo, destinazioneFermata);
 		}
 		return listaOrari;
 	}
 
 	private static Integer creaOrario(Integer contatoreNumOrario,
 			List<Orario> listaOrari, LocalDate data, LocalTime ora,
-			LocalDateTime dataOra, Mezzo mezzo, String direzioneMezzo) {
+			LocalDateTime dataOra, Mezzo mezzo, String destinazioneFermata) {
 		String[] arrNomi;
-		if (direzioneMezzo.equals("Brignole"))
+		if (destinazioneFermata.equals("Levante"))
 			arrNomi = NOMI_FERMATE_REVERSE;
 		else
 			arrNomi = NOMI_FERMATE;
 
 		for (String nomeFermata : arrNomi) {
-			Integer numFermata = trovaNumFermata(direzioneMezzo, nomeFermata);
+			Integer numFermata = trovaNumFermata(destinazioneFermata, nomeFermata);
 			Orario orario = new Orario();
 
 			orario.setNumOrario(contatoreNumOrario);
@@ -106,7 +110,7 @@ public class InizializzaOrariDB {
 				.trovaConAttributi(nomeFermata);
 
 		for (Fermata fermata : fermateTrovate) {
-			if (direzioneMezzo.equals(fermata.getLinea().getDirezione()))
+			if (direzioneMezzo.equals(fermata.getDirezione()))
 				numFermata = fermata.getNumFermata();
 		}
 

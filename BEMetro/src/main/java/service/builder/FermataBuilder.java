@@ -10,10 +10,11 @@ public class FermataBuilder {
 	private String idFermata;
 	private Integer numFermata;
 	private String nome;
+	private String direzione;
 	private String orarioAttuale;
 	private String previsioneMeteo;
 	private String posMezzo;
-	private Linea linea;
+	private List<Linea> linee;
 	private List<Mezzo> mezzi;
 
 	public FermataBuilder setIdFermata(String idFermata) {
@@ -28,6 +29,11 @@ public class FermataBuilder {
 
 	public FermataBuilder setNome(String nome) {
 		this.nome = nome;
+		return this;
+	}
+
+	public FermataBuilder setDirezione(String direzione) {
+		this.direzione = direzione;
 		return this;
 	}
 
@@ -46,8 +52,8 @@ public class FermataBuilder {
 		return this;
 	}
 
-	public FermataBuilder setLinea(Linea linea) {
-		this.linea = linea;
+	public FermataBuilder setLinee(List<Linea> linee) {
+		this.linee = linee;
 		return this;
 	}
 
@@ -62,10 +68,11 @@ public class FermataBuilder {
 		nuovaFermata.setIdFermata(idFermata);
 		nuovaFermata.setNumFermata(numFermata);
 		nuovaFermata.setNome(nome);
+		nuovaFermata.setDirezione(direzione);
 		nuovaFermata.setOrarioAttuale(orarioAttuale);
 		nuovaFermata.setPrevisioneMeteo(previsioneMeteo);
 		nuovaFermata.setPosMezzo(posMezzo);
-		nuovaFermata.setLinea(linea);
+		nuovaFermata.setLinee(linee);
 		nuovaFermata.setMezzi(mezzi);
 
 		return nuovaFermata;

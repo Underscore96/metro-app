@@ -9,10 +9,11 @@ import presentation.pojo.PojoFermata;
 public class PojoFermataBuilder {
 	private Integer numFermata;
 	private String nome;
+	private String direzione;
 	private String orarioAttuale;
 	private String previsioneMeteo;
 	private String posMezzo;
-	private Linea linea;
+	private List<Linea> linee;
 	private List<Mezzo> mezzi;
 
 	public PojoFermataBuilder setNumFermata(Integer numFermata) {
@@ -22,6 +23,11 @@ public class PojoFermataBuilder {
 
 	public PojoFermataBuilder setNome(String nome) {
 		this.nome = nome;
+		return this;
+	}
+
+	public PojoFermataBuilder setDirezione(String direzione) {
+		this.direzione = direzione;
 		return this;
 	}
 
@@ -40,8 +46,8 @@ public class PojoFermataBuilder {
 		return this;
 	}
 
-	public PojoFermataBuilder setLinea(Linea linea) {
-		this.linea = linea;
+	public PojoFermataBuilder setLinee(List<Linea> linee) {
+		this.linee = linee;
 		return this;
 	}
 
@@ -55,10 +61,11 @@ public class PojoFermataBuilder {
 
 		nuovaFermata.setNumFermata(numFermata);
 		nuovaFermata.setNome(nome);
+		nuovaFermata.setDirezione(direzione);
 		nuovaFermata.setOrarioAttuale(orarioAttuale);
 		nuovaFermata.setPrevisioneMeteo(previsioneMeteo);
 		nuovaFermata.setPosMezzo(posMezzo);
-		nuovaFermata.setLinea(linea);
+		nuovaFermata.setLinee(linee);
 		nuovaFermata.setMezzi(mezzi);
 
 		return nuovaFermata;

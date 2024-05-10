@@ -10,6 +10,7 @@ public class PojoMezzoBuilder {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
 	private String stato;
+	private String destinazione;
 	private Fermata fermataAttuale;
 	private List<Orario> orari;
 
@@ -23,7 +24,12 @@ public class PojoMezzoBuilder {
 		return this;
 	}
 
-	public PojoMezzoBuilder setStato(String stato) {
+	public PojoMezzoBuilder setStato(String destinazione) {
+		this.destinazione = destinazione;
+		return this;
+	}
+
+	public PojoMezzoBuilder setDestinazione(String stato) {
 		this.stato = stato;
 		return this;
 	}
@@ -44,10 +50,10 @@ public class PojoMezzoBuilder {
 		nuovoMezzo.setNumMezzo(numMezzo);
 		nuovoMezzo.setNumMaxPasseggeri(numMaxPasseggeri);
 		nuovoMezzo.setStato(stato);
+		nuovoMezzo.setDestinazione(destinazione);
 		nuovoMezzo.setFermataAttuale(fermataAttuale);
 		nuovoMezzo.setOrari(orari);
 
 		return nuovoMezzo;
-
 	}
 }

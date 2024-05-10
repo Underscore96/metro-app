@@ -13,7 +13,7 @@ import jakarta.persistence.EntityExistsException;
 @DisplayName("FERMATA DAO")
 class FermataDAOTest {
 	private final Fermata fermata = new Fermata("30000", 30000, "Brignole",
-			"2024-05-05T08:10", "Piove", "presente");
+			"Ponente", "2024-05-05T08:10", "Piove", "presente");
 
 	@Test
 	void when_ArgumentoNullo_Expect_IllegalArgumentException() {

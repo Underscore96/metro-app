@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
@@ -46,6 +47,7 @@ public class Orario {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idMezzo")
 	@JsonBackReference
+	@ToString.Exclude
 	private Mezzo mezzo;
 
 	public Orario(String idOrario, Integer numOrario, Integer numFermata,

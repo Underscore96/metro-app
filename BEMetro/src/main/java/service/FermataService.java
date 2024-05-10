@@ -6,7 +6,6 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import db.dao.FermataDAO;
-import db.dao.LineaDAO;
 import db.entity.Fermata;
 import db.entity.Linea;
 import exception.CustomException;
@@ -18,7 +17,6 @@ import service.builder.PojoFermataBuilder;
 
 public class FermataService {
 	private static FermataDAO fermataDAO = new FermataDAO();
-	private static LineaDAO lineaDAO = new LineaDAO();
 	private static final String NUMFERMATA = "numFermata";
 
 	private FermataService() {
@@ -32,10 +30,11 @@ public class FermataService {
 			dbFermata = new FermataBuilder()
 					.setNumFermata(fermata.getNumFermata())
 					.setNome(fermata.getNome())
+					.setDirezione(fermata.getDirezione())
 					.setOrarioAttuale(fermata.getOrarioAttuale())
 					.setPosMezzo(fermata.getPosMezzo())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
-					.setLinea(fermata.getLinea()).setMezzi(fermata.getMezzi())
+					.setLinee(fermata.getLinee()).setMezzi(fermata.getMezzi())
 					.costruisci();
 
 			fermataDAO.crea(dbFermata);
@@ -81,10 +80,11 @@ public class FermataService {
 			risultato = new PojoFermataBuilder()
 					.setNumFermata(fermataDB.getNumFermata())
 					.setNome(fermataDB.getNome())
+					.setDirezione(fermataDB.getDirezione())
 					.setOrarioAttuale(fermataDB.getOrarioAttuale())
 					.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
 					.setPosMezzo(fermataDB.getPosMezzo())
-					.setLinea(fermataDB.getLinea())
+					.setLinee(fermataDB.getLinee())
 					.setMezzi(fermataDB.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {
@@ -130,10 +130,11 @@ public class FermataService {
 					.setIdFermata(fermataVecchia.getIdFermata())
 					.setNumFermata(fermataVecchia.getNumFermata())
 					.setNome(fermata.getNome())
+					.setDirezione(fermata.getDirezione())
 					.setOrarioAttuale(fermata.getOrarioAttuale())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
 					.setPosMezzo(fermata.getPosMezzo())
-					.setLinea(fermata.getLinea()).setMezzi(fermata.getMezzi())
+					.setLinee(fermata.getLinee()).setMezzi(fermata.getMezzi())
 					.costruisci();
 
 			fermataAggiornata = fermataDAO.aggiorna(fermataAggiornata);
@@ -147,10 +148,11 @@ public class FermataService {
 			risultato = new PojoFermataBuilder()
 					.setNumFermata(fermataAggiornata.getNumFermata())
 					.setNome(fermataAggiornata.getNome())
+					.setDirezione(fermataAggiornata.getDirezione())
 					.setOrarioAttuale(fermataAggiornata.getOrarioAttuale())
 					.setPrevisioneMeteo(fermataAggiornata.getPrevisioneMeteo())
 					.setPosMezzo(fermataAggiornata.getPosMezzo())
-					.setLinea(fermataAggiornata.getLinea())
+					.setLinee(fermataAggiornata.getLinee())
 					.setMezzi(fermataAggiornata.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {
@@ -228,10 +230,11 @@ public class FermataService {
 				fermataSingola = new PojoFermataBuilder()
 						.setNumFermata(fermataDB.getNumFermata())
 						.setNome(fermataDB.getNome())
+						.setDirezione(fermataDB.getDirezione())
 						.setOrarioAttuale(fermataDB.getOrarioAttuale())
 						.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
 						.setPosMezzo(fermataDB.getPosMezzo())
-						.setLinea(fermataDB.getLinea())
+						.setLinee(fermataDB.getLinee())
 						.setMezzi(fermataDB.getMezzi()).costruisci();
 
 				risultati.add(fermataSingola);
@@ -277,10 +280,11 @@ public class FermataService {
 				fermataSingola = new PojoFermataBuilder()
 						.setNumFermata(fermataDB.getNumFermata())
 						.setNome(fermataDB.getNome())
+						.setDirezione(fermataDB.getDirezione())
 						.setOrarioAttuale(fermataDB.getOrarioAttuale())
 						.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
 						.setPosMezzo(fermataDB.getPosMezzo())
-						.setLinea(fermataDB.getLinea())
+						.setLinee(fermataDB.getLinee())
 						.setMezzi(fermataDB.getMezzi()).costruisci();
 
 				risultati.add(fermataSingola);
@@ -308,21 +312,16 @@ public class FermataService {
 	}
 
 	public static PojoFermata aggiornaRelazioneFermata(Integer numFermata,
-			String nomeLinea) {
+			List<Linea> listaLinee) {
 		PojoFermata risultato = null;
-		Linea lineaDB;
-		List<Linea> listaLineeDB;
 		Fermata fermataDB;
 		List<Fermata> listaFermateDB;
-
-		listaLineeDB = lineaDAO.leggiDaNomeLinea(nomeLinea);
-		lineaDB = listaLineeDB.get(0);
 
 		listaFermateDB = fermataDAO.leggiDaNumFermata(numFermata);
 		fermataDB = listaFermateDB.get(0);
 
 		try {
-			fermataDB.setLinea(lineaDB);
+			fermataDB.setLinee(listaLinee);
 
 			fermataDB = fermataDAO.aggiorna(fermataDB);
 
@@ -335,10 +334,11 @@ public class FermataService {
 			risultato = new PojoFermataBuilder()
 					.setNumFermata(fermataDB.getNumFermata())
 					.setNome(fermataDB.getNome())
+					.setDirezione(fermataDB.getDirezione())
 					.setOrarioAttuale(fermataDB.getOrarioAttuale())
 					.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
 					.setPosMezzo(fermataDB.getPosMezzo())
-					.setLinea(fermataDB.getLinea())
+					.setLinee(fermataDB.getLinee())
 					.setMezzi(fermataDB.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {
@@ -383,10 +383,11 @@ public class FermataService {
 			fermataAggiornata = new FermataBuilder()
 					.setIdFermata(fermataVecchia.getIdFermata())
 					.setNumFermata(numFermata).setNome(nomeFermata)
+					.setDirezione(fermataVecchia.getDirezione())
 					.setOrarioAttuale(fermataVecchia.getOrarioAttuale())
 					.setPrevisioneMeteo(fermataVecchia.getPrevisioneMeteo())
 					.setPosMezzo(fermataVecchia.getPosMezzo())
-					.setLinea(fermataVecchia.getLinea())
+					.setLinee(fermataVecchia.getLinee())
 					.setMezzi(fermataVecchia.getMezzi()).costruisci();
 
 			fermataAggiornata = fermataDAO.aggiorna(fermataAggiornata);
@@ -400,10 +401,11 @@ public class FermataService {
 			risultato = new PojoFermataBuilder()
 					.setNumFermata(fermataAggiornata.getNumFermata())
 					.setNome(fermataAggiornata.getNome())
+					.setDirezione(fermataAggiornata.getDirezione())
 					.setOrarioAttuale(fermataAggiornata.getOrarioAttuale())
 					.setPrevisioneMeteo(fermataAggiornata.getPrevisioneMeteo())
 					.setPosMezzo(fermataAggiornata.getPosMezzo())
-					.setLinea(fermataAggiornata.getLinea())
+					.setLinee(fermataAggiornata.getLinee())
 					.setMezzi(fermataAggiornata.getMezzi()).costruisci();
 
 		} catch (NullPointerException e) {

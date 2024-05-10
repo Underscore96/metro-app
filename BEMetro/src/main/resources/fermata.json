@@ -2,6 +2,7 @@
 	{
 		"numFermata": 1,
 		"nome": "Brignole",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "presente"
@@ -9,6 +10,7 @@
 	{
 		"numFermata": 2,
 		"nome": "De Ferrari",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
@@ -16,6 +18,7 @@
 	{
 		"numFermata": 3,
 		"nome": "Sarzano",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
@@ -23,6 +26,7 @@
 	{
 		"numFermata": 4,
 		"nome": "San Giorgio",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
@@ -30,6 +34,7 @@
 	{
 		"numFermata": 5,
 		"nome": "Darsena",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
@@ -37,6 +42,7 @@
 	{
 		"numFermata": 6,
 		"nome": "Principe",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
@@ -44,6 +50,7 @@
 	{
 		"numFermata": 7,
 		"nome": "Dinegro",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
@@ -51,6 +58,7 @@
 	{
 		"numFermata": 8,
 		"nome": "Brin",
+		"direzione": "Ponente",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
@@ -58,6 +66,7 @@
 	{
 		"numFermata": 9,
 		"nome": "Brin",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "presente"
@@ -65,6 +74,7 @@
 	{
 		"numFermata": 10,
 		"nome": "Dinegro",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
@@ -72,6 +82,7 @@
 	{
 		"numFermata": 11,
 		"nome": "Principe",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
@@ -79,6 +90,7 @@
 	{
 		"numFermata": 12,
 		"nome": "Darsena",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "sole",
 		"posMezzo": "assente"
@@ -86,6 +98,7 @@
 	{
 		"numFermata": 13,
 		"nome": "San Giorgio",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
@@ -93,6 +106,7 @@
 	{
 		"numFermata": 14,
 		"nome": "Sarzano",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "nuvolo",
 		"posMezzo": "assente"
@@ -100,6 +114,7 @@
 	{
 		"numFermata": 15,
 		"nome": "De Ferrari",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"
@@ -107,6 +122,7 @@
 	{
 		"numFermata": 16,
 		"nome": "Brignole",
+		"direzione": "Levante",
 		"orarioAttuale": "2024-04-30T08:00",
 		"previsioneMeteo": "pioggia",
 		"posMezzo": "assente"

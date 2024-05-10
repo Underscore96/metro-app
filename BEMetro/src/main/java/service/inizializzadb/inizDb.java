@@ -35,8 +35,12 @@ public class inizDb {
 	private LineaDAO lineaDAO = new LineaDAO();
 	private UtenteDAO utenteDAO = new UtenteDAO();
 	private MezzoDAO mezzoDAO = new MezzoDAO();
-	private static final String[] NOMI_FERMATE = {"Brignole", "De Ferrari",
-			"Sarzano", "San Giorgio", "Darsena", "Principe", "Dinegro", "Brin"};
+	private static final String[] NOMI_FERMATE_DIR_BRIN = {"Brignole",
+			"De Ferrari", "Sarzano", "San Giorgio", "Darsena", "Principe",
+			"Dinegro", "Brin"};
+	private static final String[] NOMI_FERMATE_DIR_MOLASSANA = {"Marassi",
+			"Parenzo", "Staglieno", "Adriatico", "Bligny", "San Gottardo",
+			"Molassana"};
 
 	public Object[] startProcess() {
 		Object[] dbData = new Object[5];
@@ -62,7 +66,7 @@ public class inizDb {
 			for (Linea linea : listaLinee) {
 				listaPojoLinee.add(new PojoLineaBuilder()
 						.setNomeLinea(linea.getNomeLinea())
-						.setDirezione(linea.getDirezione())
+						.setDestinazione(linea.getDestinazione())
 						.setFermate(linea.getFermate()).costruisci());
 
 			}
@@ -216,12 +220,14 @@ public class inizDb {
 		if (listaFermate != null && listalinee != null) {
 			for (Fermata fermata : listaFermate) {
 				numFermata = fermata.getNumFermata();
-				if (numFermata <= NOMI_FERMATE.length)
-					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "blu"));
+				if (numFermata <= NOMI_FERMATE_DIR_BRIN.length)
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									lineaDAO.leggiDaNomeLinea("blu")));
 				else
-					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "verde"));
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									lineaDAO.leggiDaNomeLinea("verde")));
 			}
 		}
 

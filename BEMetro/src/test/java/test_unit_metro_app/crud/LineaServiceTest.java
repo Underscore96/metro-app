@@ -129,7 +129,7 @@ class LineaServiceTest {
 			listaVuota.get(0);
 		});
 		assertThrows(NullPointerException.class, () -> {
-			lin.setDirezione(null);
+			lin.setDestinazione(null);
 		});
 
 		lin = new Linea();
@@ -143,11 +143,11 @@ class LineaServiceTest {
 
 		Linea actual = new LineaBuilder().setIdLinea("30001")
 				.setNomeLinea(pojoLinea.getNomeLinea())
-				.setDirezione(pojoLinea.getDirezione()).costruisci();
+				.setDestinazione(pojoLinea.getDestinazione()).costruisci();
 
-		assertThat(actual).extracting("idLinea", "nomeLinea", "direzione")
+		assertThat(actual).extracting("idLinea", "nomeLinea", "destinazione")
 				.containsExactly(expected.getIdLinea(), expected.getNomeLinea(),
-						expected.getDirezione());
+						expected.getDestinazione());
 	}
 
 	@Test
@@ -158,9 +158,9 @@ class LineaServiceTest {
 
 		PojoLinea actual = new PojoLineaBuilder()
 				.setNomeLinea(Linea.getNomeLinea())
-				.setDirezione(Linea.getDirezione()).costruisci();
+				.setDestinazione(Linea.getDestinazione()).costruisci();
 
-		assertThat(actual).extracting("nomeLinea", "direzione").containsExactly(
-				expected.getNomeLinea(), expected.getDirezione());
+		assertThat(actual).extracting("nomeLinea", "destinazione").containsExactly(
+				expected.getNomeLinea(), expected.getDestinazione());
 	}
 }

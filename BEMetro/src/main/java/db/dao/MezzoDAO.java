@@ -68,7 +68,6 @@ public class MezzoDAO {
 			criteria.select(root)
 					.where(builder.equal(root.get(NUMMEZZO), numMezzo));
 			result = sessione.createQuery(criteria).getResultList();
-
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -77,6 +76,7 @@ public class MezzoDAO {
 			if (sessione != null)
 				sessione.close();
 		}
+
 		return result;
 	}
 

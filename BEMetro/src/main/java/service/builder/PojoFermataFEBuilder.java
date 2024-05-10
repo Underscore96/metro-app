@@ -10,7 +10,8 @@ public class PojoFermataFEBuilder {
 	private Integer id;
 	private Integer numFermata;
 	private String nomeFermata;
-	private String nomeLinea;
+	private List<String> nomiLinee;
+	private List<String> destinazioni;
 	private String direzione;
 	private String orarioAttuale;
 	private String previsioneMeteo;
@@ -34,8 +35,13 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setNomeLinea(String nomeLinea) {
-		this.nomeLinea = nomeLinea;
+	public PojoFermataFEBuilder setNomiLinee(List<String> nomiLinee) {
+		this.nomiLinee = nomiLinee;
+		return this;
+	}
+
+	public PojoFermataFEBuilder setDestinazioni(List<String> destinazioni) {
+		this.destinazioni = destinazioni;
 		return this;
 	}
 
@@ -81,7 +87,8 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setId(id);
 		nuovoPojoFermataFE.setNumFermata(numFermata);
 		nuovoPojoFermataFE.setNomeFermata(nomeFermata);
-		nuovoPojoFermataFE.setNomeLinea(nomeLinea);
+		nuovoPojoFermataFE.setNomiLinee(nomiLinee);
+		nuovoPojoFermataFE.setDestinazioni(destinazioni);
 		nuovoPojoFermataFE.setDirezione(direzione);
 		nuovoPojoFermataFE.setOrarioAttuale(orarioAttuale);
 		nuovoPojoFermataFE.setPrevisioneMeteo(previsioneMeteo);

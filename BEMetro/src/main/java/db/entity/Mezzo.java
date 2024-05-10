@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
@@ -43,6 +44,9 @@ public class Mezzo {
 	@Column(name = "stato", length = 20, nullable = true, unique = false)
 	private String stato;
 
+	@Column(name = "destinazione", length = 20, nullable = true, unique = false)
+	private String destinazione;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idFermata")
 	@JsonBackReference
@@ -51,12 +55,15 @@ public class Mezzo {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mezzo")
 	@JsonManagedReference
 	@JsonIgnore
+	@ToString.Exclude
 	private List<Orario> orari;
 
-	public Mezzo(String idMezzo, Integer numMezzo, Integer numMaxPasseggeri) {
+	public Mezzo(String idMezzo, Integer numMezzo, Integer numMaxPasseggeri,
+			String destinazione) {
 		super();
 		this.idMezzo = idMezzo;
 		this.numMezzo = numMezzo;
 		this.numMaxPasseggeri = numMaxPasseggeri;
+		this.destinazione = destinazione;
 	}
 }

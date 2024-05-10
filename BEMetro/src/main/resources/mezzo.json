@@ -2,31 +2,37 @@
 	{
 		"numMezzo": 1,
 		"numMaxPasseggeri": 100,
-		"stato": "in stazione"
+		"stato": "in stazione",
+		"destinazione":"Brin"
 	},
 	{
 		"numMezzo": 2,
 		"numMaxPasseggeri": 100,
-		"stato": "in arrivo"
+		"stato": "in arrivo",
+		"destinazione":"Brin"
 	},
 	{
 		"numMezzo": 3,
 		"numMaxPasseggeri": 100,
-		"stato": "in arrivo"
+		"stato": "in arrivo",
+		"destinazione":"Brin"
 	},
 	{
 		"numMezzo": 4,
 		"numMaxPasseggeri": 100,
-		"stato": "in stazione"
+		"stato": "in stazione",
+		"destinazione":"Brignole"
 	},
 	{
 		"numMezzo": 5,
 		"numMaxPasseggeri": 100,
-		"stato": "in arrivo"
+		"stato": "in arrivo",
+		"destinazione":"Brignole"
 	},
 	{
 		"numMezzo": 6,
 		"numMaxPasseggeri": 100,
-		"stato": "in arrivo"
+		"stato": "in arrivo",
+		"destinazione":"Brignole"
 	}
 ]

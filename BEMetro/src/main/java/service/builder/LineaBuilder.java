@@ -8,7 +8,7 @@ import db.entity.Linea;
 public class LineaBuilder {
 	private String idLinea;
 	private String nomeLinea;
-	private String direzione;
+	private String destinazione;
 	private List<Fermata> fermate;
 
 	public LineaBuilder setIdLinea(String idLinea) {
@@ -21,8 +21,8 @@ public class LineaBuilder {
 		return this;
 	}
 
-	public LineaBuilder setDirezione(String direzione) {
-		this.direzione = direzione;
+	public LineaBuilder setDestinazione(String destinazione) {
+		this.destinazione = destinazione;
 		return this;
 	}
 
@@ -36,7 +36,7 @@ public class LineaBuilder {
 
 		nuovaLinea.setIdLinea(idLinea);
 		nuovaLinea.setNomeLinea(nomeLinea);
-		nuovaLinea.setDirezione(direzione);
+		nuovaLinea.setDestinazione(destinazione);
 		nuovaLinea.setFermate(fermate);
 
 		return nuovaLinea;

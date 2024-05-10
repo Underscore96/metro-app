@@ -30,7 +30,7 @@ import service.UtenteService;
 import service.builder.PojoLineaBuilder;
 import service.builder.PojoUtenteBuilder;
 
-public class InizializzaDbSkyTram {
+public class GestoreDatiDB {
 	private FermataDAO fermataDAO = new FermataDAO();
 	private LineaDAO lineaDAO = new LineaDAO();
 	private UtenteDAO utenteDAO = new UtenteDAO();
@@ -60,7 +60,7 @@ public class InizializzaDbSkyTram {
 			for (Linea linea : listaLinee) {
 				listaPojoLinee.add(new PojoLineaBuilder()
 						.setNomeLinea(linea.getNomeLinea())
-						.setDirezione(linea.getDirezione())
+						.setDestinazione(linea.getDestinazione())
 						.setFermate(linea.getFermate()).costruisci());
 
 			}
@@ -215,17 +215,21 @@ public class InizializzaDbSkyTram {
 			for (Fermata fermata : listaFermate) {
 				numFermata = fermata.getNumFermata();
 				if (numFermata <= 8)
-					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "blu"));
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									lineaDAO.leggiDaNomeLinea("blu")));
 				else if (numFermata <= 16)
-					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "verde"));
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									lineaDAO.leggiDaNomeLinea("verde")));
 				else if (numFermata <= 24)
-					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "rossa"));
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									lineaDAO.leggiDaNomeLinea("rossa")));
 				else
-					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, "gialla"));
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									lineaDAO.leggiDaNomeLinea("gialla")));
 			}
 		}
 

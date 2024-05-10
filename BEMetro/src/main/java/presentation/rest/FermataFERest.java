@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -44,27 +43,27 @@ public class FermataFERest {
 		return risposta;
 	}
 
-	@DELETE
-	@Path("/rimuovi")
-	@Consumes("Application/json")
-	@Produces("Application/json")
-	public Response rimuoviFermata(
-			@QueryParam("riferimento") String riferimento,
-			PojoFermataFE fermataFE) {
-		Response risposta = null;
-		String risultato = null;
-
-		try {
-			risultato = FermataFEService.rimuoviFermataFE(fermataFE,
-					riferimento);
-			risposta = Response.ok(risultato).build();
-		} finally {
-			if (sessione != null && sessione.isOpen()) {
-				sessione.close();
-			}
-		}
-		return risposta;
-	}
+	// @DELETE
+	// @Path("/rimuovi")
+	// @Consumes("Application/json")
+	// @Produces("Application/json")
+	// public Response rimuoviFermata(
+	// @QueryParam("riferimento") String riferimento,
+	// PojoFermataFE fermataFE) {
+	// Response risposta = null;
+	// String risultato = null;
+	//
+	// try {
+	// risultato = FermataFEService.rimuoviFermataFE(fermataFE,
+	// riferimento);
+	// risposta = Response.ok(risultato).build();
+	// } finally {
+	// if (sessione != null && sessione.isOpen()) {
+	// sessione.close();
+	// }
+	// }
+	// return risposta;
+	// }
 
 	@GET
 	@Path("/leggi")
@@ -76,8 +75,7 @@ public class FermataFERest {
 		PojoFermataFE risultato = null;
 
 		try {
-			risultato = FermataFEService.leggiFermataFE(id, nome_linea,
-					numero_fermata);
+			risultato = FermataFEService.leggiFermataFE(id, numero_fermata);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {

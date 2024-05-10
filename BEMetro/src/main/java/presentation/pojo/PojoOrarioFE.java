@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PojoOrarioFE {
-	private Integer numMezzo;
+	private Integer idMezzo;
+	private String destinazione;
 	private String orarioPrevisto;
 	private String ritardo;
 }

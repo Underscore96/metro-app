@@ -120,10 +120,10 @@ class FermataServiceTest {
 
 	@Test
 	void Should_ConvertireAFermata_When_Passo_PojoFermata() {
-		Fermata expected = new Fermata("30001", 30000, "Brignole",
+		Fermata expected = new Fermata("30001", 30000, "Brignole", "ponente",
 				"2024-05-05T08:10", "Piove", "presente");
 
-		PojoFermata pojoFermata = new PojoFermata(30000, "Brignole",
+		PojoFermata pojoFermata = new PojoFermata(30000, "Brignole", "ponente",
 				"2024-05-05T08:10", "Piove", "presente");
 
 		Fermata actual = new FermataBuilder().setIdFermata("30001")
@@ -144,24 +144,24 @@ class FermataServiceTest {
 
 	@Test
 	void Should_ConvertireAPojoFermata_When_Passo_Fermata() {
-		PojoFermata expected = new PojoFermata(30000, "Brignole",
+		PojoFermata expected = new PojoFermata(30000, "Brignole", "ponente",
 				"2024-05-05T08:10", "Piove", "presente");
 
-		Fermata fermata = new Fermata("30000", 30000, "Brignole",
+		Fermata fermata = new Fermata("30000", 30000, "Brignole", "ponente",
 				"2024-05-05T08:10", "Piove", "presente");
 
 		PojoFermata actual = new PojoFermataBuilder()
 				.setNumFermata(fermata.getNumFermata())
-				.setNome(fermata.getNome())
+				.setNome(fermata.getNome()).setDirezione(fermata.getDirezione())
 				.setOrarioAttuale(fermata.getOrarioAttuale())
 				.setPosMezzo(fermata.getPosMezzo())
 				.setPrevisioneMeteo(fermata.getPrevisioneMeteo()).costruisci();
 
 		assertThat(actual)
-				.extracting("numFermata", "nome", "orarioAttuale", "posMezzo",
-						"previsioneMeteo")
+				.extracting("numFermata", "nome", "direzione", "orarioAttuale",
+						"posMezzo", "previsioneMeteo")
 				.containsExactly(expected.getNumFermata(), expected.getNome(),
-						expected.getOrarioAttuale(), expected.getPosMezzo(),
-						expected.getPrevisioneMeteo());
+						expected.getDirezione(), expected.getOrarioAttuale(),
+						expected.getPosMezzo(), expected.getPrevisioneMeteo());
 	}
 }

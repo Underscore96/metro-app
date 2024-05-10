@@ -16,17 +16,19 @@ import lombok.NoArgsConstructor;
 public class PojoFermata {
 	private Integer numFermata;
 	private String nome;
+	private String direzione;
 	private String orarioAttuale;
 	private String previsioneMeteo;
-	private Linea linea;
 	private String posMezzo;
+	private List<Linea> linee;
 	private List<Mezzo> mezzi;
 
-	public PojoFermata(Integer numFermata, String nome, String orarioAttuale,
-			String previsioneMeteo, String posMezzo) {
+	public PojoFermata(Integer numFermata, String nome, String direzione,
+			String orarioAttuale, String previsioneMeteo, String posMezzo) {
 		super();
 		this.numFermata = numFermata;
 		this.nome = nome;
+		this.direzione = direzione;
 		this.orarioAttuale = orarioAttuale;
 		this.previsioneMeteo = previsioneMeteo;
 		this.posMezzo = posMezzo;

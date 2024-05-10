@@ -32,6 +32,7 @@ public class MezzoService {
 			mezzoDB = new MezzoBuilder().setNumMezzo(mezzo.getNumMezzo())
 					.setNumMaxPasseggeri(mezzo.getNumMaxPasseggeri())
 					.setOrari(mezzo.getOrari()).setStato(mezzo.getStato())
+					.setDestinazione(mezzo.getDestinazione())
 					.setFermataAttuale(mezzo.getFermataAttuale()).costruisci();
 
 			mezzoDAO.crea(mezzoDB);
@@ -77,6 +78,7 @@ public class MezzoService {
 					.setNumMezzo(mezzoDB.getNumMezzo())
 					.setNumMaxPasseggeri(mezzoDB.getNumMaxPasseggeri())
 					.setOrari(mezzoDB.getOrari()).setStato(mezzoDB.getStato())
+					.setDestinazione(mezzoDB.getDestinazione())
 					.setFermataAttuale(mezzoDB.getFermataAttuale())
 					.costruisci();
 
@@ -122,6 +124,7 @@ public class MezzoService {
 					.setNumMezzo(mezzoVecchio.getNumMezzo())
 					.setNumMaxPasseggeri(mezzo.getNumMaxPasseggeri())
 					.setOrari(mezzo.getOrari()).setStato(mezzo.getStato())
+					.setDestinazione(mezzo.getDestinazione())
 					.setFermataAttuale(mezzo.getFermataAttuale()).costruisci();
 
 			mezzoAggiornato = mezzoDAO.aggiorna(mezzoAggiornato);
@@ -137,6 +140,7 @@ public class MezzoService {
 					.setNumMaxPasseggeri(mezzoAggiornato.getNumMaxPasseggeri())
 					.setOrari(mezzoAggiornato.getOrari())
 					.setStato(mezzoAggiornato.getStato())
+					.setDestinazione(mezzoAggiornato.getDestinazione())
 					.setFermataAttuale(mezzoAggiornato.getFermataAttuale())
 					.costruisci();
 
@@ -215,6 +219,7 @@ public class MezzoService {
 						.setNumMaxPasseggeri(mezzoDB.getNumMaxPasseggeri())
 						.setOrari(mezzoDB.getOrari())
 						.setStato(mezzoDB.getStato())
+						.setDestinazione(mezzoDB.getDestinazione())
 						.setFermataAttuale(mezzoDB.getFermataAttuale())
 						.costruisci();
 
@@ -275,6 +280,7 @@ public class MezzoService {
 					.setNumMezzo(mezzoDB.getNumMezzo())
 					.setNumMaxPasseggeri(mezzoDB.getNumMaxPasseggeri())
 					.setOrari(mezzoDB.getOrari()).setStato(mezzoDB.getStato())
+					.setDestinazione(mezzoDB.getDestinazione())
 					.setFermataAttuale(mezzoDB.getFermataAttuale())
 					.costruisci();
 

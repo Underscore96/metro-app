@@ -3,7 +3,6 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.hibernate.HibernateException;
 
@@ -38,46 +37,58 @@ public class FermataFEService {
 	}
 
 	public static String aggiornaFermataFE(PojoFermataFE fermataFE) {
-		PojoLinea pojolinea = null;
-		PojoFermata pojoFermata = null;
-		String risultato = "FERMATA E LINEA NON AGGIORNATA";
-		Object[] pojoDalFE;
+		PojoFermata pojoFermata = new PojoFermata();
+		List<PojoLinea> listaPojoLinee = new ArrayList<>();
+		String risultato = "FERMATA E LINEE NON AGGIORNATA";
 		List<Linea> controlloLinee;
 		List<Fermata> controlloFermate;
 		List<Mezzo> listaMezzi;
 		try {
-			if (fermataFE.getNumFermata() == null
-					|| fermataFE.getNomeLinea() == null)
+			if (fermataFE.getNumFermata() == null)
 				throw new CustomException(
 						String.format(
 								ErrorMessages.FERMATA_FE_NULL_POINTER_EXCEPTION,
 								NUMFERMATA, NOMELINEA),
 						Response.Status.BAD_REQUEST);
 
-			pojoDalFE = caricaDati(fermataFE);
-			pojoFermata = (PojoFermata) pojoDalFE[0];
-			pojolinea = (PojoLinea) pojoDalFE[1];
+			pojoFermata = caricaDati(fermataFE, pojoFermata, listaPojoLinee);
 
-			controlloLinee = lineaDAO
-					.leggiDaNomeLinea(fermataFE.getNomeLinea());
+			System.out.println(
+					"pojoFermata in aggiornaFermataFE: " + pojoFermata);
+			System.out.println(
+					"listaPojoLinee in aggiornaFermataFE: " + listaPojoLinee);
 
-			if (controlloLinee.isEmpty()) {
-				LineaService.creaLinea(pojolinea);
-			} else {
-				LineaService.aggiornaLinea(pojolinea);
+			if (!listaPojoLinee.isEmpty()) {
+				for (String nomeLinea : fermataFE.getNomiLinee()) {
+					controlloLinee = lineaDAO.leggiDaNomeLinea(nomeLinea);
+					for (PojoLinea pojoLinea : listaPojoLinee) {
+						if (pojoLinea.getNomeLinea().equals(nomeLinea)) {
+							if (controlloLinee.isEmpty()) {
+								LineaService.creaLinea(pojoLinea);
+							} else {
+								LineaService.aggiornaLinea(pojoLinea);
+							}
+							controlloLinee = new ArrayList<>();
+						}
+					}
+				}
 			}
 
 			controlloFermate = fermataDAO
 					.leggiDaNumFermata(fermataFE.getNumFermata());
 
-			if (controlloFermate.isEmpty()) {
-				FermataService.creaFermata(pojoFermata);
-				FermataService.aggiornaRelazioneFermata(
-						pojoFermata.getNumFermata(), pojolinea.getNomeLinea());
-			} else {
-				FermataService.aggiornaFermata(pojoFermata);
-				FermataService.aggiornaRelazioneFermata(
-						pojoFermata.getNumFermata(), pojolinea.getNomeLinea());
+			for (String nomeLinea : fermataFE.getNomiLinee()) {
+				if (controlloFermate.isEmpty()) {
+					FermataService.creaFermata(pojoFermata);
+					FermataService.aggiornaRelazioneFermata(
+							pojoFermata.getNumFermata(),
+							lineaDAO.leggiDaNomeLinea(nomeLinea));
+				} else {
+					FermataService.aggiornaFermata(pojoFermata);
+					FermataService.aggiornaRelazioneFermata(
+							pojoFermata.getNumFermata(),
+							lineaDAO.leggiDaNomeLinea(nomeLinea));
+				}
 			}
 			listaMezzi = pojoFermata.getMezzi();
 
@@ -86,7 +97,7 @@ public class FermataFEService {
 					mezzoDAO.aggiorna(mezzo);
 			}
 
-			risultato = "FERMATA E LINEA AGGIORNATA";
+			risultato = "FERMATA E LINEE AGGIORNATA";
 
 		} catch (NullPointerException e) {
 			throw new CustomException(String.format(
@@ -109,23 +120,19 @@ public class FermataFEService {
 		return risultato;
 	}
 
-	public static PojoFermataFE leggiFermataFE(Integer id, String nomeLinea,
-			Integer numFermata) {
-		Linea linea = null;
+	public static PojoFermataFE leggiFermataFE(Integer id, Integer numFermata) {
 		Fermata fermata = null;
 		PojoFermataFE risultato = null;
 		String posizione;
 
 		try {
-			if (id == null || nomeLinea == null || numFermata == null)
+			if (id == null || numFermata == null)
 				throw new CustomException(
 						"Null value encountered in id, or nome_linea, or numero_fermata. id, or  nome_linea, or numero_fermata argument cannot be null. Please check for null references.",
 						Response.Status.BAD_REQUEST);
 
 			List<Fermata> listaFermateTrovate = fermataDAO
 					.leggiDaNumFermata(numFermata);
-			List<Linea> listaLineeTrovate = lineaDAO
-					.leggiDaNomeLinea(nomeLinea);
 
 			if (listaFermateTrovate.isEmpty())
 				throw new CustomException("FERMATA NON PRESENTE NEL DATABASE",
@@ -133,18 +140,36 @@ public class FermataFEService {
 			else
 				fermata = listaFermateTrovate.get(0);
 
-			if (listaLineeTrovate.isEmpty()) {
-				throw new CustomException("LINEA NON PRESENTE NEL DATABASE",
+			List<Linea> listaLinee = fermata.getLinee();
+			String[] nomiLinee = new String[listaLinee.size()];
+			String[] destinazioniLinee = new String[listaLinee.size()];
+			List<String> listaNomiLinee = new ArrayList<>();
+			List<String> listaDestinazioniLinee = new ArrayList<>();
+			if (listaLinee.isEmpty()) {
+				throw new CustomException(
+						"FERMATA NON ASSOCIATA AD UNA LINEA DEL DATABASE",
 						Response.Status.NOT_FOUND);
 			} else {
-				linea = listaLineeTrovate.get(0);
+				for (Integer i = 0; i < listaLinee.size(); i++) {
+					nomiLinee[i] = listaLinee.get(i).getNomeLinea();
+					for (Integer z = 0; z < nomiLinee.length; z++) {
+						listaNomiLinee.add(nomiLinee[i]);
+					}
+
+					destinazioniLinee[i] = listaLinee.get(i).getDestinazione();
+					for (Integer z = 0; z < destinazioniLinee.length; z++) {
+						listaDestinazioniLinee.add(destinazioniLinee[i]);
+					}
+				}
 			}
 
 			posizione = fermata.getPosMezzo();
 
 			risultato = new PojoFermataFEBuilder().setId(id)
 					.setNumFermata(numFermata).setNomeFermata(fermata.getNome())
-					.setNomeLinea(nomeLinea).setDirezione(linea.getDirezione())
+					.setNomiLinee(listaNomiLinee)
+					.setDestinazioni(listaDestinazioniLinee)
+					.setDirezione(fermata.getDirezione())
 					.setOrarioAttuale(fermata.getOrarioAttuale())
 					.setPrevisioneMeteo(fermata.getPrevisioneMeteo())
 					.setPosizioneMezzo(posizione)
@@ -192,13 +217,11 @@ public class FermataFEService {
 		List<Orario> listaOrari = null;
 		List<PojoOrarioFE> listaTempiArrivo = new ArrayList<>();
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
-
+		String destinazione = null;
 		try {
 			for (Mezzo m : listaMezzi) {
-				if (m.getFermataAttuale().getLinea().getDirezione()
-						.equals(fermata.getLinea().getDirezione())) {
-					listaOrari = m.getOrari();
-				}
+				listaOrari = m.getOrari();
+				destinazione = m.getDestinazione();
 				if (listaOrari != null && !listaOrari.isEmpty()) {
 
 					for (Orario orario : listaOrari) {
@@ -207,8 +230,9 @@ public class FermataFEService {
 						if (Objects.equals(orario.getNumFermata(),
 								fermata.getNumFermata())) {
 
-							pojoOrarioFE.setNumMezzo(
+							pojoOrarioFE.setIdMezzo(
 									orario.getMezzo().getNumMezzo());
+							pojoOrarioFE.setDestinazione(destinazione);
 							pojoOrarioFE.setOrarioPrevisto(
 									orario.getOrarioPrevisto().toString());
 							pojoOrarioFE
@@ -218,7 +242,6 @@ public class FermataFEService {
 						}
 					}
 				}
-				listaOrari = null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -227,73 +250,75 @@ public class FermataFEService {
 		return listaTempiArrivo;
 	}
 
-	public static String rimuoviFermataFE(PojoFermataFE fermataFE,
-			String riferimento) {
-		String lineaRiscontro = "LINEA NON CANCELLATA";
-		String fermataRiscontro = "FERMATA NON CANCELLATA";
-		PojoLinea pojolinea = null;
-		PojoFermata pojoFermata = null;
-		String risultato;
-		Object[] pojoDalFE;
-		Optional<String> rifOpz = Optional.ofNullable(riferimento);
-		String rif = rifOpz.isPresent() ? riferimento : "";
-		try {
-			if (fermataFE.getNumFermata() == null
-					|| fermataFE.getNomeLinea() == null)
-				throw new CustomException(
-						String.format(
-								ErrorMessages.FERMATA_FE_NULL_POINTER_EXCEPTION,
-								NUMFERMATA, NOMELINEA),
-						Response.Status.BAD_REQUEST);
-
-			pojoDalFE = caricaDati(fermataFE);
-			pojoFermata = (PojoFermata) pojoDalFE[0];
-			pojolinea = (PojoLinea) pojoDalFE[1];
-
-			List<Fermata> controlloFermate = fermataDAO
-					.leggiDaNumFermata(fermataFE.getNumFermata());
-			List<Linea> controlloLinee = lineaDAO
-					.leggiDaNomeLinea(fermataFE.getNomeLinea());
-
-			if (rif.equals("fermata")) {
-				if (controlloFermate.isEmpty()) {
-					fermataRiscontro = "IMPOSSIBILE CANCELLARE FERMATA, DATO NON PRESENTE O GIA' CANCELLATO";
-				} else {
-					fermataRiscontro = FermataService
-							.cancellaFermata(pojoFermata.getNumFermata());
-				}
-			}
-
-			if (rif.equals("linea")) {
-				if (controlloLinee.isEmpty()) {
-					lineaRiscontro = "IMPOSSIBILE CANCELLARE LINEA, DATO NON PRESENTE O GIA' CANCELLATO";
-				} else {
-					lineaRiscontro = LineaService
-							.cancellaLinea(pojolinea.getNomeLinea());
-				}
-			}
-
-		} catch (NullPointerException e) {
-			throw new CustomException(String.format(
-					ErrorMessages.FERMATA_FE_NULL_POINTER_EXCEPTION, NUMFERMATA,
-					NOMELINEA), Response.Status.NOT_FOUND);
-		} catch (IllegalArgumentException e) {
-			throw new CustomException(
-					String.format(ErrorMessages.ILLEGAL_ARGUMENT_EXCEPTION,
-							FERMATA_BE),
-					Response.Status.BAD_REQUEST);
-		} catch (IndexOutOfBoundsException e) {
-			throw new CustomException(
-					String.format(ErrorMessages.INDEX_OUT_OF_BOUNDS_EXCEPTION),
-					Response.Status.NOT_FOUND);
-		} catch (HibernateException e) {
-			throw new CustomException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		}
-
-		risultato = lineaRiscontro + " - " + fermataRiscontro;
-		return risultato;
-	}
+	// public static String rimuoviFermataFE(PojoFermataFE fermataFE,
+	// String riferimento) {
+	// String lineaRiscontro = "LINEA NON CANCELLATA";
+	// String fermataRiscontro = "FERMATA NON CANCELLATA";
+	// PojoLinea pojolinea = null;
+	// PojoFermata pojoFermata = null;
+	// String risultato;
+	// Object[] pojoDalFE;
+	// Optional<String> rifOpz = Optional.ofNullable(riferimento);
+	// String rif = rifOpz.isPresent() ? riferimento : "";
+	// try {
+	// if (fermataFE.getNumFermata() == null
+	// || fermataFE.getNomeLinea() == null)
+	// throw new CustomException(
+	// String.format(
+	// ErrorMessages.FERMATA_FE_NULL_POINTER_EXCEPTION,
+	// NUMFERMATA, NOMELINEA),
+	// Response.Status.BAD_REQUEST);
+	//
+	// pojoDalFE = caricaDati(fermataFE);
+	// pojoFermata = (PojoFermata) pojoDalFE[0];
+	// pojolinea = (PojoLinea) pojoDalFE[1];
+	//
+	// List<Fermata> controlloFermate = fermataDAO
+	// .leggiDaNumFermata(fermataFE.getNumFermata());
+	// List<Linea> controlloLinee = lineaDAO
+	// .leggiDaNomeLinea(fermataFE.getNomeLinea());
+	//
+	// if (rif.equals("fermata")) {
+	// if (controlloFermate.isEmpty()) {
+	// fermataRiscontro = "IMPOSSIBILE CANCELLARE FERMATA, DATO NON PRESENTE O
+	// GIA' CANCELLATO";
+	// } else {
+	// fermataRiscontro = FermataService
+	// .cancellaFermata(pojoFermata.getNumFermata());
+	// }
+	// }
+	//
+	// if (rif.equals("linea")) {
+	// if (controlloLinee.isEmpty()) {
+	// lineaRiscontro = "IMPOSSIBILE CANCELLARE LINEA, DATO NON PRESENTE O GIA'
+	// CANCELLATO";
+	// } else {
+	// lineaRiscontro = LineaService
+	// .cancellaLinea(pojolinea.getNomeLinea());
+	// }
+	// }
+	//
+	// } catch (NullPointerException e) {
+	// throw new CustomException(String.format(
+	// ErrorMessages.FERMATA_FE_NULL_POINTER_EXCEPTION, NUMFERMATA,
+	// NOMELINEA), Response.Status.NOT_FOUND);
+	// } catch (IllegalArgumentException e) {
+	// throw new CustomException(
+	// String.format(ErrorMessages.ILLEGAL_ARGUMENT_EXCEPTION,
+	// FERMATA_BE),
+	// Response.Status.BAD_REQUEST);
+	// } catch (IndexOutOfBoundsException e) {
+	// throw new CustomException(
+	// String.format(ErrorMessages.INDEX_OUT_OF_BOUNDS_EXCEPTION),
+	// Response.Status.NOT_FOUND);
+	// } catch (HibernateException e) {
+	// throw new CustomException(e.getMessage(),
+	// Response.Status.INTERNAL_SERVER_ERROR);
+	// }
+	//
+	// risultato = lineaRiscontro + " - " + fermataRiscontro;
+	// return risultato;
+	// }
 
 	public static List<PojoFermataFE> leggiTutteLeFermateFE() {
 		List<PojoFermataFE> listaFermateFE = new ArrayList<>();
@@ -301,52 +326,52 @@ public class FermataFEService {
 		Integer idNum = 1;
 
 		for (Fermata fermata : listaFermate) {
-			listaFermateFE.add(
-					leggiFermataFE(idNum, fermata.getLinea().getNomeLinea(),
-							fermata.getNumFermata()));
+			listaFermateFE.add(leggiFermataFE(idNum, fermata.getNumFermata()));
 			idNum++;
 		}
 
 		return listaFermateFE;
 	}
 
-	private static Object[] caricaDati(PojoFermataFE fermataFE) {
-		Object[] pojoArray = new Object[2];
-		PojoFermata fermata;
-		PojoLinea linea;
+	private static PojoFermata caricaDati(PojoFermataFE fermataFE,
+			PojoFermata pojoFermata, List<PojoLinea> listaPojoLinee) {
+		List<Linea> listaLineeFermata = new ArrayList<>();
+		List<Mezzo> listaMezzi = new ArrayList<>();
 		try {
-			if (fermataFE.getNumFermata() == null
-					|| fermataFE.getNomeLinea() == null)
+			if (fermataFE == null || fermataFE.getNumFermata() == null)
 				throw new CustomException(
 						String.format(
 								ErrorMessages.FERMATA_FE_NULL_POINTER_EXCEPTION,
 								NUMFERMATA, NOMELINEA),
 						Response.Status.BAD_REQUEST);
 
-			fermata = new PojoFermataBuilder()
+			for (String nomeLinea : fermataFE.getNomiLinee()) {
+				listaLineeFermata
+						.add(lineaDAO.leggiDaNomeLinea(nomeLinea).get(0));
+			}
+
+			for (PojoStatoMezzoFE pojoStatoMezzoFE : fermataFE
+					.getStatiMezzi()) {
+				listaMezzi = mezzoDAO
+						.leggiDaNumMezzo(pojoStatoMezzoFE.getIdMezzo());
+			}
+
+			pojoFermata = new PojoFermataBuilder()
 					.setNumFermata(fermataFE.getNumFermata())
 					.setNome(fermataFE.getNomeFermata())
+					.setDirezione(fermataFE.getDirezione())
 					.setOrarioAttuale(fermataFE.getOrarioAttuale())
 					.setPrevisioneMeteo(fermataFE.getPrevisioneMeteo())
 					.setPosMezzo(fermataFE.getPosizioneMezzo())
-					.setLinea(lineaDAO
-							.leggiDaNomeLinea(fermataFE.getNomeLinea()).get(0))
-					.setMezzi(fermataDAO
-							.leggiDaNumFermata(fermataFE.getNumFermata()).get(0)
-							.getMezzi())
+					.setLinee(listaLineeFermata).setMezzi(listaMezzi)
 					.costruisci();
 
-			linea = new PojoLineaBuilder()
-					.setNomeLinea(fermataFE.getNomeLinea())
-					.setDirezione(fermataFE.getDirezione())
-					.setFermate(
-							lineaDAO.leggiDaNomeLinea(fermataFE.getNomeLinea())
-									.get(0).getFermate())
-					.costruisci();
-
-			pojoArray[0] = fermata;
-			pojoArray[1] = linea;
-
+			for (Linea linea : listaLineeFermata) {
+				listaPojoLinee.add(new PojoLineaBuilder()
+						.setNomeLinea(linea.getNomeLinea())
+						.setDestinazione(linea.getDestinazione())
+						.setFermate(linea.getFermate()).costruisci());
+			}
 		} catch (NullPointerException e) {
 			throw new CustomException(String.format(
 					ErrorMessages.FERMATA_FE_NULL_POINTER_EXCEPTION, NUMFERMATA,
@@ -363,8 +388,9 @@ public class FermataFEService {
 		} catch (HibernateException e) {
 			throw new CustomException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		return pojoArray;
+		return pojoFermata;
 	}
 }

@@ -15,7 +15,8 @@ public class PojoFermataFE {
 	private Integer id;
 	private Integer numFermata;
 	private String nomeFermata;
-	private String nomeLinea;
+	private List<String> nomiLinee;
+	private List<String> destinazioni;
 	private String direzione;
 	private String orarioAttuale;
 	private String previsioneMeteo;
@@ -25,14 +26,15 @@ public class PojoFermataFE {
 	private List<PojoOrarioFE> orariMezzi;
 
 	public PojoFermataFE(Integer id, Integer numFermata, String nomeFermata,
-			String nomeLinea, String direzione, String orarioAttuale,
-			String previsioneMeteo, Integer numMezzi,
+			List<String> nomiLinee, List<String> destinazioni, String direzione,
+			String orarioAttuale, String previsioneMeteo, Integer numMezzi,
 			List<PojoStatoMezzoFE> statiMezzi, String posizioneMezzo) {
 		super();
 		this.id = id;
 		this.numFermata = numFermata;
 		this.nomeFermata = nomeFermata;
-		this.nomeLinea = nomeLinea;
+		this.nomiLinee = nomiLinee;
+		this.destinazioni = destinazioni;
 		this.direzione = direzione;
 		this.orarioAttuale = orarioAttuale;
 		this.previsioneMeteo = previsioneMeteo;

@@ -11,6 +11,7 @@ public class MezzoBuilder {
 	private Integer numMezzo;
 	private Integer numMaxPasseggeri;
 	private String stato;
+	private String destinazione;
 	private Fermata fermataAttuale;
 	private List<Orario> orari;
 
@@ -34,6 +35,11 @@ public class MezzoBuilder {
 		return this;
 	}
 
+	public MezzoBuilder setDestinazione(String destinazione) {
+		this.destinazione = destinazione;
+		return this;
+	}
+
 	public MezzoBuilder setFermataAttuale(Fermata fermataAttuale) {
 		this.fermataAttuale = fermataAttuale;
 		return this;
@@ -51,10 +57,10 @@ public class MezzoBuilder {
 		nuovoMezzo.setNumMezzo(numMezzo);
 		nuovoMezzo.setNumMaxPasseggeri(numMaxPasseggeri);
 		nuovoMezzo.setStato(stato);
+		nuovoMezzo.setDestinazione(destinazione);
 		nuovoMezzo.setFermataAttuale(fermataAttuale);
 		nuovoMezzo.setOrari(orari);
 
 		return nuovoMezzo;
-
 	}
 }

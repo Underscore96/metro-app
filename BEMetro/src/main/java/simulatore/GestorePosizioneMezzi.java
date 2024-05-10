@@ -151,12 +151,12 @@ public class GestorePosizioneMezzi {
 		if (fer.getNumFermata() == 8) {
 			MezzoService.aggiornaRelazioneMezzo(8, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(9, numMezzo, "");
-			GestoreOrari.generaOrari(numMezzo, "Brignole");
+			GestoreOrari.generaOrari(numMezzo, "verde");
 		}
 		if (fer.getNumFermata() == 16) {
 			MezzoService.aggiornaRelazioneMezzo(16, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(1, numMezzo, "");
-			GestoreOrari.generaOrari(numMezzo, "Brin");
+			GestoreOrari.generaOrari(numMezzo, "blu");
 		} else {
 			MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata(), numMezzo,
 					RIM);

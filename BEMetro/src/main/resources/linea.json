@@ -1,10 +1,10 @@
 [
 	{
 		"nomeLinea": "verde",
-		"direzione": "Brignole"
+		"destinazione": "Brignole"
 	},
 	{
 		"nomeLinea": "blu",
-		"direzione": "Brin"
+		"destinazione": "Brin"
 	}
 ]

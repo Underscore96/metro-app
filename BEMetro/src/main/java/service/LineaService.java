@@ -30,7 +30,7 @@ public class LineaService {
 
 		try {
 			dbLinea = new LineaBuilder().setNomeLinea(linea.getNomeLinea())
-					.setDirezione(linea.getDirezione())
+					.setDestinazione(linea.getDestinazione())
 					.setFermate(linea.getFermate()).costruisci();
 
 			lineaDAO.crea(dbLinea);
@@ -75,7 +75,7 @@ public class LineaService {
 
 			risultato = new PojoLineaBuilder()
 					.setNomeLinea(lineaDB.getNomeLinea())
-					.setDirezione(lineaDB.getDirezione())
+					.setDestinazione(lineaDB.getDestinazione())
 					.setFermate(lineaDB.getFermate()).costruisci();
 
 		} catch (NullPointerException e) {
@@ -119,7 +119,7 @@ public class LineaService {
 			lineaAggiornata = new LineaBuilder()
 					.setIdLinea(lineaVecchia.getIdLinea())
 					.setNomeLinea(lineaVecchia.getNomeLinea())
-					.setDirezione(linea.getDirezione())
+					.setDestinazione(linea.getDestinazione())
 					.setFermate(linea.getFermate()).costruisci();
 
 			lineaAggiornata = lineaDAO.aggiorna(lineaAggiornata);
@@ -132,7 +132,7 @@ public class LineaService {
 
 			risultato = new PojoLineaBuilder()
 					.setNomeLinea(lineaAggiornata.getNomeLinea())
-					.setDirezione(lineaAggiornata.getDirezione())
+					.setDestinazione(lineaAggiornata.getDestinazione())
 					.setFermate(lineaAggiornata.getFermate()).costruisci();
 
 		} catch (NullPointerException e) {
@@ -209,7 +209,7 @@ public class LineaService {
 
 				lineaSingola = new PojoLineaBuilder()
 						.setNomeLinea(lineaDB.getNomeLinea())
-						.setDirezione(lineaDB.getDirezione())
+						.setDestinazione(lineaDB.getDestinazione())
 						.setFermate(lineaDB.getFermate()).costruisci();
 
 				risultati.add(lineaSingola);
@@ -254,7 +254,7 @@ public class LineaService {
 
 				lineaSingola = new PojoLineaBuilder()
 						.setNomeLinea(lineaDB.getNomeLinea())
-						.setDirezione(lineaDB.getDirezione())
+						.setDestinazione(lineaDB.getDestinazione())
 						.setFermate(lineaDB.getFermate()).costruisci();
 
 				risultati.add(lineaSingola);
@@ -300,8 +300,9 @@ public class LineaService {
 				pojoFermata = new PojoFermataBuilder()
 						.setNumFermata(fermataDB.getNumFermata())
 						.setNome(fermataDB.getNome())
+						.setDirezione(fermataDB.getDirezione())
 						.setPrevisioneMeteo(fermataDB.getPrevisioneMeteo())
-						.setLinea(fermataDB.getLinea())
+						.setLinee(fermataDB.getLinee())
 						.setMezzi(fermataDB.getMezzi()).costruisci();
 
 				risultato.add(pojoFermata);
@@ -347,7 +348,7 @@ public class LineaService {
 			lineaAggiornata = new LineaBuilder()
 					.setIdLinea(lineaVecchia.getIdLinea())
 					.setNomeLinea(nuovoNome)
-					.setDirezione(lineaVecchia.getDirezione())
+					.setDestinazione(lineaVecchia.getDestinazione())
 					.setFermate(lineaVecchia.getFermate()).costruisci();
 
 			lineaAggiornata = lineaDAO.aggiorna(lineaAggiornata);
@@ -360,7 +361,7 @@ public class LineaService {
 
 			risultato = new PojoLineaBuilder()
 					.setNomeLinea(lineaAggiornata.getNomeLinea())
-					.setDirezione(lineaAggiornata.getDirezione())
+					.setDestinazione(lineaAggiornata.getDestinazione())
 					.setFermate(lineaAggiornata.getFermate()).costruisci();
 
 		} catch (NullPointerException e) {

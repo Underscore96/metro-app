@@ -51,7 +51,6 @@ public class ClasseMain {
 		Integer numCicli = 1;
 		List<Simulazione> listSim = simulazioneDAO
 				.leggiDaIdSimulazione(idSimulazione);
-
 		if (listSim != null && !listSim.isEmpty()) {
 			sim = listSim.get(0);
 
@@ -65,13 +64,11 @@ public class ClasseMain {
 			simulazioneDAO.aggiornaSimulazione(sim);
 			numCicli = sim.getNumCicli();
 		}
-
 		Map<Integer, Fermata> mezziPerFermata = new HashMap<>();
 		List<PojoFermataFE> elencoFermate = FermataFEService
 				.leggiTutteLeFermateFE();
-
+		System.out.println("getNumMezzi" + elencoFermate.get(0).getNumMezzi());
 		for (PojoFermataFE fermataFE : elencoFermate) {
-
 			calcolaRitardo(fermataFE);
 			previsioneMeteo(fermataFE);
 			registraPosizioneMezzi(mezziPerFermata, fermataFE);
@@ -79,7 +76,13 @@ public class ClasseMain {
 
 			FermataFEService.aggiornaFermataFE(fermataFE);
 		}
+
 		GestorePosizioneMezzi.aggPosizioneMezzi(mezziPerFermata, numCicli);
+		elencoFermate = FermataFEService.leggiTutteLeFermateFE();
+		for (PojoFermataFE fermataFE : elencoFermate) {
+			aggiornaPresenzaMezzi(fermataFE);
+			FermataFEService.aggiornaFermataFE(fermataFE);
+		}
 		if (Boolean.TRUE.equals(sim.getStatoEsecuzione())) {
 			sim.setNumCicli(numCicli + 1);
 			simulazioneDAO.aggiornaSimulazione(sim);
@@ -96,7 +99,7 @@ public class ClasseMain {
 			PojoOrarioFE orarioMezzo = elencoOrariFermata.get(i);
 
 			List<Orario> listaOrariDaAggiornare = mezzoDAO
-					.leggiDaNumMezzo(orarioMezzo.getNumMezzo()).get(0)
+					.leggiDaNumMezzo(orarioMezzo.getIdMezzo()).get(0)
 					.getOrari();
 
 			Integer ritardoRandom = 0;
@@ -145,7 +148,15 @@ public class ClasseMain {
 		for (Mezzo m : listaMezzi) {
 			mezziPerFermata.put(m.getNumMezzo(), m.getFermataAttuale());
 		}
+	}
 
+	private static void aggiornaOraAttuale(PojoFermataFE fermataFE) {
+		String stringaOrarioAttuale = fermataFE.getOrarioAttuale();
+		LocalDateTime orarioAttuale = LocalDateTime.parse(stringaOrarioAttuale);
+		fermataFE.setOrarioAttuale(orarioAttuale.plusMinutes(5).toString());
+	}
+
+	private static void aggiornaPresenzaMezzi(PojoFermataFE fermataFE) {
 		List<PojoStatoMezzoFE> listastatiMezzi = fermataFE.getStatiMezzi();
 
 		if (!listastatiMezzi.isEmpty()) {
@@ -153,11 +164,5 @@ public class ClasseMain {
 		} else {
 			fermataFE.setPosizioneMezzo(ASS);
 		}
-	}
-
-	private static void aggiornaOraAttuale(PojoFermataFE fermataFE) {
-		String stringaOrarioAttuale = fermataFE.getOrarioAttuale();
-		LocalDateTime orarioAttuale = LocalDateTime.parse(stringaOrarioAttuale);
-		fermataFE.setOrarioAttuale(orarioAttuale.plusMinutes(5).toString());
 	}
 }

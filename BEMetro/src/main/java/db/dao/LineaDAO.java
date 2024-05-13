@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
@@ -73,6 +74,10 @@ public class LineaDAO {
 					.where(builder.equal(root.get(NOMELINEA), nomeLinea));
 			result = sessione.createQuery(criteria).getResultList();
 
+			for (Linea linea : result) {
+				Hibernate.initialize(linea.getFermate());
+			}
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -120,7 +125,7 @@ public class LineaDAO {
 			sessione.beginTransaction();
 
 			sessione.remove(linea);
-			
+
 			sessione.getTransaction().commit();
 
 		} catch (HibernateException e) {

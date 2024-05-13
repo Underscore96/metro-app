@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import db.dao.FermataDAO;
+import db.dao.LineaDAO;
 import db.entity.Fermata;
 import db.entity.Linea;
 import exception.CustomException;
@@ -17,6 +18,7 @@ import service.builder.PojoFermataBuilder;
 
 public class FermataService {
 	private static FermataDAO fermataDAO = new FermataDAO();
+	private static LineaDAO lineaDAO = new LineaDAO();
 	private static final String NUMFERMATA = "numFermata";
 
 	private FermataService() {
@@ -312,15 +314,20 @@ public class FermataService {
 	}
 
 	public static PojoFermata aggiornaRelazioneFermata(Integer numFermata,
-			List<Linea> listaLinee) {
+			List<String> listaNomeLinee) {
 		PojoFermata risultato = null;
 		Fermata fermataDB;
 		List<Fermata> listaFermateDB;
-
-		listaFermateDB = fermataDAO.leggiDaNumFermata(numFermata);
-		fermataDB = listaFermateDB.get(0);
+		List<Linea> listaLinee = new ArrayList<>();
 
 		try {
+			listaFermateDB = fermataDAO.leggiDaNumFermata(numFermata);
+			fermataDB = listaFermateDB.get(0);
+
+			for (String nomeLinea : listaNomeLinee) {
+				listaLinee.add(lineaDAO.leggiDaNomeLinea(nomeLinea).get(0));
+			}
+
 			fermataDB.setLinee(listaLinee);
 
 			fermataDB = fermataDAO.aggiorna(fermataDB);

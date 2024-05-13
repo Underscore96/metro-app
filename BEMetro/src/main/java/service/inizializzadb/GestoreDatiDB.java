@@ -56,7 +56,7 @@ public class GestoreDatiDB {
 			aggiornaDBUtenti(listaUtenti);
 			aggiornaDBMezzi(listaMezzi);
 
-			dbData[0] = relazioniFermateLinee(listaFermate, listaLinee);
+			dbData[0] = relazioniFermateLinee(listaFermate);
 
 			for (Linea linea : listaLinee) {
 				listaPojoLinee.add(new PojoLineaBuilder()
@@ -80,8 +80,9 @@ public class GestoreDatiDB {
 			dbData[2] = listaPojoUtenti;
 
 			dbData[3] = relazioniMezzoFermata(listaMezzi);
-			dbData[4] = InizializzaOrariDB.generaOrari();
-
+			dbData[4] = InizializzaOrariDBSkyTram.generaOrari();
+			// System.out.println("LISTALINEE DA CAPIRE: "
+			// + relazioniFermateLinee(listaFermate));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,7 +116,7 @@ public class GestoreDatiDB {
 			listaLinee = mapper.readValue(lineaInputStream,
 					new TypeReference<List<Linea>>() {
 					});
-			System.out.println("LISTAlINEE: " + listaLinee);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -208,39 +209,62 @@ public class GestoreDatiDB {
 		}
 	}
 
-	private List<PojoFermata> relazioniFermateLinee(List<Fermata> listaFermate,
-			List<Linea> listalinee) {
+	private List<PojoFermata> relazioniFermateLinee(
+			List<Fermata> listaFermate) {
 		List<PojoFermata> listaPojoFermate = new ArrayList<>();
+		List<String> listaNomiLinee = new ArrayList<>();
 		Integer numFermata;
 
-		if (listaFermate != null && listalinee != null) {
+		if (listaFermate != null) {
 			for (Fermata fermata : listaFermate) {
 				numFermata = fermata.getNumFermata();
-				if (numFermata == 1 || numFermata == 16) {
-					List<Linea> listaLinee = lineaDAO.leggiDaNomeLinea("blu");
-					listaLinee.addAll(lineaDAO.leggiDaNomeLinea("verde"));
 
-					listaPojoFermate.add(FermataService
-							.aggiornaRelazioneFermata(numFermata, listaLinee));
-				} else if (numFermata <= 8)
+				if (numFermata >= 1 && numFermata <= 7) {
+					listaNomiLinee.add("verde");
 					listaPojoFermate.add(
 							FermataService.aggiornaRelazioneFermata(numFermata,
-									lineaDAO.leggiDaNomeLinea("blu")));
-				else if (numFermata <= 15)
+									listaNomiLinee));
+					listaNomiLinee.clear();
+
+				} else if (numFermata == 8) {
+					listaNomiLinee.add("verde");
+					listaNomiLinee.add("gialla");
 					listaPojoFermate.add(
 							FermataService.aggiornaRelazioneFermata(numFermata,
-									lineaDAO.leggiDaNomeLinea("verde")));
-				else if (numFermata <= 23)
+									listaNomiLinee));
+					listaNomiLinee.clear();
+
+				} else if (numFermata > 8 && numFermata <= 15) {
+					listaNomiLinee.add("gialla");
 					listaPojoFermate.add(
 							FermataService.aggiornaRelazioneFermata(numFermata,
-									lineaDAO.leggiDaNomeLinea("rossa")));
-				else
+									listaNomiLinee));
+					listaNomiLinee.clear();
+
+				} else if (numFermata >= 16 && numFermata < 23) {
+					listaNomiLinee.add("rossa");
 					listaPojoFermate.add(
 							FermataService.aggiornaRelazioneFermata(numFermata,
-									lineaDAO.leggiDaNomeLinea("gialla")));
+									listaNomiLinee));
+					listaNomiLinee.clear();
+
+				} else if (numFermata == 23) {
+					listaNomiLinee.add("blu");
+					listaNomiLinee.add("rossa");
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									listaNomiLinee));
+					listaNomiLinee.clear();
+
+				} else {
+					listaNomiLinee.add("blu");
+					listaPojoFermate.add(
+							FermataService.aggiornaRelazioneFermata(numFermata,
+									listaNomiLinee));
+					listaNomiLinee.clear();
+				}
 			}
 		}
-
 		return listaPojoFermate;
 	}
 
@@ -251,16 +275,16 @@ public class GestoreDatiDB {
 		if (listaMezzi != null) {
 			for (Mezzo mezzo : listaMezzi) {
 				numMezzo = mezzo.getNumMezzo();
-				if (numMezzo <= 3)
+				if (numMezzo >= 1 && numMezzo <= 3)
 					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(1,
 							numMezzo, AGG));
-				else if (numMezzo <= 6)
-					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(9,
+				else if (numMezzo >= 4 && numMezzo <= 6)
+					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(8,
 							numMezzo, AGG));
-				else if (numMezzo <= 9)
-					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(9,
+				else if (numMezzo >= 7 && numMezzo <= 9)
+					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(23,
 							numMezzo, AGG));
-				else
+				else if (numMezzo >= 10 && numMezzo <= 12)
 					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(24,
 							numMezzo, AGG));
 			}

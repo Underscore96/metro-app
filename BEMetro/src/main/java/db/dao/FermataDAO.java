@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
 import db.entity.Fermata;
+import db.entity.Linea;
 import db.util.HibernateUtil;
 import exception.CustomException;
 import exception.ErrorMessages;
@@ -72,6 +74,10 @@ public class FermataDAO {
 					.where(builder.equal(root.get(NUMFERMATA), numFermata));
 			result = sessione.createQuery(criteria).getResultList();
 
+			for (Fermata fermata : result) {
+				Hibernate.initialize(fermata.getLinee());
+			}
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -83,13 +89,49 @@ public class FermataDAO {
 		return result;
 	}
 
+	public List<Linea> leggiLineeDellaFermata(Integer numFermata) {
+		List<Fermata> result = new ArrayList<>();
+		CriteriaBuilder builder;
+		CriteriaQuery<Fermata> criteria;
+		Root<Fermata> root;
+		List<Linea> listaLinee = null;
+
+		try {
+			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
+			sessione.beginTransaction();
+
+			builder = sessione.getCriteriaBuilder();
+			criteria = builder.createQuery(Fermata.class);
+			root = criteria.from(Fermata.class);
+
+			criteria.select(root)
+					.where(builder.equal(root.get(NUMFERMATA), numFermata));
+			result = sessione.createQuery(criteria).getResultList();
+
+			for (Fermata fermata : result) {
+				Hibernate.initialize(fermata.getLinee());
+				listaLinee = fermata.getLinee();
+			}
+
+		} catch (HibernateException e) {
+			sessione.getTransaction().rollback();
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			if (sessione != null)
+				sessione.close();
+		}
+		return listaLinee;
+	}
+
 	public Fermata aggiorna(Fermata fermata) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
+			Hibernate.initialize(fermata.getLinee());
 			fermata = sessione.merge(fermata);
-			
+
 			sessione.getTransaction().commit();
 		} catch (PropertyValueException e) {
 			sessione.getTransaction().rollback();
@@ -118,7 +160,7 @@ public class FermataDAO {
 			sessione.beginTransaction();
 
 			sessione.remove(fermata);
-			
+
 			sessione.getTransaction().commit();
 
 		} catch (HibernateException e) {

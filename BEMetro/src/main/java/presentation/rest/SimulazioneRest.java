@@ -20,7 +20,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import simulatore.ClasseMain;
+import simulatore.ClasseMainSkyTram;
 
 @Path("/simulazione")
 public class SimulazioneRest {
@@ -104,11 +104,11 @@ public class SimulazioneRest {
 						scheduler.shutdown();
 						return;
 					}
-					ClasseMain.updateData("1");
+					ClasseMainSkyTram.updateData("1");
 				}
 			};
 
-			scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
+			scheduler.scheduleAtFixedRate(task, 0, 20, TimeUnit.SECONDS);
 			return "Simulazione inizializzata correttamente.";
 
 		} catch (InterruptedException e) {

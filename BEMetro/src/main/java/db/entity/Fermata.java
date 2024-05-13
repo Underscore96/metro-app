@@ -20,6 +20,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -27,6 +28,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = {"idFermata"})
 @Entity
 @Table(name = "Fermate")
 public class Fermata {
@@ -54,7 +56,7 @@ public class Fermata {
 	@Column(name = "posMezzo", length = 20, nullable = true, unique = false)
 	private String posMezzo;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
 			CascadeType.MERGE})
 	@JoinTable(name = "Fermate_Linee", joinColumns = @JoinColumn(name = "idFermata"), inverseJoinColumns = @JoinColumn(name = "idLinea"))
 	@JsonIgnore

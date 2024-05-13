@@ -12,7 +12,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
 import presentation.pojo.PojoFermataFE;
+import presentation.pojo.PojoFermataFESkyTram;
 import service.FermataFEService;
+import service.FermataFEServiceSkyTram;
 
 @Path("/fermataFE")
 public class FermataFERest {
@@ -28,12 +30,12 @@ public class FermataFERest {
 	@Path("/aggiorna")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response aggiornaFermata(PojoFermataFE fermataFE) {
+	public Response aggiornaFermata(PojoFermataFESkyTram fermataFE) {
 		Response risposta = null;
 		String risultato = null;
 
 		try {
-			risultato = FermataFEService.aggiornaFermataFE(fermataFE);
+			risultato = FermataFEServiceSkyTram.aggiornaFermataFE(fermataFE);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
@@ -69,13 +71,12 @@ public class FermataFERest {
 	@Path("/leggi")
 	@Produces("Application/json")
 	public Response rimuoviFermata(@QueryParam("id") Integer id,
-			@QueryParam("nome_linea") String nome_linea,
-			@QueryParam("numero_fermata") Integer numero_fermata) {
+			@QueryParam("numFermata") Integer numFermata) {
 		Response risposta = null;
 		PojoFermataFE risultato = null;
 
 		try {
-			risultato = FermataFEService.leggiFermataFE(id, numero_fermata);
+			risultato = FermataFEService.leggiFermataFE(id, numFermata);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
@@ -90,10 +91,10 @@ public class FermataFERest {
 	@Produces("Application/json")
 	public Response leggiTutteLeFermateFE() {
 		Response risposta = null;
-		List<PojoFermataFE> risultato = null;
+		List<PojoFermataFESkyTram> risultato = null;
 
 		try {
-			risultato = FermataFEService.leggiTutteLeFermateFE();
+			risultato = FermataFEServiceSkyTram.leggiTutteLeFermateFE();
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {

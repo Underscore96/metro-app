@@ -212,19 +212,21 @@ public class InizDb {
 	private List<PojoFermata> relazioniFermateLinee(List<Fermata> listaFermate,
 			List<Linea> listalinee) {
 		List<PojoFermata> listaPojoFermate = new ArrayList<>();
+		List<String> listaNomi = new ArrayList<>();
 		Integer numFermata;
 
 		if (listaFermate != null && listalinee != null) {
 			for (Fermata fermata : listaFermate) {
 				numFermata = fermata.getNumFermata();
-				if (numFermata <= NOMI_FERMATE_DIR_BRIN.length)
-					listaPojoFermate.add(
-							FermataService.aggiornaRelazioneFermata(numFermata,
-									lineaDAO.leggiDaNomeLinea("blu")));
-				else
-					listaPojoFermate.add(
-							FermataService.aggiornaRelazioneFermata(numFermata,
-									lineaDAO.leggiDaNomeLinea("verde")));
+				if (numFermata <= NOMI_FERMATE_DIR_BRIN.length) {
+					listaNomi.add("blu");
+					listaPojoFermate.add(FermataService
+							.aggiornaRelazioneFermata(numFermata, listaNomi));
+				} else {
+					listaNomi.add("blu");
+					listaPojoFermate.add(FermataService
+							.aggiornaRelazioneFermata(numFermata, listaNomi));
+				}
 			}
 		}
 

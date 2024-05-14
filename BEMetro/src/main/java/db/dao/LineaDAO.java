@@ -57,7 +57,7 @@ public class LineaDAO {
 	}
 
 	public List<Linea> leggiDaNomeLinea(String nomeLinea) {
-		List<Linea> result = new ArrayList<>();
+		List<Linea> risultati = new ArrayList<>();
 		CriteriaBuilder builder;
 		CriteriaQuery<Linea> criteria;
 		Root<Linea> root;
@@ -72,9 +72,9 @@ public class LineaDAO {
 
 			criteria.select(root)
 					.where(builder.equal(root.get(NOMELINEA), nomeLinea));
-			result = sessione.createQuery(criteria).getResultList();
+			risultati = sessione.createQuery(criteria).getResultList();
 
-			for (Linea linea : result) {
+			for (Linea linea : risultati) {
 				Hibernate.initialize(linea.getFermate());
 			}
 
@@ -86,7 +86,7 @@ public class LineaDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return result;
+		return risultati;
 	}
 
 	public Linea aggiorna(Linea linea) {
@@ -139,7 +139,7 @@ public class LineaDAO {
 	}
 
 	public List<Linea> trovaTutteLeLinee() {
-		List<Linea> result = new ArrayList<>();
+		List<Linea> risultati = new ArrayList<>();
 		CriteriaBuilder builder;
 		CriteriaQuery<Linea> criteria;
 
@@ -151,7 +151,12 @@ public class LineaDAO {
 			criteria = builder.createQuery(Linea.class);
 			criteria.from(Linea.class);
 
-			result = sessione.createQuery(criteria).getResultList();
+			risultati = sessione.createQuery(criteria).getResultList();
+
+			for (Linea linea : risultati) {
+				Hibernate.initialize(linea.getFermate());
+			}
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -160,7 +165,7 @@ public class LineaDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return result;
+		return risultati;
 	}
 
 	public List<Linea> trovaConAttributi(String direzione) {
@@ -189,6 +194,10 @@ public class LineaDAO {
 
 			risultati = castList(Linea.class, query.getResultList());
 
+			for (Linea linea : risultati) {
+				Hibernate.initialize(linea.getFermate());
+			}
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -209,15 +218,19 @@ public class LineaDAO {
 	}
 
 	public List<Fermata> leggiLineaConFermate(String nomeLinea) {
-		List<Fermata> result = new ArrayList<>();
+		List<Fermata> risultati = new ArrayList<>();
 
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
 			String sqlQuery = "SELECT f.* FROM Fermata f JOIN Linea l ON f.idLinea = l.idLinea WHERE l.nomeLinea = :nomeLinea";
-			result = sessione.createNativeQuery(sqlQuery, Fermata.class)
+			risultati = sessione.createNativeQuery(sqlQuery, Fermata.class)
 					.setParameter(NOMELINEA, nomeLinea).getResultList();
+
+			for (Fermata fermata : risultati) {
+				Hibernate.initialize(fermata.getLinee());
+			}
 
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
@@ -227,6 +240,6 @@ public class LineaDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return result;
+		return risultati;
 	}
 }

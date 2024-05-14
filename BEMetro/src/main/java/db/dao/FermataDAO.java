@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
 import db.entity.Fermata;
-import db.entity.Linea;
 import db.util.HibernateUtil;
 import exception.CustomException;
 import exception.ErrorMessages;
@@ -57,7 +56,7 @@ public class FermataDAO {
 	}
 
 	public List<Fermata> leggiDaNumFermata(Integer numFermata) {
-		List<Fermata> result = new ArrayList<>();
+		List<Fermata> risultati = new ArrayList<>();
 		CriteriaBuilder builder;
 		CriteriaQuery<Fermata> criteria;
 		Root<Fermata> root;
@@ -72,9 +71,9 @@ public class FermataDAO {
 
 			criteria.select(root)
 					.where(builder.equal(root.get(NUMFERMATA), numFermata));
-			result = sessione.createQuery(criteria).getResultList();
+			risultati = sessione.createQuery(criteria).getResultList();
 
-			for (Fermata fermata : result) {
+			for (Fermata fermata : risultati) {
 				Hibernate.initialize(fermata.getLinee());
 			}
 
@@ -86,42 +85,7 @@ public class FermataDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return result;
-	}
-
-	public List<Linea> leggiLineeDellaFermata(Integer numFermata) {
-		List<Fermata> result = new ArrayList<>();
-		CriteriaBuilder builder;
-		CriteriaQuery<Fermata> criteria;
-		Root<Fermata> root;
-		List<Linea> listaLinee = null;
-
-		try {
-			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
-			sessione.beginTransaction();
-
-			builder = sessione.getCriteriaBuilder();
-			criteria = builder.createQuery(Fermata.class);
-			root = criteria.from(Fermata.class);
-
-			criteria.select(root)
-					.where(builder.equal(root.get(NUMFERMATA), numFermata));
-			result = sessione.createQuery(criteria).getResultList();
-
-			for (Fermata fermata : result) {
-				Hibernate.initialize(fermata.getLinee());
-				listaLinee = fermata.getLinee();
-			}
-
-		} catch (HibernateException e) {
-			sessione.getTransaction().rollback();
-			throw new CustomException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		} finally {
-			if (sessione != null)
-				sessione.close();
-		}
-		return listaLinee;
+		return risultati;
 	}
 
 	public Fermata aggiorna(Fermata fermata) {
@@ -174,7 +138,7 @@ public class FermataDAO {
 	}
 
 	public List<Fermata> trovaTutteLeFermate() {
-		List<Fermata> result = new ArrayList<>();
+		List<Fermata> risultati = new ArrayList<>();
 		CriteriaBuilder builder;
 		CriteriaQuery<Fermata> criteria;
 
@@ -186,7 +150,12 @@ public class FermataDAO {
 			criteria = builder.createQuery(Fermata.class);
 			criteria.from(Fermata.class);
 
-			result = sessione.createQuery(criteria).getResultList();
+			risultati = sessione.createQuery(criteria).getResultList();
+
+			for (Fermata fermata : risultati) {
+				Hibernate.initialize(fermata.getLinee());
+			}
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -195,7 +164,7 @@ public class FermataDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return result;
+		return risultati;
 	}
 
 	public List<Fermata> trovaConAttributi(String nome) {
@@ -222,6 +191,10 @@ public class FermataDAO {
 			Query query = sessione.createQuery(criteriaQuery);
 
 			risultati = castList(Fermata.class, query.getResultList());
+
+			for (Fermata fermata : risultati) {
+				Hibernate.initialize(fermata.getLinee());
+			}
 
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();

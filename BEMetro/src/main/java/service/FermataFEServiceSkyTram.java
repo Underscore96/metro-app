@@ -323,18 +323,17 @@ public class FermataFEServiceSkyTram {
 
 			listaFermate = fermataDAO
 					.leggiDaNumFermata(fermataFE.getNumFermata());
+
 			if (listaFermate != null && !listaFermate.isEmpty())
 				listaFermate.get(0).getLinee();
-			// da verificare
-			for (String nomeLinea : fermataFE.getNomiLinee()) {
+
+			for (String nomeLinea : fermataFE.getNomiLinee())
 				listaLineeBuffer
 						.add(lineaDAO.leggiDaNomeLinea(nomeLinea).get(0));
-			}
-			// da verificare
-			for (DatiMezzoFE datiMezzoFE : fermataFE.getDatiMezziFE()) {
+
+			for (DatiMezzoFE datiMezzoFE : fermataFE.getDatiMezziFE())
 				listaMezzi.add(mezzoDAO
 						.leggiDaNumMezzo(datiMezzoFE.getIdMezzo()).get(0));
-			}
 
 			fer = new FermataBuilder().setNumFermata(fermataFE.getNumFermata())
 					.setNome(fermataFE.getNomeFermata())

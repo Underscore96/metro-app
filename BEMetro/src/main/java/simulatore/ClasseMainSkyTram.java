@@ -25,8 +25,6 @@ public class ClasseMainSkyTram {
 	private static MezzoDAO mezzoDAO = new MezzoDAO();
 	private static SimulazioneDAO simulazioneDAO = new SimulazioneDAO();
 	private static Random random = new Random();
-	private static final String ASS = "assente";
-	private static final String PRES = "presente";
 
 	private ClasseMainSkyTram() {
 	}
@@ -78,7 +76,7 @@ public class ClasseMainSkyTram {
 				FermataFEServiceSkyTram.aggiornaFermataFE(fermataFE);
 			}
 
-			GestorePosizioneMezzi.aggPosizioneMezzi(mezziPerFermata, numCicli);
+			GestorePosizioneMezziSkyTram.aggPosizioneMezzi(mezziPerFermata, numCicli);
 
 			if (Boolean.TRUE.equals(sim.getStatoEsecuzione())) {
 				sim.setNumCicli(numCicli + 1);

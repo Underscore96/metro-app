@@ -81,8 +81,7 @@ public class GestoreDatiDB {
 
 			dbData[3] = relazioniMezzoFermata(listaMezzi);
 			dbData[4] = InizializzaOrariDBSkyTram.generaOrari();
-			// System.out.println("LISTALINEE DA CAPIRE: "
-			// + relazioniFermateLinee(listaFermate));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -282,10 +281,10 @@ public class GestoreDatiDB {
 					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(8,
 							numMezzo, AGG));
 				else if (numMezzo >= 7 && numMezzo <= 9)
-					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(23,
+					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(16,
 							numMezzo, AGG));
 				else if (numMezzo >= 10 && numMezzo <= 12)
-					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(24,
+					listaPojoMezzi.add(MezzoService.aggiornaRelazioneMezzo(23,
 							numMezzo, AGG));
 			}
 		}

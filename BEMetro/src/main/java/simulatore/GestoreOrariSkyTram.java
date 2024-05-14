@@ -13,48 +13,53 @@ import db.entity.Orario;
 import exception.CustomException;
 import jakarta.ws.rs.core.Response;
 
-public class GestoreOrari {
+public class GestoreOrariSkyTram {
+
+	private GestoreOrariSkyTram() {
+	}
+
 	private static OrarioDAO orarioDAO = new OrarioDAO();
 	private static MezzoDAO mezzoDAO = new MezzoDAO();
 	private static LineaDAO lineaDAO = new LineaDAO();
 
 	public static void generaOrari(Integer numMezzo, String nomeLinea) {
-		List<Mezzo> listaMezzi = mezzoDAO.leggiDaNumMezzo(numMezzo);
-		List<Orario> listaOrari = new ArrayList<>();
+		Linea linea;
+		Integer index = 0;
 		Mezzo mezzo = null;
 		Integer numFermata = null;
 		List<Fermata> fermateTrovate = null;
-		Integer index = 0;
-		Linea linea;
-		if (listaMezzi != null && !listaMezzi.isEmpty()) {
-			mezzo = listaMezzi.get(0);
-		}
-		List<Linea> lineeTrovate = lineaDAO.leggiDaNomeLinea(nomeLinea);
+		List<Orario> listaOrari = new ArrayList<>();
 
-		if (lineeTrovate != null && !lineeTrovate.isEmpty()) {
-			linea = lineeTrovate.get(0);
+		try {
+			mezzo = mezzoDAO.leggiDaNumMezzo(numMezzo).get(0);
+
+			linea = lineaDAO.leggiDaNomeLinea(nomeLinea).get(0);
+
+			if (linea == null || mezzo == null) {
+				throw new CustomException(
+						"ERRORE NELL'AGGIORNAMENTO DEGLI ORARI",
+						Response.Status.NOT_FOUND);
+			}
+
 			fermateTrovate = linea.getFermate();
-		}
-		if (mezzo != null && mezzo.getOrari() != null) {
+
 			for (Orario orario : mezzo.getOrari()) {
+				numFermata = fermateTrovate.get(index).getNumFermata();
+				orario.setNumFermata(numFermata);
 				orario.setOrarioPrevisto(
 						orario.getOrarioPrevisto().plusMinutes(80));
 				orario.setRitardo(orario.getRitardo().plusMinutes(80));
 
-				if (fermateTrovate != null) {
-					numFermata = fermateTrovate.get(index).getNumFermata();
-				} else {
-					throw new CustomException(
-							"ERRORE NELL'AGGIORNAMENTO DEGLI ORARI",
-							Response.Status.NOT_FOUND);
-				}
-				orario.setNumFermata(numFermata);
 				orarioDAO.aggiorna(orario);
 				listaOrari.add(orario);
+
 				index++;
 			}
 			mezzo.setOrari(listaOrari);
 			mezzoDAO.aggiorna(mezzo);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

@@ -223,20 +223,20 @@ public class GestorePosizioneMezziSkyTram {
 		if (fer.getNumFermata() == 8 && destinazione.equals("Brignole")) {
 			MezzoService.aggiornaRelazioneMezzo(8, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(23, numMezzo, "");
-			GestoreOrari.generaOrari(numMezzo, "blu");
+			GestoreOrariSkyTram.generaOrari(numMezzo, "blu");
 		} else if (fer.getNumFermata() == 30) {
 			MezzoService.aggiornaRelazioneMezzo(30, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(1, numMezzo, "");
-			GestoreOrari.generaOrari(numMezzo, "verde");
+			GestoreOrariSkyTram.generaOrari(numMezzo, "verde");
 		} else if (fer.getNumFermata() == 15) {
 			MezzoService.aggiornaRelazioneMezzo(15, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(16, numMezzo, "");
-			GestoreOrari.generaOrari(numMezzo, "rossa");
+			GestoreOrariSkyTram.generaOrari(numMezzo, "rossa");
 		} else if (fer.getNumFermata() == 23
 				&& destinazione.equals("Brignole")) {
 			MezzoService.aggiornaRelazioneMezzo(23, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(8, numMezzo, "");
-			GestoreOrari.generaOrari(numMezzo, "gialla");
+			GestoreOrariSkyTram.generaOrari(numMezzo, "gialla");
 		} else {
 			MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata(), numMezzo,
 					RIM);

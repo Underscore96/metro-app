@@ -108,7 +108,7 @@ public class SimulazioneRest {
 				}
 			};
 
-			scheduler.scheduleAtFixedRate(task, 0, 20, TimeUnit.SECONDS);
+			scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
 			return "Simulazione inizializzata correttamente.";
 
 		} catch (InterruptedException e) {

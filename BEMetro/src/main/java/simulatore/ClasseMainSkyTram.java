@@ -40,7 +40,7 @@ public class ClasseMainSkyTram {
 			}
 		};
 
-		scheduler.scheduleAtFixedRate(task, 0, 20, TimeUnit.SECONDS);
+		scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
 	}
 
 	public static void updateData(String idSimulazione) {

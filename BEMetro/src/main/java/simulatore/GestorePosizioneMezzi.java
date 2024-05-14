@@ -31,13 +31,28 @@ public class GestorePosizioneMezzi {
 			Set<Integer> setNumMezzi1 = new HashSet<>();
 
 			Fermata fer1 = fermataDAO.leggiDaNumFermata(1).get(0);
-			Fermata fer9 = fermataDAO.leggiDaNumFermata(9).get(0);
+
+			Fermata fer8 = fermataDAO.leggiDaNumFermata(8).get(0);
+
+			Fermata fer16 = fermataDAO.leggiDaNumFermata(16).get(0);
+
+			Fermata fer23 = fermataDAO.leggiDaNumFermata(23).get(0);
 
 			mezziPerFermata1.put(1, fer1);
-			mezziPerFermata1.put(4, fer9);
+
+			mezziPerFermata1.put(4, fer8);
+
+			mezziPerFermata1.put(7, fer16);
+
+			mezziPerFermata1.put(10, fer23);
 
 			setNumMezzi1.add(1);
+
 			setNumMezzi1.add(4);
+
+			setNumMezzi1.add(7);
+
+			setNumMezzi1.add(10);
 
 			aggiornaStatiIniziali(mezziPerFermata1, setNumMezzi1);
 			return;
@@ -48,18 +63,39 @@ public class GestorePosizioneMezzi {
 
 			Fermata fer1 = fermataDAO.leggiDaNumFermata(1).get(0);
 			Fermata fer2 = fermataDAO.leggiDaNumFermata(2).get(0);
+
+			Fermata fer8 = fermataDAO.leggiDaNumFermata(8).get(0);
 			Fermata fer9 = fermataDAO.leggiDaNumFermata(9).get(0);
-			Fermata fer10 = fermataDAO.leggiDaNumFermata(10).get(0);
+
+			Fermata fer16 = fermataDAO.leggiDaNumFermata(16).get(0);
+			Fermata fer17 = fermataDAO.leggiDaNumFermata(17).get(0);
+
+			Fermata fer23 = fermataDAO.leggiDaNumFermata(23).get(0);
+			Fermata fer24 = fermataDAO.leggiDaNumFermata(24).get(0);
 
 			mezziPerFermata2.put(2, fer1);
 			mezziPerFermata2.put(1, fer2);
-			mezziPerFermata2.put(5, fer9);
-			mezziPerFermata2.put(4, fer10);
+
+			mezziPerFermata2.put(5, fer8);
+			mezziPerFermata2.put(4, fer9);
+
+			mezziPerFermata2.put(8, fer16);
+			mezziPerFermata2.put(7, fer17);
+
+			mezziPerFermata2.put(11, fer23);
+			mezziPerFermata2.put(10, fer24);
 
 			setNumMezzi2.add(2);
 			setNumMezzi2.add(1);
+
 			setNumMezzi2.add(5);
 			setNumMezzi2.add(4);
+
+			setNumMezzi2.add(8);
+			setNumMezzi2.add(7);
+
+			setNumMezzi2.add(11);
+			setNumMezzi2.add(10);
 
 			aggiornaStatiIniziali(mezziPerFermata2, setNumMezzi2);
 			return;
@@ -71,23 +107,56 @@ public class GestorePosizioneMezzi {
 			Fermata fer1 = fermataDAO.leggiDaNumFermata(1).get(0);
 			Fermata fer2 = fermataDAO.leggiDaNumFermata(2).get(0);
 			Fermata fer3 = fermataDAO.leggiDaNumFermata(3).get(0);
+
+			Fermata fer8 = fermataDAO.leggiDaNumFermata(8).get(0);
 			Fermata fer9 = fermataDAO.leggiDaNumFermata(9).get(0);
 			Fermata fer10 = fermataDAO.leggiDaNumFermata(10).get(0);
-			Fermata fer11 = fermataDAO.leggiDaNumFermata(11).get(0);
+
+			Fermata fer16 = fermataDAO.leggiDaNumFermata(16).get(0);
+			Fermata fer17 = fermataDAO.leggiDaNumFermata(17).get(0);
+			Fermata fer18 = fermataDAO.leggiDaNumFermata(18).get(0);
+
+			System.out
+					.println("FERMATA23: " + fermataDAO.leggiDaNumFermata(23));
+			System.out
+					.println("FERMATA24: " + fermataDAO.leggiDaNumFermata(24));
+			System.out
+					.println("FERMATA25: " + fermataDAO.leggiDaNumFermata(25));
+			Fermata fer23 = fermataDAO.leggiDaNumFermata(23).get(0);
+			Fermata fer24 = fermataDAO.leggiDaNumFermata(24).get(0);
+			Fermata fer25 = fermataDAO.leggiDaNumFermata(25).get(0);
 
 			mezziPerFermata3.put(3, fer1);
 			mezziPerFermata3.put(2, fer2);
 			mezziPerFermata3.put(1, fer3);
-			mezziPerFermata3.put(6, fer9);
-			mezziPerFermata3.put(5, fer10);
-			mezziPerFermata3.put(4, fer11);
+
+			mezziPerFermata3.put(6, fer8);
+			mezziPerFermata3.put(5, fer9);
+			mezziPerFermata3.put(4, fer10);
+
+			mezziPerFermata3.put(9, fer16);
+			mezziPerFermata3.put(8, fer17);
+			mezziPerFermata3.put(7, fer18);
+
+			mezziPerFermata3.put(12, fer23);
+			mezziPerFermata3.put(11, fer24);
+			mezziPerFermata3.put(10, fer25);
 
 			setNumMezzi3.add(3);
 			setNumMezzi3.add(2);
 			setNumMezzi3.add(1);
+
 			setNumMezzi3.add(6);
 			setNumMezzi3.add(5);
 			setNumMezzi3.add(4);
+
+			setNumMezzi3.add(9);
+			setNumMezzi3.add(8);
+			setNumMezzi3.add(7);
+
+			setNumMezzi3.add(12);
+			setNumMezzi3.add(11);
+			setNumMezzi3.add(10);
 
 			aggiornaStatiIniziali(mezziPerFermata3, setNumMezzi3);
 		} else {
@@ -101,6 +170,8 @@ public class GestorePosizioneMezzi {
 		List<Mezzo> listaMezzi;
 		Mezzo m;
 		String stato;
+		System.out.println("SET NUM MEZZI : " + setNumMezzi);
+		System.out.println("MEZZI PER FERMATA : " + mezziPerFermata);
 		for (Integer numMezzo : setNumMezzi) {
 			fer = mezziPerFermata.get(numMezzo);
 			listaMezzi = mezzoDAO.leggiDaNumMezzo(numMezzo);
@@ -142,21 +213,30 @@ public class GestorePosizioneMezzi {
 				} else if (stato.equals(STA)) {
 					m.setStato(ARR);
 					mezzoDAO.aggiorna(m);
-					aggiornaRelazioni(fer, numMezzo);
+					aggiornaRelazioni(fer, numMezzo, m.getDestinazione());
 				}
 			}
 		}
 	}
-	private static void aggiornaRelazioni(Fermata fer, Integer numMezzo) {
-		if (fer.getNumFermata() == 8) {
+	private static void aggiornaRelazioni(Fermata fer, Integer numMezzo,
+			String destinazione) {
+		if (fer.getNumFermata() == 8 && destinazione.equals("Brignole")) {
 			MezzoService.aggiornaRelazioneMezzo(8, numMezzo, RIM);
-			MezzoService.aggiornaRelazioneMezzo(9, numMezzo, "");
-			GestoreOrari.generaOrari(numMezzo, "verde");
-		}
-		if (fer.getNumFermata() == 16) {
-			MezzoService.aggiornaRelazioneMezzo(16, numMezzo, RIM);
-			MezzoService.aggiornaRelazioneMezzo(1, numMezzo, "");
+			MezzoService.aggiornaRelazioneMezzo(23, numMezzo, "");
 			GestoreOrari.generaOrari(numMezzo, "blu");
+		} else if (fer.getNumFermata() == 30) {
+			MezzoService.aggiornaRelazioneMezzo(30, numMezzo, RIM);
+			MezzoService.aggiornaRelazioneMezzo(1, numMezzo, "");
+			GestoreOrari.generaOrari(numMezzo, "verde");
+		} else if (fer.getNumFermata() == 15) {
+			MezzoService.aggiornaRelazioneMezzo(15, numMezzo, RIM);
+			MezzoService.aggiornaRelazioneMezzo(16, numMezzo, "");
+			GestoreOrari.generaOrari(numMezzo, "rossa");
+		} else if (fer.getNumFermata() == 23
+				&& destinazione.equals("Brignole")) {
+			MezzoService.aggiornaRelazioneMezzo(23, numMezzo, RIM);
+			MezzoService.aggiornaRelazioneMezzo(8, numMezzo, "");
+			GestoreOrari.generaOrari(numMezzo, "gialla");
 		} else {
 			MezzoService.aggiornaRelazioneMezzo(fer.getNumFermata(), numMezzo,
 					RIM);

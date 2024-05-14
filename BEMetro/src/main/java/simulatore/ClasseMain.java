@@ -17,17 +17,14 @@ import db.entity.Fermata;
 import db.entity.Mezzo;
 import db.entity.Orario;
 import db.entity.Simulazione;
+import presentation.pojo.DatiMezzoFE;
 import presentation.pojo.PojoFermataFE;
-import presentation.pojo.PojoOrarioFE;
-import presentation.pojo.PojoStatoMezzoFE;
 import service.FermataFEService;
 
 public class ClasseMain {
 	private static MezzoDAO mezzoDAO = new MezzoDAO();
 	private static SimulazioneDAO simulazioneDAO = new SimulazioneDAO();
 	private static Random random = new Random();
-	private static final String ASS = "assente";
-	private static final String PRES = "presente";
 
 	private ClasseMain() {
 	}
@@ -49,57 +46,58 @@ public class ClasseMain {
 	public static void updateData(String idSimulazione) {
 		Simulazione sim = new Simulazione();
 		Integer numCicli = 1;
-		List<Simulazione> listSim = simulazioneDAO
-				.leggiDaIdSimulazione(idSimulazione);
-		if (listSim != null && !listSim.isEmpty()) {
-			sim = listSim.get(0);
 
-			if (sim.getNumCicli() != null) {
+		try {
+			List<Simulazione> listSim = simulazioneDAO
+					.leggiDaIdSimulazione(idSimulazione);
+			if (listSim != null && !listSim.isEmpty()) {
+				sim = listSim.get(0);
+
+				if (sim.getNumCicli() != null) {
+					numCicli = sim.getNumCicli();
+
+				}
+			} else {
+				sim.setNumCicli(1);
+				sim.setStatoEsecuzione(false);
+				simulazioneDAO.aggiornaSimulazione(sim);
 				numCicli = sim.getNumCicli();
-
 			}
-		} else {
-			sim.setNumCicli(1);
-			sim.setStatoEsecuzione(false);
-			simulazioneDAO.aggiornaSimulazione(sim);
-			numCicli = sim.getNumCicli();
-		}
-		Map<Integer, Fermata> mezziPerFermata = new HashMap<>();
-		List<PojoFermataFE> elencoFermate = FermataFEService
-				.leggiTutteLeFermateFE();
-		System.out.println("getNumMezzi" + elencoFermate.get(0).getNumMezzi());
-		for (PojoFermataFE fermataFE : elencoFermate) {
-			calcolaRitardo(fermataFE);
-			previsioneMeteo(fermataFE);
-			registraPosizioneMezzi(mezziPerFermata, fermataFE);
-			aggiornaOraAttuale(fermataFE);
+			Map<Integer, Fermata> mezziPerFermata = new HashMap<>();
+			List<PojoFermataFE> elencoFermate = FermataFEService
+					.leggiTutteLeFermateFE();
 
-			FermataFEService.aggiornaFermataFE(fermataFE);
-		}
+			for (PojoFermataFE fermataFE : elencoFermate) {
+				calcolaRitardo(fermataFE);
+				previsioneMeteo(fermataFE);
+				registraPosizioneMezzi(mezziPerFermata);
+				aggiornaOraAttuale(fermataFE);
 
-		GestorePosizioneMezzi.aggPosizioneMezzi(mezziPerFermata, numCicli);
-		elencoFermate = FermataFEService.leggiTutteLeFermateFE();
-		for (PojoFermataFE fermataFE : elencoFermate) {
-			aggiornaPresenzaMezzi(fermataFE);
-			FermataFEService.aggiornaFermataFE(fermataFE);
-		}
-		if (Boolean.TRUE.equals(sim.getStatoEsecuzione())) {
-			sim.setNumCicli(numCicli + 1);
-			simulazioneDAO.aggiornaSimulazione(sim);
+				FermataFEService.aggiornaFermataFE(fermataFE);
+			}
+
+			GestorePosizioneMezzi.aggPosizioneMezzi(mezziPerFermata, numCicli);
+
+			if (Boolean.TRUE.equals(sim.getStatoEsecuzione())) {
+				sim.setNumCicli(numCicli + 1);
+				simulazioneDAO.aggiornaSimulazione(sim);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	private static void calcolaRitardo(PojoFermataFE fermata) {
 		OrarioDAO orarioDAO = new OrarioDAO();
 
-		List<PojoOrarioFE> elencoOrariFermata = fermata.getOrariMezzi();
+		List<DatiMezzoFE> elencoDatiMezzi = fermata.getDatiMezziFE();
 
-		for (Integer i = 0; i < elencoOrariFermata.size(); i++) {
+		for (Integer i = 0; i < elencoDatiMezzi.size(); i++) {
 
-			PojoOrarioFE orarioMezzo = elencoOrariFermata.get(i);
+			DatiMezzoFE datiMezzoFE = elencoDatiMezzi.get(i);
 
 			List<Orario> listaOrariDaAggiornare = mezzoDAO
-					.leggiDaNumMezzo(orarioMezzo.getIdMezzo()).get(0)
+					.leggiDaNumMezzo(datiMezzoFE.getIdMezzo()).get(0)
 					.getOrari();
 
 			Integer ritardoRandom = 0;
@@ -108,7 +106,7 @@ public class ClasseMain {
 				ritardoRandom = randomValue <= 9 ? 2 : -1;
 			}
 			LocalDateTime ritardoAggiornato = LocalDateTime
-					.parse(orarioMezzo.getRitardo()).plusMinutes(ritardoRandom);
+					.parse(datiMezzoFE.getRitardo()).plusMinutes(ritardoRandom);
 
 			for (Orario orario : listaOrariDaAggiornare) {
 				if (Objects.equals(orario.getNumFermata(),
@@ -118,10 +116,10 @@ public class ClasseMain {
 				}
 			}
 
-			orarioMezzo.setOrarioPrevisto(ritardoAggiornato.toString());
-			elencoOrariFermata.set(i, orarioMezzo);
+			datiMezzoFE.setOrarioPrevisto(ritardoAggiornato.toString());
+			elencoDatiMezzi.set(i, datiMezzoFE);
 		}
-		fermata.setOrariMezzi(elencoOrariFermata);
+		fermata.setDatiMezziFE(elencoDatiMezzi);
 	}
 
 	private static void previsioneMeteo(PojoFermataFE fermataFE) {
@@ -143,7 +141,7 @@ public class ClasseMain {
 	}
 
 	private static void registraPosizioneMezzi(
-			Map<Integer, Fermata> mezziPerFermata, PojoFermataFE fermataFE) {
+			Map<Integer, Fermata> mezziPerFermata) {
 		List<Mezzo> listaMezzi = mezzoDAO.trovaTuttiIMezzi();
 		for (Mezzo m : listaMezzi) {
 			mezziPerFermata.put(m.getNumMezzo(), m.getFermataAttuale());
@@ -154,15 +152,5 @@ public class ClasseMain {
 		String stringaOrarioAttuale = fermataFE.getOrarioAttuale();
 		LocalDateTime orarioAttuale = LocalDateTime.parse(stringaOrarioAttuale);
 		fermataFE.setOrarioAttuale(orarioAttuale.plusMinutes(5).toString());
-	}
-
-	private static void aggiornaPresenzaMezzi(PojoFermataFE fermataFE) {
-		List<PojoStatoMezzoFE> listastatiMezzi = fermataFE.getStatiMezzi();
-
-		if (!listastatiMezzi.isEmpty()) {
-			fermataFE.setPosizioneMezzo(PRES);
-		} else {
-			fermataFE.setPosizioneMezzo(ASS);
-		}
 	}
 }

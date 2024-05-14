@@ -4,6 +4,14 @@
 		"destinazione": "Brignole"
 	},
 	{
+		"nomeLinea": "gialla",
+		"destinazione": "Molassana"
+	},
+	{
+		"nomeLinea": "rossa",
+		"destinazione": "Brignole"
+	},
+	{
 		"nomeLinea": "blu",
 		"destinazione": "Brin"
 	}

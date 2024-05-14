@@ -80,7 +80,7 @@ public class GestoreDatiDB {
 			dbData[2] = listaPojoUtenti;
 
 			dbData[3] = relazioniMezzoFermata(listaMezzi);
-			dbData[4] = InizializzaOrariDBSkyTram.generaOrari();
+			dbData[4] = InizializzaOrariDB.generaOrari();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public class GestoreDatiDB {
 
 		try {
 			InputStream fermataInputStream = getClass().getClassLoader()
-					.getResourceAsStream("fermataSkyTram.json");
+					.getResourceAsStream("fermata.json");
 
 			listaFermate = mapper.readValue(fermataInputStream,
 					new TypeReference<List<Fermata>>() {
@@ -110,7 +110,7 @@ public class GestoreDatiDB {
 
 		try {
 			InputStream lineaInputStream = getClass().getClassLoader()
-					.getResourceAsStream("lineaSkyTram.json");
+					.getResourceAsStream("linea.json");
 
 			listaLinee = mapper.readValue(lineaInputStream,
 					new TypeReference<List<Linea>>() {
@@ -143,7 +143,7 @@ public class GestoreDatiDB {
 
 		try {
 			InputStream mezzoInputStream = getClass().getClassLoader()
-					.getResourceAsStream("mezzoSkyTram.json");
+					.getResourceAsStream("mezzo.json");
 
 			listaMezzi = mapper.readValue(mezzoInputStream,
 					new TypeReference<List<Mezzo>>() {

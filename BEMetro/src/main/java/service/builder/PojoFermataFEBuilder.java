@@ -2,9 +2,8 @@ package service.builder;
 
 import java.util.List;
 
+import presentation.pojo.DatiMezzoFE;
 import presentation.pojo.PojoFermataFE;
-import presentation.pojo.PojoOrarioFE;
-import presentation.pojo.PojoStatoMezzoFE;
 
 public class PojoFermataFEBuilder {
 	private Integer id;
@@ -15,10 +14,8 @@ public class PojoFermataFEBuilder {
 	private String direzione;
 	private String orarioAttuale;
 	private String previsioneMeteo;
-	private String posizioneMezzo;
 	private Integer numMezzi;
-	private List<PojoStatoMezzoFE> statiMezzi;
-	private List<PojoOrarioFE> orariMezzi;
+	private List<DatiMezzoFE> datiMezziFE;
 
 	public PojoFermataFEBuilder setId(Integer id) {
 		this.id = id;
@@ -40,7 +37,8 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setDestinazioni(List<String> destinazioni) {
+	public PojoFermataFEBuilder setDestinazioni(
+			List<String> destinazioni) {
 		this.destinazioni = destinazioni;
 		return this;
 	}
@@ -55,13 +53,9 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setPrevisioneMeteo(String previsioneMeteo) {
+	public PojoFermataFEBuilder setPrevisioneMeteo(
+			String previsioneMeteo) {
 		this.previsioneMeteo = previsioneMeteo;
-		return this;
-	}
-
-	public PojoFermataFEBuilder setPosizioneMezzo(String posizioneMezzo) {
-		this.posizioneMezzo = posizioneMezzo;
 		return this;
 	}
 
@@ -70,14 +64,9 @@ public class PojoFermataFEBuilder {
 		return this;
 	}
 
-	public PojoFermataFEBuilder setStatiMezzi(
-			List<PojoStatoMezzoFE> statiMezzi) {
-		this.statiMezzi = statiMezzi;
-		return this;
-	}
-
-	public PojoFermataFEBuilder setOrariMezzi(List<PojoOrarioFE> orariMezzi) {
-		this.orariMezzi = orariMezzi;
+	public PojoFermataFEBuilder setDatiMezziFE(
+			List<DatiMezzoFE> datiMezziFE) {
+		this.datiMezziFE = datiMezziFE;
 		return this;
 	}
 
@@ -92,10 +81,8 @@ public class PojoFermataFEBuilder {
 		nuovoPojoFermataFE.setDirezione(direzione);
 		nuovoPojoFermataFE.setOrarioAttuale(orarioAttuale);
 		nuovoPojoFermataFE.setPrevisioneMeteo(previsioneMeteo);
-		nuovoPojoFermataFE.setOrariMezzi(orariMezzi);
 		nuovoPojoFermataFE.setNumMezzi(numMezzi);
-		nuovoPojoFermataFE.setStatiMezzi(statiMezzi);
-		nuovoPojoFermataFE.setPosizioneMezzo(posizioneMezzo);
+		nuovoPojoFermataFE.setDatiMezziFE(datiMezziFE);
 
 		return nuovoPojoFermataFE;
 	}

@@ -3,36 +3,72 @@
 		"numMezzo": 1,
 		"numMaxPasseggeri": 100,
 		"stato": "in stazione",
-		"destinazione":"Brin"
+		"destinazione":"Brignole"
 	},
 	{
 		"numMezzo": 2,
 		"numMaxPasseggeri": 100,
 		"stato": "in arrivo",
-		"destinazione":"Brin"
+		"destinazione":"Brignole"
 	},
 	{
 		"numMezzo": 3,
 		"numMaxPasseggeri": 100,
 		"stato": "in arrivo",
-		"destinazione":"Brin"
+		"destinazione":"Brignole"
 	},
 	{
 		"numMezzo": 4,
 		"numMaxPasseggeri": 100,
 		"stato": "in stazione",
-		"destinazione":"Brignole"
+		"destinazione":"Molassana"
 	},
 	{
 		"numMezzo": 5,
 		"numMaxPasseggeri": 100,
 		"stato": "in arrivo",
-		"destinazione":"Brignole"
+		"destinazione":"Molassana"
 	},
 	{
 		"numMezzo": 6,
 		"numMaxPasseggeri": 100,
 		"stato": "in arrivo",
+		"destinazione":"Molassana"
+	},
+	{
+		"numMezzo": 7,
+		"numMaxPasseggeri": 100,
+		"stato": "in stazione",
 		"destinazione":"Brignole"
+	},
+	{
+		"numMezzo": 8,
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo",
+		"destinazione":"Brignole"
+	},
+	{
+		"numMezzo": 9,
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo",
+		"destinazione":"Brignole"
+	},
+	{
+		"numMezzo": 10,
+		"numMaxPasseggeri": 100,
+		"stato": "in stazione",
+		"destinazione":"Brin"
+	},
+	{
+		"numMezzo": 11,
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo",
+		"destinazione":"Brin"
+	},
+	{
+		"numMezzo": 12,
+		"numMaxPasseggeri": 100,
+		"stato": "in arrivo",
+		"destinazione":"Brin"
 	}
 ]

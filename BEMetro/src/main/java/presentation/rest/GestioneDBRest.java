@@ -26,7 +26,6 @@ public class GestioneDBRest {
 		Object[] risultato;
 		try {
 			GestoreDatiDB inizializzatore = new GestoreDatiDB();
-			// InizDb inizializzatore = new InizDb();
 			risultato = inizializzatore.inizDb();
 
 			risposta = Response.ok(risultato).build();

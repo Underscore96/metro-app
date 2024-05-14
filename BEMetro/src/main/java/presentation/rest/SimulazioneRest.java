@@ -20,7 +20,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import simulatore.ClasseMainSkyTram;
+import simulatore.ClasseMain;
 
 @Path("/simulazione")
 public class SimulazioneRest {
@@ -104,7 +104,7 @@ public class SimulazioneRest {
 						scheduler.shutdown();
 						return;
 					}
-					ClasseMainSkyTram.updateData("1");
+					ClasseMain.updateData("1");
 				}
 			};
 

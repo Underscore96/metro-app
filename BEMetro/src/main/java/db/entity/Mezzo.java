@@ -59,6 +59,11 @@ public class Mezzo {
 	@JsonIgnore
 	@ToString.Exclude
 	private List<Orario> orari;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idCorsa")
+	@JsonIgnore
+	@ToString.Exclude
+	private List<Corsa> corse;
 
 	public Mezzo(String idMezzo, Integer numMezzo, Integer numMaxPasseggeri,
 			String destinazione) {

@@ -40,7 +40,7 @@ public class FermataService {
 					.costruisci();
 
 			fermataDAO.crea(dbFermata);
-			risultato = "FERMATA CREATE";
+			risultato = "FERMATA CREATA";
 
 		} catch (NullPointerException e) {
 			throw new CustomException(

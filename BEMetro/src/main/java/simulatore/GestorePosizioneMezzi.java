@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import db.dao.CorsaDAO;
 import db.dao.FermataDAO;
 import db.dao.MezzoDAO;
+import db.entity.Corsa;
 import db.entity.Fermata;
 import db.entity.Mezzo;
 import service.MezzoService;
@@ -16,6 +18,7 @@ public class GestorePosizioneMezzi {
 
 	private static FermataDAO fermataDAO = new FermataDAO();
 	private static MezzoDAO mezzoDAO = new MezzoDAO();
+	private static CorsaDAO corsaDAO = new CorsaDAO();
 	private static final String STA = "in stazione";
 	private static final String ARR = "in arrivo";
 	private static final String RIM = "rimuovi";
@@ -170,8 +173,7 @@ public class GestorePosizioneMezzi {
 		List<Mezzo> listaMezzi;
 		Mezzo m;
 		String stato;
-		System.out.println("SET NUM MEZZI : " + setNumMezzi);
-		System.out.println("MEZZI PER FERMATA : " + mezziPerFermata);
+
 		for (Integer numMezzo : setNumMezzi) {
 			fer = mezziPerFermata.get(numMezzo);
 			listaMezzi = mezzoDAO.leggiDaNumMezzo(numMezzo);
@@ -220,20 +222,34 @@ public class GestorePosizioneMezzi {
 	}
 	private static void aggiornaRelazioni(Fermata fer, Integer numMezzo,
 			String destinazione) {
+		Corsa corsa = null;
+
 		if (fer.getNumFermata() == 8 && destinazione.equals("Brignole")) {
+			corsa = GestoreCorse.generaCorsa(numMezzo, "verde");
+			corsaDAO.crea(corsa);
+
 			MezzoService.aggiornaRelazioneMezzo(8, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(23, numMezzo, "");
 			GestoreOrari.generaOrari(numMezzo, "blu");
 		} else if (fer.getNumFermata() == 30) {
+			corsa = GestoreCorse.generaCorsa(numMezzo, "blu");
+			corsaDAO.crea(corsa);
+
 			MezzoService.aggiornaRelazioneMezzo(30, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(1, numMezzo, "");
 			GestoreOrari.generaOrari(numMezzo, "verde");
 		} else if (fer.getNumFermata() == 15) {
+			corsa = GestoreCorse.generaCorsa(numMezzo, "gialla");
+			corsaDAO.crea(corsa);
+
 			MezzoService.aggiornaRelazioneMezzo(15, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(16, numMezzo, "");
 			GestoreOrari.generaOrari(numMezzo, "rossa");
 		} else if (fer.getNumFermata() == 23
 				&& destinazione.equals("Brignole")) {
+			corsa = GestoreCorse.generaCorsa(numMezzo, "rossa");
+			corsaDAO.crea(corsa);
+
 			MezzoService.aggiornaRelazioneMezzo(23, numMezzo, RIM);
 			MezzoService.aggiornaRelazioneMezzo(8, numMezzo, "");
 			GestoreOrari.generaOrari(numMezzo, "gialla");

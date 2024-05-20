@@ -11,10 +11,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import db.dao.CorsaDAO;
 import db.dao.FermataDAO;
 import db.dao.LineaDAO;
 import db.dao.MezzoDAO;
 import db.dao.UtenteDAO;
+import db.entity.Corsa;
 import db.entity.Fermata;
 import db.entity.Linea;
 import db.entity.Mezzo;
@@ -23,6 +25,7 @@ import presentation.pojo.PojoFermata;
 import presentation.pojo.PojoLinea;
 import presentation.pojo.PojoMezzo;
 import presentation.pojo.PojoUtente;
+import service.CorsaService;
 import service.FermataService;
 import service.LineaService;
 import service.MezzoService;
@@ -35,10 +38,11 @@ public class GestoreDatiDB {
 	private LineaDAO lineaDAO = new LineaDAO();
 	private UtenteDAO utenteDAO = new UtenteDAO();
 	private MezzoDAO mezzoDAO = new MezzoDAO();
+	private CorsaDAO corsaDAO = new CorsaDAO();
 	private static final String AGG = "aggiungi";
 
 	public Object[] inizDb() {
-		Object[] dbData = new Object[5];
+		Object[] dbData = new Object[6];
 		List<PojoLinea> listaPojoLinee = new ArrayList<>();
 		List<PojoUtente> listaPojoUtenti = new ArrayList<>();
 
@@ -49,12 +53,14 @@ public class GestoreDatiDB {
 		List<Linea> listaLinee = estraiLineeJSON(mapper);
 		List<Utente> listaUtenti = estraiUtentiJSON(mapper);
 		List<Mezzo> listaMezzi = estraiMezziJSON(mapper);
+		List<Corsa> listaCorse = estraiCorseJSON(mapper);
 
 		try {
 			aggiornaDBFermate(listaFermate);
 			aggiornaDBLinee(listaLinee);
 			aggiornaDBUtenti(listaUtenti);
 			aggiornaDBMezzi(listaMezzi);
+			aggiornaDBCorse(listaCorse);
 
 			dbData[0] = relazioniFermateLinee(listaFermate);
 
@@ -81,7 +87,7 @@ public class GestoreDatiDB {
 
 			dbData[3] = relazioniMezzoFermata(listaMezzi);
 			dbData[4] = InizializzaOrariDB.generaOrari();
-
+			dbData[5] = GestoreCorse.aggiornaCorse();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,6 +160,22 @@ public class GestoreDatiDB {
 		return listaMezzi;
 	}
 
+	private List<Corsa> estraiCorseJSON(ObjectMapper mapper) {
+		List<Corsa> listaCorse = null;
+
+		try {
+			InputStream corsaInputStream = getClass().getClassLoader()
+					.getResourceAsStream("corsa.json");
+
+			listaCorse = mapper.readValue(corsaInputStream,
+					new TypeReference<List<Corsa>>() {
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaCorse;
+	}
+
 	private void aggiornaDBFermate(List<Fermata> listaFermate) {
 
 		for (Fermata fermata : listaFermate) {
@@ -204,6 +226,17 @@ public class GestoreDatiDB {
 			else {
 				MezzoService.cancellaMezzo(mezzo.getNumMezzo());
 				mezzoDAO.crea(mezzo);
+			}
+		}
+	}
+
+	private void aggiornaDBCorse(List<Corsa> listaCorse) {
+		for (Corsa corsa : listaCorse) {
+			if (corsaDAO.leggiDaNumCorsa(corsa.getNumCorsa()).isEmpty())
+				corsaDAO.crea(corsa);
+			else {
+				CorsaService.cancellaCorsa(corsa.getNumCorsa());
+				corsaDAO.crea(corsa);
 			}
 		}
 	}

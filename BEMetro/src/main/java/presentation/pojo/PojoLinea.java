@@ -14,12 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PojoLinea {
 	private String nomeLinea;
+	private Integer numLinea;
 	private String destinazione;
 	private List<Fermata> fermate;
 
-	public PojoLinea(String nomeLinea, String destinazione) {
+	public PojoLinea(String nomeLinea, Integer numLinea, String destinazione) {
 		super();
 		this.nomeLinea = nomeLinea;
+		this.numLinea = numLinea;
 		this.destinazione = destinazione;
 	}
 }

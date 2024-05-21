@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
 import db.entity.Mezzo;
+import db.entity.TestBuilder;
 import db.util.HibernateUtil;
 import exception.CustomException;
 import exception.ErrorMessages;
@@ -153,5 +154,35 @@ public class MezzoDAO {
 				sessione.close();
 		}
 		return risultati;
+	}
+	
+	public void creaTestBuilder(TestBuilder testEsempio) {
+		try {
+			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
+			sessione.beginTransaction();
+
+			sessione.persist(testEsempio);
+
+			sessione.getTransaction().commit();
+
+		} catch (PropertyValueException e) {
+			sessione.getTransaction().rollback();
+			throw new CustomException(String
+					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMMEZZO),
+					Response.Status.CONFLICT);
+		} catch (GenericJDBCException e) {
+			sessione.getTransaction().rollback();
+			throw new CustomException(
+					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMMEZZO),
+					Response.Status.CONFLICT);
+		} catch (HibernateException e) {
+			sessione.getTransaction().rollback();
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			if (sessione != null) {
+				sessione.close();
+			}
+		}
 	}
 }

@@ -9,6 +9,7 @@ import db.dao.FermataDAO;
 import db.dao.MezzoDAO;
 import db.entity.Fermata;
 import db.entity.Mezzo;
+import db.entity.TestBuilder;
 import exception.CustomException;
 import exception.ErrorMessages;
 import jakarta.ws.rs.core.Response;
@@ -283,6 +284,41 @@ public class MezzoService {
 					.setDestinazione(mezzoDB.getDestinazione())
 					.setFermataAttuale(mezzoDB.getFermataAttuale())
 					.costruisci();
+
+		} catch (NullPointerException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.NULL_POINTER_EXCEPTION,
+							NUMMEZZO, NUMMEZZO),
+					Response.Status.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			throw new CustomException(String
+					.format(ErrorMessages.ILLEGAL_ARGUMENT_EXCEPTION, NUMMEZZO),
+					Response.Status.BAD_REQUEST);
+		} catch (IndexOutOfBoundsException e) {
+			throw new CustomException(
+					String.format(ErrorMessages.INDEX_OUT_OF_BOUNDS_EXCEPTION),
+					Response.Status.NOT_FOUND);
+		} catch (HibernateException e) {
+			throw new CustomException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		}
+
+		return risultato;
+	}
+
+	public static String creaTestBuilderService(TestBuilder testEsempio) {
+		TestBuilder testEsempioDB = null;
+		String risultato = "TESTO ESEMPIO NON CREATO";
+
+		try {
+			testEsempioDB = TestBuilder.builder()
+					.nome(testEsempio.getNome())
+					.cognome(testEsempio.getCognome())
+					.mail(testEsempio.getMail())
+					.telefono(testEsempio.getTelefono()).build();
+
+			mezzoDAO.creaTestBuilder(testEsempioDB);
+			risultato = "TESTO ESEMPIO CREATO";
 
 		} catch (NullPointerException e) {
 			throw new CustomException(

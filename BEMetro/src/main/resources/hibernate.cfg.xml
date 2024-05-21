@@ -14,5 +14,6 @@
 		<mapping class="db.entity.Orario" />
 		<mapping class="db.entity.Simulazione"/>
 		<mapping class="db.entity.Corsa"/>
+		<mapping class="db.entity.TestBuilder"/>
 	</session-factory>
 </hibernate-configuration>

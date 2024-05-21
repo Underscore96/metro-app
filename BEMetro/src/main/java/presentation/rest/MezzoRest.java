@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import db.entity.TestBuilder;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -113,6 +114,25 @@ public class MezzoRest {
 			listaMezzi = MezzoService.trovaTuttiIMezzi();
 
 			risposta = Response.ok(listaMezzi).build();
+		} finally {
+			if (sessione != null && sessione.isOpen()) {
+				sessione.close();
+			}
+		}
+		return risposta;
+	}
+	@POST
+	@Path("testesempio")
+	@Consumes("Application/json")
+	@Produces("Application/json")
+	public Response creaTestEsempioService(TestBuilder test) {
+		String risultato = null;
+		Response risposta = null;
+
+		try {
+			risultato = MezzoService.creaTestBuilderService(test);
+			risposta = Response.ok(risultato).build();
+
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();

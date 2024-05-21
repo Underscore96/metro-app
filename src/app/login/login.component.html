@@ -16,7 +16,8 @@
         <h1>Invalid username and password Please try again</h1>
       </div>
       <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
+       <input type="checkbox" name="remember" [(ngModel)]="rememberMe" (change)="onRememberMeChange()"> Remember me
+
       </label>
     </div>
 </form>

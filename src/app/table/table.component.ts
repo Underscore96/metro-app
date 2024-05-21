@@ -1,29 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { AdministComponent } from '../administ/administ.component';
-import { HeaderComponent } from "../header/header.component";
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
-import { TimebarComponent } from "../timebar/timebar.component";
-import * as d3 from 'd3';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import moment from 'moment';
-import { MapComponent } from "../map/map.component";
-import { TableComponent } from "../table/table.component";
-
+import { AdministComponent } from '../administ/administ.component';
+import { HeaderComponent } from '../header/header.component';
+import { MapComponent } from '../map/map.component';
+import { TimebarComponent } from '../timebar/timebar.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-    selector: 'app-home',
-    standalone: true,
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss',
-    imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule, TimebarComponent, MatCardModule, MapComponent, TableComponent]
+  selector: 'app-table',
+  standalone: true,
+  imports: [AdministComponent, HeaderComponent, CommonModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule, TimebarComponent, MatCardModule, MapComponent],
+  templateUrl: './table.component.html',
+  styleUrl: './table.component.scss'
 })
-export class HomeComponent implements OnInit{
-
+export class TableComponent implements OnInit{
   searchTerm: any;
   fermate: any[] = [];
   isTableOpen: boolean = false;
@@ -31,16 +27,16 @@ export class HomeComponent implements OnInit{
   direction: 'levante' | 'ponente' | any; 
   showMap: boolean = false;
 
+  
+
+  
+  ngOnInit() {
+    this.getFermate();
+  }
 
   
 
   constructor(private http: HttpClient) {}
-
-
-
-  ngOnInit() {
-    this.getFermate();
-  }
 
   colorMapping: { [key: number]: string } = {};
 
@@ -109,8 +105,4 @@ isArrivalTimeGreaterThanCurrentTime(arrivalTime: string, orarioAttuale: string):
 }
 
 
-toggleMapVisibility(): void {
-  this.showMap = !this.showMap;
 }
-}
-

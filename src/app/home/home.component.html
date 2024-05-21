@@ -4,86 +4,9 @@
 
 
 
-  
+<app-table></app-table>  
 
 
-<form (submit)="searchFermata()">
-  <input type="search" placeholder="Numero fermata..." [(ngModel)]="searchTerm" name="searchTerm">
-  <!-- <button type="submit">Search</button> -->
-  <button mat-button type="submit">
-    <span class="material-symbols-outlined" (click)="searchFermata()">search</span>
-  </button>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <div class="table-container" [class.open]="isTableOpen">
-    <table>
-      <thead>
-        <tr>
-          <th>Direzione</th>
-          <th>Arrivo</th>
-          <th>Ritardo</th>
-          <th>Nome Fermata</th>
-          <th>Meteo</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let fermata of fermate">
-            <td>{{ fermata.direzione }}</td>
-            <td>
-              <ng-container *ngFor="let arrival of fermata.orariMezzi">
-                <li [style.background-color]="isArrivalTimeGreaterThanCurrentTime(arrival.orarioPrevisto, fermata.orarioAttuale) ? 'red' : 'transparent'">
-                  <span>{{ formatArrivalTime(arrival.orarioPrevisto) }}</span>
-                </li> 
-              </ng-container>
-            </td>
-            <td>
-              <ng-container *ngFor="let arrival of fermata.orariMezzi">
-                <li>
-                  <span>{{ formatDelayTime(arrival.ritardo, arrival.orarioPrevisto) }}</span>
-                </li> 
-              </ng-container>
-            </td>
-              <!-- <li><td>{{ formatDelayTime(fermata.orariMezzi[0].ritardo, fermata.orariMezzi[0].orarioPrevisto) }}</td></li> -->
-
-              <!-- <ng-container *ngFor="let arrivo of fermata.orariMezzi.orarioPrevisto">
-                <td>{{ fermata.orariMezzi.orarioPrevisto }}</td> -->
-               <!-- <li> {{ formatArrivalTime(arrivo) }}</li> -->
-                
-              <!-- </ng-container>
-            </td> -->
-            <!-- <td> {{ fermata.tempiArrivo}}</td> -->
-       
-          
-            <td>{{ fermata.nomeFermata }}</td>
-            <td>
-              
-
-            <mat-icon *ngIf="fermata.previsioneMeteo === 'sole'">wb_sunny</mat-icon>
-            <mat-icon *ngIf="fermata.previsioneMeteo === 'pioggia'">
-            umbrella</mat-icon>
-            <mat-icon *ngIf="fermata.previsioneMeteo === 'nuvolo'">
-              wb_cloudy</mat-icon>
-          
-
-              <td colspan="5" class="timebar-cell">
-                <app-timebar [direction]="getDirection()"></app-timebar>
-
-                <td class="card"> Info:
-                    <p>➤  Direzione</p>
-                    <p>🟡 la metro è qui</p>
-                  
-                   </td>
-            
-
-          </tr>
-        
-          
-      </tbody>
-
-      
-    </table>
-    
-  </div>
-</form>
 
 
 
@@ -97,6 +20,8 @@
   <div class="ties"></div>
   <div class="ties"></div>
 </div>
+
+
 
 
 

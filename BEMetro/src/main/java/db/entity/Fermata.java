@@ -28,7 +28,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"idFermata"})
+@EqualsAndHashCode(of = { "idFermata" })
 @Entity
 @Table(name = "Fermate")
 public class Fermata {
@@ -56,8 +56,7 @@ public class Fermata {
 	@Column(name = "posMezzo", length = 20, nullable = true, unique = false)
 	private String posMezzo;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
-			CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "Fermate_Linee", joinColumns = @JoinColumn(name = "idFermata"), inverseJoinColumns = @JoinColumn(name = "idLinea"))
 	@JsonIgnore
 	@ToString.Exclude
@@ -69,9 +68,8 @@ public class Fermata {
 	@ToString.Exclude
 	private List<Mezzo> mezzi;
 
-	public Fermata(String idFermata, Integer numFermata, String nome,
-			String direzione, String orarioAttuale, String previsioneMeteo,
-			String posMezzo) {
+	public Fermata(String idFermata, Integer numFermata, String nome, String direzione, String orarioAttuale,
+			String previsioneMeteo, String posMezzo) {
 		super();
 		this.idFermata = idFermata;
 		this.numFermata = numFermata;

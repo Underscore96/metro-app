@@ -1,6 +1,6 @@
 
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -11,8 +11,12 @@ import * as d3 from 'd3';
   styleUrl: './timebar.component.scss'
 })
 export class TimebarComponent implements OnInit{
-@Input() direction!: 'forward' | 'backward' | null;
+@Input() direction!: 'levante' | 'ponente' | null;
+@Input() searchTerm!: any;
+@Output() colorMapping = new EventEmitter<{ [key: number]: string }>();
 fermataData: any[] = [];
+
+
 
 
   constructor(private http: HttpClient) {}
@@ -22,208 +26,176 @@ fermataData: any[] = [];
     this.fetchFermataData();
   }
 
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['searchTerm']) {
+  //     this.fetchFermataData();
+  //   }
+  // }
+  
   fetchFermataData() {
     this.http.get<any[]>('http://localhost:8080/Metro/rest/fermataFE/tutte').subscribe(data => {
       this.fermataData = data;
-      this.renderTimbebar();
+      this.renderTimebar()
     });
   }
 
   
-  renderTimbebar() {
-    console.log('Direction:', this.direction)
-    const svg = d3.select('svg');
-
-    const margin = { top: 50, right: 20, bottom: 50, left: 20 };
-    const width = +svg.attr('width') - margin.left - margin.right;
-    const height = +svg.attr('height') - margin.top - margin.bottom;
-
-    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-
-    let filteredFermataData = this.fermataData;
-    if (this.direction === 'forward') {
-      filteredFermataData = this.fermataData.slice(0, 8); 
-    } else if (this.direction === 'backward') {
-      filteredFermataData = this.fermataData.slice(this.fermataData.length - 8);
-    }
-
-    const x = d3.scaleLinear()
-      .domain([0, filteredFermataData.length - 1])
-      .range([0, width]);
-
-    const y = height / 2;
-
-    const line = d3.line<any>()
-      .x((d, i) => x(i))
-      .y(y);
-
-   
-
-
-      
-      
-    const path = g.append('path')
-      .datum(filteredFermataData)
-      .attr('class', 'line')
-      .attr('d', line)
-      .style('fill', 'none')
-      .style('stroke', 'steelblue');
-
-    const dots = g.selectAll('.dot')
-      .data(filteredFermataData)
-      .enter().append('g')
-      .attr('class', 'dot')
-      .attr('transform', (d, i) => `translate(${x(i)}, ${y})`);
-
-      const colorScale = d3.scaleOrdinal()
-      .domain(filteredFermataData.flatMap(d => d.statiMezzi))
-      .range(['purple', 'green', 'yellow']);
+    renderTimebar() {
+      console.log('Direction:', this.direction);
+      const svg = d3.select('svg');
   
-      dots.append('circle')
-      .attr('cx', 0)
-      .attr('cy', 0)
-      .attr('r', 5)
-      .attr('fill', function(this: SVGCircleElement, d: any): any {
-          const posizioneMezzo = d.posizioneMezzo;
-          if (posizioneMezzo === "presente") {
-              const idMezzi = d.statiMezzi;
-              if (idMezzi && posizioneMezzo) {
-             
-                  const color = colorScale(idMezzi);
-                  return color;
-              }
-          } else if (posizioneMezzo === "assente") {
-              
-              return 'steelblue';
-          }
-          
-      });
-
-
-   
-   
-
-
-   
-
-     
-   
-     
-
-     
-
-      dots.append('text')
-      .text(d => d.nomeFermata)
-      .attr('x', (d, i, nodes) => {
-        if (i === nodes.length - 1) {
-          return 8; 
-        } else {
-          return 8; 
-        }
-      })
-      .attr('y', -8)
-      .attr('text-anchor', (d, i, nodes) => {
-        if (i === nodes.length - 1) {
-          return 'end'; 
-        } else {
-          return 'start'; 
-        }
-      })
-      .style('font-size', '12px')
-      .style('font-weight', 'bold');
+      const margin = { top: 50, right: 20, bottom: 50, left: 20 };
+      const width = +svg.attr('width') - margin.left - margin.right;
+      const height = +svg.attr('height') - margin.top - margin.bottom;
+  
+      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+      
+       
+        const searchTermNum = parseInt(this.searchTerm);
+        const levanteStops = this.fermataData.filter(d => d.direzione.toLowerCase() === 'levante');
+        const ponenteStops = this.fermataData.filter(d => d.direzione.toLowerCase() === 'ponente');
     
-
-   
-      dots.style('display', (d, i): string | null => {
-        if (this.direction === 'forward') {
-          return i < 8 ? 'block' : 'none';
-        } else if (this.direction === 'backward') {
-          return i >= filteredFermataData.length - 8 ? 'block' : 'none'; 
-        }
-        return null; 
-      });
-
+        let firstLineStops = [];
+        let secondLineStops = [];
     
-
-      dots.each((d, i, nodes) => {
-        if (i < nodes.length - 1) {
-          const nextXCoord = x(i + 1);
-          const arrowX = nextXCoord - ((nextXCoord - x(i)) / 2);
-          let arrow;
-          if (this.direction === 'forward') {
-            arrow = g.append('path')
-              .attr('d', `M${arrowX},${y - 5} L${arrowX + 5},${y} L${arrowX},${y + 5} Z`)
-              .style('fill', 'black');
-          } else if (this.direction === 'backward') {
-            arrow = g.append('path')
-              .attr('d', `M${arrowX},${y - 5} L${arrowX + 5},${y} L${arrowX},${y + 5} Z`)
-              .style('fill', 'black');
-          }
-
+        if (searchTermNum <= 9) {
+          firstLineStops = levanteStops.slice(0, 8);
+          secondLineStops = levanteStops.slice(8, 15);
+        } else if (searchTermNum >= 9) {
+          firstLineStops = ponenteStops.slice(7, 15); 
+          secondLineStops = ponenteStops.slice(0, 7); 
+        }
         
-      
-          
-          if (d.numMezzi > 1) {
-            const dotGroup = g.append('g')
-              .attr('class', 'dot-group')
-              .attr('transform', `translate(${x(i)}, ${y})`)
-              .style('cursor', 'pointer')
-              .on('click', () => {
-                
-                const attachedDots = dotGroup.selectAll('.attached-dot');
-                const attachmentLines = dotGroup.selectAll('.attachment-line');
-                attachedDots.style('display', attachedDots.style('display') === 'none' ? 'block' : 'none');
-                attachmentLines.style('display', attachmentLines.style('display') === 'none' ? 'block' : 'none');
-              });
-      
-            
-            const mainDot = dotGroup.append('g')
-              .attr('class', 'main-dot');
-      
-            mainDot.append('circle')
+    
+        console.log('First Line Stops:', firstLineStops);
+        console.log('Second Line Stops:', secondLineStops);
+  
+      // Define scales
+      const x1 = d3.scaleLinear()
+          .domain([0, firstLineStops.length - 1])
+          .range([0, width]);
+  
+      const x2 = d3.scaleLinear()
+          .domain([0, secondLineStops.length - 1])
+          .range([width, 0]);
+  
+      const y1 = height / 3; 
+      const y2 = (2 * height) / 3 + 50; 
+  
+      // Define lines
+      const line1 = d3.line<any>()
+          .x((d, i) => x1(i))
+          .y(y1);
+  
+      const line2 = d3.line<any>()
+          .x((d, i) => x2(i))
+          .y(y2);
+  
+      // Draw the first line
+      g.append('path')
+          .datum(firstLineStops)
+          .attr('class', 'line')
+          .attr('d', line1)
+          .style('fill', 'none')
+          .style('stroke', 'steelblue');
+  
+      // Draw the second line
+      g.append('path')
+          .datum(secondLineStops)
+          .attr('class', 'line')
+          .attr('d', line2)
+          .style('fill', 'none')
+          .style('stroke', 'steelblue');
+  
+      // Create dots for the first and second parts
+      const dots1 = g.selectAll('.dot1')
+          .data(firstLineStops)
+          .enter().append('g')
+          .attr('class', 'dot1')
+          .attr('transform', (d, i) => `translate(${x1(i)}, ${y1})`);
+  
+      const dots2 = g.selectAll('.dot2')
+          .data(secondLineStops)
+          .enter().append('g')
+          .attr('class', 'dot2')
+          .attr('transform', (d, i) => `translate(${x2(i)}, ${y2})`);
+  
+      // Define color scale
+      const colorScale = d3.scaleOrdinal()
+          .domain([...new Set(this.fermataData.flatMap(d => d.datiMezziFE.map((mezzo: any) => mezzo.idMezzo)))])
+          .range(['#00FF00', '#FFC0CB', '#800080', '#FFA500', '#FFFF00', '#0000FF', '#808080', '#A52A2A', '#722f37', '#7FFFD4', '#ADD8E6', '#40E0D0']);
+  
+      const colorMapping: { [key: number]: any } = {};
+      this.fermataData.flatMap(d => d.datiMezziFE).forEach((mezzo: any) => {
+          colorMapping[mezzo.idMezzo] = colorScale(mezzo.idMezzo);
+      });
+      this.colorMapping.emit(colorMapping);
+  
+      // Add circles to the dots
+      const addCircles = (dots: any) => {
+          dots.append('circle')
               .attr('cx', 0)
               .attr('cy', 0)
               .attr('r', 5)
-              .style('fill', 'yellow');
-      
-            mainDot.append('text')
-              .text(d.numMezzi)
-              .attr('text-anchor', 'middle')
-              .attr('dy', 3)
-              .style('fill', 'black');
-      
-            
-            const colors = ['red', 'purple', 'green']; 
-            for (let j = 0; j < d.numMezzi; j++) {
-              dotGroup.append('circle')
-                .attr('class', 'attached-dot')
-                .attr('cx', 0)
-                .attr('cy', j * 10) 
-                .attr('r', 3)
-                .style('fill', colors[j] || 'black')
-                .style('display', 'none'); 
-      
-             
-              dotGroup.append('line')
-                .attr('class', 'attachment-line')
-                .attr('x1', 0)
-                .attr('y1', 0)
-                .attr('x2', 0)
-                .attr('y2', j * 10)
-                .style('stroke', 'black')
-                .style('stroke-dasharray', '2,2') // Dotted line
-                .style('display', 'none')
+              .attr('fill', (d: any): any => {
+                  const mezzo = d.datiMezziFE.find((mezzo: any) => mezzo.statoMezzo === 'in stazione' || mezzo.statoMezzo === 'in arrivo');
+                  if (mezzo) {
+                      return colorScale(mezzo.idMezzo);
+                  }
+                  return 'steelblue';
+              });
+  
+          dots.append('text')
+              .text((d: { nomeFermata: any; }) => d.nomeFermata)
+              .attr('x', -22)
+              .attr('y', -8)
+              .attr('text-anchor', 'start')
+              .style('font-size', '12px')
+              .style('font-weight', 'bold');
+      };
+  
+      addCircles(dots1);
+      addCircles(dots2);
+  
+      // Add arrows for direction
+      const addArrows = (dots: any, xScale: any, y: number, direction: 'forward' | 'backward') => {
+          dots.each((d: any, i: number, nodes: string | any[]) => {
+              if (i < nodes.length - 1) {
+                  const nextXCoord = xScale(i + 1);
+                  const arrowX = nextXCoord - ((nextXCoord - xScale(i)) / 2);
+                  const arrowPath = direction === 'forward'
+                      ? `M${arrowX},${y - 5} L${arrowX + 5},${y} L${arrowX},${y + 5} Z`
+                      : `M${arrowX},${y - 5} L${arrowX - 5},${y} L${arrowX},${y + 5} Z`;
+                  g.append('path')
+                      .attr('d', arrowPath)
+                      .style('fill', 'black');
 
-                
-            }
-          }
-        }
-      });
-    }
-  }
+                      
+              }
               
+          });
+
+          
+      };
+
+   // Draw the dashed line between Brignole and Marassi
+   const brignole = { x: x1(firstLineStops.length - 1), y: y1 };
+   const marassi = { x: x2(0), y: y2 };
+
+   g.append('line')
+     .attr('x1', brignole.x)
+     .attr('y1', brignole.y)
+     .attr('x2', brignole.x)
+     .attr('y2', marassi.y)
+     .style('stroke', 'red')
+     .style('stroke-width', 2)
+     .style('stroke-dasharray', '5,5');
   
-
+      addArrows(dots1, x1, y1, 'forward');
+      addArrows(dots2, x2, y2, 'backward');
   
-
-
+      // debug
+      firstLineStops.forEach(stop => console.log('First Line Stop:', stop));
+      secondLineStops.forEach(stop => console.log('Second Line Stop:', stop));
+    }
+  } 

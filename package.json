@@ -25,6 +25,7 @@
     "@asymmetrik/ngx-leaflet": "^17.0.0",
     "@nebular/eva-icons": "13.0.0",
     "@nebular/theme": "^13.0.0",
+    "angular-web-storage": "^17.0.0",
     "d3": "^7.9.0",
     "eva-icons": "^1.1.3",
     "firebase": "^10.11.0",

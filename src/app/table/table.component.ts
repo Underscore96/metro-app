@@ -26,6 +26,7 @@ export class TableComponent implements OnInit{
   lastFetchTimestamp: any;
   direction: 'levante' | 'ponente' | any; 
   showMap: boolean = false;
+  selectedStop: any;
 
   
 
@@ -39,6 +40,13 @@ export class TableComponent implements OnInit{
   constructor(private http: HttpClient) {}
 
   colorMapping: { [key: number]: string } = {};
+
+  handleSelectedStop(stop: any) {
+    this.selectedStop = stop;
+    // Update the fermate array to include only the selected stop
+    this.fermate = [stop];
+    
+  }
 
   receiveColorMapping(mapping: { [key: number]: string }) {
     this.colorMapping = mapping;

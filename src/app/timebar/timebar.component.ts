@@ -1,6 +1,6 @@
 
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -14,6 +14,7 @@ export class TimebarComponent implements OnInit{
 @Input() direction!: 'levante' | 'ponente' | null;
 @Input() searchTerm!: any;
 @Output() colorMapping = new EventEmitter<{ [key: number]: string }>();
+@Output() selectedStop = new EventEmitter<any>();
 fermataData: any[] = [];
 
 
@@ -24,6 +25,7 @@ fermataData: any[] = [];
 
   ngOnInit() {
     this.fetchFermataData();
+
   }
 
   // ngOnChanges(changes: SimpleChanges) {
@@ -43,12 +45,15 @@ fermataData: any[] = [];
     renderTimebar() {
       console.log('Direction:', this.direction);
       const svg = d3.select('svg');
+      
   
       const margin = { top: 50, right: 20, bottom: 50, left: 20 };
       const width = +svg.attr('width') - margin.left - margin.right;
       const height = +svg.attr('height') - margin.top - margin.bottom;
   
       const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+
+    
       
        
         const searchTermNum = parseInt(this.searchTerm);
@@ -58,10 +63,10 @@ fermataData: any[] = [];
         let firstLineStops = [];
         let secondLineStops = [];
     
-        if (searchTermNum <= 9) {
+        if (searchTermNum <= 15) {
           firstLineStops = levanteStops.slice(0, 8);
           secondLineStops = levanteStops.slice(8, 15);
-        } else if (searchTermNum >= 9) {
+        } else if (searchTermNum >= 15) {
           firstLineStops = ponenteStops.slice(7, 15); 
           secondLineStops = ponenteStops.slice(0, 7); 
         }
@@ -84,11 +89,11 @@ fermataData: any[] = [];
   
       // Define lines
       const line1 = d3.line<any>()
-          .x((d, i) => x1(i))
+          .x((_d, i) => x1(i))
           .y(y1);
   
       const line2 = d3.line<any>()
-          .x((d, i) => x2(i))
+          .x((_d, i) => x2(i))
           .y(y2);
   
       // Draw the first line
@@ -112,13 +117,17 @@ fermataData: any[] = [];
           .data(firstLineStops)
           .enter().append('g')
           .attr('class', 'dot1')
-          .attr('transform', (d, i) => `translate(${x1(i)}, ${y1})`);
+          .attr('transform', (_d, i) => `translate(${x1(i)}, ${y1})`)
+          .on('click', (_event: any, d: any) => this.selectedStop.emit(d))
+
   
       const dots2 = g.selectAll('.dot2')
           .data(secondLineStops)
           .enter().append('g')
           .attr('class', 'dot2')
-          .attr('transform', (d, i) => `translate(${x2(i)}, ${y2})`);
+          .attr('transform', (_d, i) => `translate(${x2(i)}, ${y2})`)
+          .on('click', (_event: any, d: any) => this.selectedStop.emit(d))
+          
   
       // Define color scale
       const colorScale = d3.scaleOrdinal()
@@ -137,6 +146,7 @@ fermataData: any[] = [];
               .attr('cx', 0)
               .attr('cy', 0)
               .attr('r', 5)
+              // .on('click', (_event: any, d: any) => this.selectedStop.emit(d))
               .attr('fill', (d: any): any => {
                   const mezzo = d.datiMezziFE.find((mezzo: any) => mezzo.statoMezzo === 'in stazione' || mezzo.statoMezzo === 'in arrivo');
                   if (mezzo) {
@@ -151,7 +161,8 @@ fermataData: any[] = [];
               .attr('y', -8)
               .attr('text-anchor', 'start')
               .style('font-size', '12px')
-              .style('font-weight', 'bold');
+              .style('font-weight', 'bold')
+              // .on('click', (event: any, d: any) => this.selectedStop.emit(d)); 
       };
   
       addCircles(dots1);
@@ -159,7 +170,7 @@ fermataData: any[] = [];
   
       // Add arrows for direction
       const addArrows = (dots: any, xScale: any, y: number, direction: 'forward' | 'backward') => {
-          dots.each((d: any, i: number, nodes: string | any[]) => {
+          dots.each((_d: any, i: number, nodes: string | any[]) => {
               if (i < nodes.length - 1) {
                   const nextXCoord = xScale(i + 1);
                   const arrowX = nextXCoord - ((nextXCoord - xScale(i)) / 2);
@@ -179,17 +190,23 @@ fermataData: any[] = [];
       };
 
    // Draw the dashed line between Brignole and Marassi
-   const brignole = { x: x1(firstLineStops.length - 1), y: y1 };
-   const marassi = { x: x2(0), y: y2 };
+     // Identify the indices of Brignole and Marassi in the stop arrays
+  const brignoleIndex1 = this.findStopIndex(firstLineStops, 'Brignole');
+  const marassiIndex2 = this.findStopIndex(secondLineStops, 'Marassi');
 
-   g.append('line')
-     .attr('x1', brignole.x)
-     .attr('y1', brignole.y)
-     .attr('x2', brignole.x)
-     .attr('y2', marassi.y)
-     .style('stroke', 'red')
-     .style('stroke-width', 2)
-     .style('stroke-dasharray', '5,5');
+  if (brignoleIndex1 !== -1 && marassiIndex2 !== -1) {
+    const brignole = { x: x1(brignoleIndex1), y: y1 };
+    const marassi = { x: x2(marassiIndex2), y: y2 };
+
+    g.append('line')
+      .attr('x1', brignole.x)
+      .attr('y1', brignole.y)
+      .attr('x2', marassi.x)
+      .attr('y2', marassi.y)
+      .style('stroke', 'red')
+      .style('stroke-width', 2)
+      .style('stroke-dasharray', '5,5');
+  }
   
       addArrows(dots1, x1, y1, 'forward');
       addArrows(dots2, x2, y2, 'backward');
@@ -197,5 +214,10 @@ fermataData: any[] = [];
       // debug
       firstLineStops.forEach(stop => console.log('First Line Stop:', stop));
       secondLineStops.forEach(stop => console.log('Second Line Stop:', stop));
+    }
+
+
+    findStopIndex(stops: any[], stopName: string) {
+      return stops.findIndex(stop => stop.nomeFermata === stopName);
     }
   } 

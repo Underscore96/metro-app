@@ -15,7 +15,7 @@
     <tr *ngFor="let fermata of metroData">
       <td>{{ fermata.numFermata }}</td>
       <td>{{ fermata.nome }}</td>
-      <td>{{ fermata.linea.nomeLinea }}</td>
+      <td>{{ fermata.nomeLinea }}</td>
       <td>
         <button (click)="deleteStop(fermata)">Delete</button>
         <button (click)="renameStop(fermata)">Rename</button>

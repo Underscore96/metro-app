@@ -49,11 +49,11 @@ table {
 th, td {
   padding: 8px;
   text-align: left;
-  border-bottom: 1px solid #ba1d1d;
+  border-bottom: 1px solid #f3e8e8e2;
 }
 
 th {
-  background-color: #d86c6cac;
+  background-color: #e0d8d8ac;
 }
 
 
@@ -276,7 +276,7 @@ body {
 .card {
   position: absolute;
   background-color: white;
-  top: 250%;
+  top: 190%;
   left: 50%;
   width: 200px;
   height: 100px;
@@ -306,6 +306,24 @@ body {
   border-width: 10px 10px 0 10px;
   border-color: white transparent transparent transparent;
 }
+
+
+.arrivi-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  
+    li {
+      padding: 0.25em;
+      border-radius: 4px;
+      border: 3px solid transparent; // Default border color
+  
+      &.missed {
+        border-color: red; // Border color for missed arrivals
+      }
+    }
+  }
+  
 
 
 

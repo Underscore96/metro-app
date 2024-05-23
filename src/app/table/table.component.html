@@ -1,10 +1,19 @@
 <form (submit)="searchFermata()">
-    <input type="search" placeholder="Numero fermata..." [(ngModel)]="searchTerm" name="searchTerm">
-    <!-- <button type="submit">Search</button> -->
+    <input
+      type="search"
+      placeholder="Numero fermata..."
+      [(ngModel)]="searchTerm"
+      name="searchTerm"
+    />
     <button mat-button type="submit">
       <span class="material-symbols-outlined" (click)="searchFermata()">search</span>
     </button>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+  
     <div class="table-container" [class.open]="isTableOpen">
       <table>
         <thead>
@@ -18,84 +27,77 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let fermata of fermate">
-              <td>{{ fermata.direzione}}</td>
+          <tr *ngFor="let fermata of fermate">
+            <td>{{ fermata.direzione }}</td>
   
-              <td>
-              
+            <td>
+              <ul>
                 <ng-container *ngFor="let arrival of fermata.datiMezziFE">
-                  <li> 
-                    <span>{{arrival.destinazione }}</span>
-                  </li> 
+                  <li>
+                    <span>{{ arrival.destinazione }}</span>
+                  </li>
                 </ng-container>
-              </td>
+              </ul>
+            </td>
   
-              <td>
-              
+            <td>
+              <ul class="arrivi-list">
                 <ng-container *ngFor="let arrival of fermata.datiMezziFE">
-                  <li [style.background-color]="isArrivalTimeGreaterThanCurrentTime(arrival.orarioPrevisto, fermata.orarioAttuale) ? 'red' : 'transparent'">
-                    <li [style.background-color]="getColorForIdMezzo(arrival.idMezzo)">
+                  <li
+                    [ngClass]="{
+                      missed: isArrivalTimeGreaterThanCurrentTime(arrival.orarioPrevisto, fermata.orarioAttuale)
+                    }"
+                    [ngStyle]="{
+                      'background-color': getColorForIdMezzo(arrival.idMezzo)
+                    }"
+                  >
                     <span>{{ formatArrivalTime(arrival.orarioPrevisto) }}</span>
-                  </li> 
+                  </li>
                 </ng-container>
-              </td>
-              <td>
+              </ul>
+            </td>
+  
+            <td>
+              <ul>
                 <ng-container *ngFor="let arrival of fermata.datiMezziFE">
                   <li>
                     <span>{{ formatDelayTime(arrival.ritardo, arrival.orarioPrevisto) }}</span>
-                  </li> 
+                  </li>
                 </ng-container>
-              </td>
-                <!-- <li><td>{{ formatDelayTime(fermata.orariMezzi[0].ritardo, fermata.orariMezzi[0].orarioPrevisto) }}</td></li> -->
+              </ul>
+            </td>
   
-                <!-- <ng-container *ngFor="let arrivo of fermata.orariMezzi.orarioPrevisto">
-                  <td>{{ fermata.orariMezzi.orarioPrevisto }}</td> -->
-                 <!-- <li> {{ formatArrivalTime(arrivo) }}</li> -->
-                  
-                <!-- </ng-container>
-              </td> -->
-              <!-- <td> {{ fermata.tempiArrivo}}</td> -->
-         
-            
-              <td>{{ fermata.nomeFermata }}</td>
-              <td>
+            <td>{{ fermata.nomeFermata }}</td>
   
-               
+            <td>
+              <ng-container [ngSwitch]="fermata.previsioneMeteo">
+                <mat-icon *ngSwitchCase="'sole'">wb_sunny</mat-icon>
+                <mat-icon *ngSwitchCase="'pioggia'">umbrella</mat-icon>
+                <mat-icon *ngSwitchCase="'nuvolo'">wb_cloudy</mat-icon>
+              </ng-container>
+            </td>
   
-                
+            <td colspan="5" class="timebar-cell">
+              <app-timebar
+                [direction]="getDirection()"
+                [searchTerm]="searchTerm"
+                (colorMapping)="receiveColorMapping($event)"
+                (selectedStop)="handleSelectedStop($event)"
+              ></app-timebar>
+            </td>
   
-              <mat-icon *ngIf="fermata.previsioneMeteo === 'sole'">wb_sunny</mat-icon>
-              <mat-icon *ngIf="fermata.previsioneMeteo === 'pioggia'">
-              umbrella</mat-icon>
-              <mat-icon *ngIf="fermata.previsioneMeteo === 'nuvolo'">
-                wb_cloudy</mat-icon>
-            
+            <td class="card">
+              Info:
+              <p>➤ Direzione</p>
+              <p>🟡🟢🟠 la metro è qui</p>
+              <p>🟥 la metro è passata</p>
+              <p>┄ la metro sta arrivando</p>
+            </td>
   
-                <td colspan="5" class="timebar-cell">
-                  <!-- <app-timebar [direction]="getDirection()" (colorMapping)="receiveColorMapping($event)"></app-timebar> -->
-                  <app-timebar [direction]="getDirection()" [searchTerm]="searchTerm" (colorMapping)="receiveColorMapping($event)"></app-timebar>
-                </td>
-  
-                  <td class="card"> Info:
-                      <p>➤  Direzione</p>
-                      <p>🟡 la metro è qui</p>
-                    
-                     </td>
-  
-  
-                     <td>{{fermata.orarioAttuale}}</td>
-              
-  
-            </tr>
-  
-            
-          
-            
+            <td>{{ fermata.orarioAttuale }}</td>
+          </tr>
         </tbody>
-  
-        
       </table>
-      
     </div>
   </form>
   

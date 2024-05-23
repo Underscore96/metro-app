@@ -27,7 +27,8 @@ export class MapComponent implements AfterViewInit{
     tiles.addTo(this.map);
 
     const markers = [
-      L.marker([44.4072060, 8.9347032], {
+  
+      L.marker([44.4072798, 8.9485139], {
         icon: L.divIcon({
           className: 'custom-icon',
           html: '<div style="background-color: red; width: 16px; height: 16px; border-radius: 50%;"></div>',
@@ -35,7 +36,7 @@ export class MapComponent implements AfterViewInit{
           iconAnchor: [8, 8]
         })
       }),
-      L.marker([44.4072798, 8.9485139], {
+      L.marker([44.4072060, 8.9347032], {
         icon: L.divIcon({
           className: 'custom-icon',
           html: '<div style="background-color: red; width: 16px; height: 16px; border-radius: 50%;"></div>',

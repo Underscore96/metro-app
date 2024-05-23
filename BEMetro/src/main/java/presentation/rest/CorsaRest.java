@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import db.entity.TestBuilder;
+import db.entity.Corsa;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -14,11 +14,10 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
-import presentation.pojo.PojoMezzo;
-import service.MezzoService;
+import service.CorsaService;
 
-@Path("/mezzo")
-public class MezzoRest {
+@Path("/Corsa")
+public class CorsaRest {
 	Session sessione = null;
 
 	@GET
@@ -31,12 +30,12 @@ public class MezzoRest {
 	@Path("/crea")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response creaMezzo(PojoMezzo mezzo) {
+	public Response creaCorsa(Corsa corsa) {
 		String risultato = null;
 		Response risposta = null;
 
 		try {
-			risultato = MezzoService.creaMezzo(mezzo);
+			risultato = CorsaService.creaCorsa(corsa);
 			risposta = Response.ok(risultato).build();
 
 		} finally {
@@ -51,13 +50,13 @@ public class MezzoRest {
 	@Path("/leggi")
 	@Consumes("Application/json")
 	@Produces("Application/json")
-	public Response leggiMezzo(PojoMezzo mezzo) {
+	public Response leggiCorsa(Corsa corsa) {
 		Response risposta = null;
-		PojoMezzo mezzoTrovato = null;
+		Corsa corsaTrovata = null;
 
 		try {
-			mezzoTrovato = MezzoService.leggiMezzo(mezzo);
-			risposta = Response.ok(mezzoTrovato).build();
+			corsaTrovata = CorsaService.leggiCorsa(corsa);
+			risposta = Response.ok(corsaTrovata).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -70,13 +69,13 @@ public class MezzoRest {
 	@Path("/aggiorna")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response aggiornaMezzo(PojoMezzo mezzo) {
-		PojoMezzo mezzoAggiornato = null;
+	public Response aggiornaCorsa(Corsa corsa) {
+		Corsa corsaAggiornato = null;
 		Response risposta = null;
 
 		try {
-			mezzoAggiornato = MezzoService.aggiornaMezzo(mezzo);
-			risposta = Response.ok(mezzoAggiornato).build();
+			corsaAggiornato = CorsaService.aggiornaCorsa(corsa);
+			risposta = Response.ok(corsaAggiornato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();
@@ -88,12 +87,12 @@ public class MezzoRest {
 	@DELETE
 	@Path("/cancella")
 	@Produces("application/json")
-	public Response cancellaMezzo(@QueryParam("numMezzo") Integer numMezzo) {
+	public Response cancellaCorsa(@QueryParam("numCorsa") Integer numCorsa) {
 		String risultato = null;
 		Response risposta = null;
 
 		try {
-			risultato = MezzoService.cancellaMezzo(numMezzo);
+			risultato = CorsaService.cancellaCorsa(numCorsa);
 			risposta = Response.ok(risultato).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
@@ -104,35 +103,16 @@ public class MezzoRest {
 	}
 
 	@GET
-	@Path("tutti")
+	@Path("tutte")
 	@Produces("application/Json")
-	public Response trovaTuttiIMezzi() {
-		List<PojoMezzo> listaMezzi = null;
+	public Response trovaTutteLeCorse() {
+		List<Corsa> listaCorse = null;
 		Response risposta = null;
 
 		try {
-			listaMezzi = MezzoService.trovaTuttiIMezzi();
+			listaCorse = CorsaService.trovaTutteLeCorse();
 
-			risposta = Response.ok(listaMezzi).build();
-		} finally {
-			if (sessione != null && sessione.isOpen()) {
-				sessione.close();
-			}
-		}
-		return risposta;
-	}
-	@POST
-	@Path("testesempio")
-	@Consumes("Application/json")
-	@Produces("Application/json")
-	public Response creaTestEsempioService(TestBuilder test) {
-		String risultato = null;
-		Response risposta = null;
-
-		try {
-			risultato = MezzoService.creaTestBuilderService(test);
-			risposta = Response.ok(risultato).build();
-
+			risposta = Response.ok(listaCorse).build();
 		} finally {
 			if (sessione != null && sessione.isOpen()) {
 				sessione.close();

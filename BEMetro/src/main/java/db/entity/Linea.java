@@ -3,6 +3,7 @@ package db.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +38,10 @@ public class Linea {
 	@Column(name = "nomeLinea", length = 10, nullable = false, unique = true)
 	private String nomeLinea;
 
-	@Column(name = "destinazione", length = 40, nullable = true, unique = false)
+	@Column(name = "numLinea", length = 10, nullable = true, unique = false)
+	private Integer numLinea;
+
+	@Column(name = "destinazione", length = 20, nullable = true, unique = false)
 	private String destinazione;
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "linee")
@@ -44,10 +49,18 @@ public class Linea {
 	@JsonIgnore
 	private List<Fermata> fermate;
 
-	public Linea(String idLinea, String nomeLinea, String destinazione) {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "idCorsa")
+	@JsonManagedReference
+	@JsonIgnore
+	@ToString.Exclude
+	private List<Corsa> corse;
+
+	public Linea(String idLinea, String nomeLinea, Integer numLinea,
+			String destinazione) {
 		super();
 		this.idLinea = idLinea;
 		this.nomeLinea = nomeLinea;
+		this.numLinea = numLinea;
 		this.destinazione = destinazione;
 	}
 }

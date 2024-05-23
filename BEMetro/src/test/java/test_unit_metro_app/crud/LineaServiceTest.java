@@ -137,30 +137,34 @@ class LineaServiceTest {
 
 	@Test
 	void Should_ConvertireALinea_When_PassoPojoFermata() {
-		Linea expected = new Linea("30001", "verde", "Brignole");
+		Linea expected = new Linea("30001", "verde", 1, "Brignole");
 
-		PojoLinea pojoLinea = new PojoLinea("verde", "Brignole");
+		PojoLinea pojoLinea = new PojoLinea("verde", 1, "Brignole");
 
 		Linea actual = new LineaBuilder().setIdLinea("30001")
 				.setNomeLinea(pojoLinea.getNomeLinea())
+				.setNumLinea(pojoLinea.getNumLinea())
 				.setDestinazione(pojoLinea.getDestinazione()).costruisci();
 
-		assertThat(actual).extracting("idLinea", "nomeLinea", "destinazione")
+		assertThat(actual)
+				.extracting("idLinea", "nomeLinea", "numLinea", "destinazione")
 				.containsExactly(expected.getIdLinea(), expected.getNomeLinea(),
-						expected.getDestinazione());
+						expected.getNumLinea(), expected.getDestinazione());
 	}
 
 	@Test
 	void Should_ConvertireAPojoLinea_When_PassoFermata() {
-		PojoLinea expected = new PojoLinea("verde", "Brignole");
+		PojoLinea expected = new PojoLinea("verde", 1, "Brignole");
 
-		Linea Linea = new Linea("30001", "verde", "Brignole");
+		Linea Linea = new Linea("30001", "verde", 1, "Brignole");
 
 		PojoLinea actual = new PojoLineaBuilder()
 				.setNomeLinea(Linea.getNomeLinea())
+				.setNumLinea(Linea.getNumLinea())
 				.setDestinazione(Linea.getDestinazione()).costruisci();
 
-		assertThat(actual).extracting("nomeLinea", "destinazione").containsExactly(
-				expected.getNomeLinea(), expected.getDestinazione());
+		assertThat(actual).extracting("nomeLinea", "numLinea", "destinazione")
+				.containsExactly(expected.getNomeLinea(),
+						expected.getNumLinea(), expected.getDestinazione());
 	}
 }

@@ -12,7 +12,7 @@ import jakarta.persistence.EntityExistsException;
 
 @DisplayName("LINEA DAO")
 class LineaDAOTest {
-	private final Linea linea = new Linea("30000", "30000", "Brignole");
+	private final Linea linea = new Linea("30000", "30000", 1, "Brignole");
 
 	@Test
 	void when_ArgumentoNullo_Expect_IllegalArgumentException() {

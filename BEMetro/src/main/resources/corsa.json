@@ -1,0 +1,182 @@
+[
+	{
+		"numCorsa": 1,
+		"orarioFineCorsa": "2024-05-15T09:40",
+		"ritardoMedio": "00:10"
+	},
+	{
+		"numCorsa": 2,
+		"orarioFineCorsa": "2024-05-15T13:15",
+		"ritardoMedio": "00:05"
+	},
+	{
+		"numCorsa": 3,
+		"orarioFineCorsa": "2024-05-15T18:30",
+		"ritardoMedio": "00:20"
+	},
+	{
+		"numCorsa": 4,
+		"orarioFineCorsa": "2024-05-15T10:50",
+		"ritardoMedio": "00:12"
+	},
+	{
+		"numCorsa": 5,
+		"orarioFineCorsa": "2024-05-15T14:25",
+		"ritardoMedio": "00:02"
+	},
+	{
+		"numCorsa": 6,
+		"orarioFineCorsa": "2024-05-15T19:40",
+		"ritardoMedio": "00:08"
+	},
+	{
+		"numCorsa": 7,
+		"orarioFineCorsa": "2024-05-15T11:20",
+		"ritardoMedio": "00:15"
+	},
+	{
+		"numCorsa": 8,
+		"orarioFineCorsa": "2024-05-15T15:05",
+		"ritardoMedio": "00:18"
+	},
+	{
+		"numCorsa": 9,
+		"orarioFineCorsa": "2024-05-15T20:20",
+		"ritardoMedio": "00:22"
+	},
+	{
+		"numCorsa": 10,
+		"orarioFineCorsa": "2024-05-15T12:30",
+		"ritardoMedio": "00:10"
+	},
+	{
+		"numCorsa": 11,
+		"orarioFineCorsa": "2024-05-15T16:15",
+		"ritardoMedio": "00:05"
+	},
+	{
+		"numCorsa": 12,
+		"orarioFineCorsa": "2024-05-15T21:30",
+		"ritardoMedio": "00:20"
+	},
+	{
+		"numCorsa": 13,
+		"orarioFineCorsa": "2024-05-15T13:40",
+		"ritardoMedio": "00:12"
+	},
+	{
+		"numCorsa": 14,
+		"orarioFineCorsa": "2024-05-15T17:25",
+		"ritardoMedio": "00:02"
+	},
+	{
+		"numCorsa": 15,
+		"orarioFineCorsa": "2024-05-15T22:40",
+		"ritardoMedio": "00:08"
+	},
+	{
+		"numCorsa": 16,
+		"orarioFineCorsa": "2024-05-15T14:00",
+		"ritardoMedio": "00:15"
+	},
+	{
+		"numCorsa": 17,
+		"orarioFineCorsa": "2024-05-15T17:45",
+		"ritardoMedio": "00:18"
+	},
+	{
+		"numCorsa": 18,
+		"orarioFineCorsa": "2024-05-15T23:00",
+		"ritardoMedio": "00:22"
+	},
+	{
+		"numCorsa": 19,
+		"orarioFineCorsa": "2024-05-15T15:10",
+		"ritardoMedio": "00:10"
+	},
+	{
+		"numCorsa": 20,
+		"orarioFineCorsa": "2024-05-15T18:45",
+		"ritardoMedio": "00:05"
+	},
+	{
+		"numCorsa": 21,
+		"orarioFineCorsa": "2024-05-15T23:00",
+		"ritardoMedio": "00:20"
+	},
+	{
+		"numCorsa": 22,
+		"orarioFineCorsa": "2024-05-15T16:20",
+		"ritardoMedio": "00:12"
+	},
+	{
+		"numCorsa": 23,
+		"orarioFineCorsa": "2024-05-15T20:05",
+		"ritardoMedio": "00:02"
+	},
+	{
+		"numCorsa": 24,
+		"orarioFineCorsa": "2024-05-15T01:20",
+		"ritardoMedio": "00:08"
+	},
+	{
+		"numCorsa": 25,
+		"orarioFineCorsa": "2024-05-15T11:30",
+		"ritardoMedio": "00:15"
+	},
+	{
+		"numCorsa": 26,
+		"orarioFineCorsa": "2024-05-15T15:15",
+		"ritardoMedio": "00:18"
+	},
+	{
+		"numCorsa": 27,
+		"orarioFineCorsa": "2024-05-15T20:30",
+		"ritardoMedio": "00:22"
+	},
+	{
+		"numCorsa": 28,
+		"orarioFineCorsa": "2024-05-15T12:40",
+		"ritardoMedio": "00:10"
+	},
+	{
+		"numCorsa": 29,
+		"orarioFineCorsa": "2024-05-15T16:25",
+		"ritardoMedio": "00:05"
+	},
+	{
+		"numCorsa": 30,
+		"orarioFineCorsa": "2024-05-15T21:40",
+		"ritardoMedio": "00:20"
+	},
+	{
+		"numCorsa": 31,
+		"orarioFineCorsa": "2024-05-15T13:50",
+		"ritardoMedio": "00:12"
+	},
+	{
+		"numCorsa": 32,
+		"orarioFineCorsa": "2024-05-15T17:35",
+		"ritardoMedio": "00:02"
+	},
+	{
+		"numCorsa": 33,
+		"orarioFineCorsa": "2024-05-15T22:50",
+		"ritardoMedio": "00:08"
+	},
+	{
+		"numCorsa": 34,
+		"orarioFineCorsa": "2024-05-15T18:10",
+		"ritardoMedio": "00:02"
+	},
+	{
+		"numCorsa": 35,
+		"orarioFineCorsa": "2024-05-15T22:45",
+		"ritardoMedio": "00:15"
+	},
+	{
+		"numCorsa": 36,
+		"orarioFineCorsa": "2024-05-15T23:55",
+		"ritardoMedio": "00:03"
+	}
+]

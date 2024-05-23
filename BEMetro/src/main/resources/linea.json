@@ -1,18 +1,22 @@
 [
 	{
 		"nomeLinea": "verde",
+		"numLinea": 1,
 		"destinazione": "Brignole"
 	},
 	{
 		"nomeLinea": "gialla",
+		"numLinea": 2,
 		"destinazione": "Molassana"
 	},
 	{
 		"nomeLinea": "rossa",
+		"numLinea": 2,
 		"destinazione": "Brignole"
 	},
 	{
 		"nomeLinea": "blu",
+		"numLinea": 1,
 		"destinazione": "Brin"
 	}
 ]

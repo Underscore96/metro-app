@@ -30,6 +30,7 @@ public class LineaService {
 
 		try {
 			dbLinea = new LineaBuilder().setNomeLinea(linea.getNomeLinea())
+					.setNumLinea(linea.getNumLinea())
 					.setDestinazione(linea.getDestinazione())
 					.setFermate(linea.getFermate()).costruisci();
 
@@ -75,6 +76,7 @@ public class LineaService {
 
 			risultato = new PojoLineaBuilder()
 					.setNomeLinea(lineaDB.getNomeLinea())
+					.setNumLinea(lineaDB.getNumLinea())
 					.setDestinazione(lineaDB.getDestinazione())
 					.setFermate(lineaDB.getFermate()).costruisci();
 
@@ -119,6 +121,7 @@ public class LineaService {
 			lineaAggiornata = new LineaBuilder()
 					.setIdLinea(lineaVecchia.getIdLinea())
 					.setNomeLinea(lineaVecchia.getNomeLinea())
+					.setNumLinea(linea.getNumLinea())
 					.setDestinazione(linea.getDestinazione())
 					.setFermate(linea.getFermate()).costruisci();
 
@@ -132,6 +135,7 @@ public class LineaService {
 
 			risultato = new PojoLineaBuilder()
 					.setNomeLinea(lineaAggiornata.getNomeLinea())
+					.setNumLinea(lineaAggiornata.getNumLinea())
 					.setDestinazione(lineaAggiornata.getDestinazione())
 					.setFermate(lineaAggiornata.getFermate()).costruisci();
 
@@ -209,6 +213,7 @@ public class LineaService {
 
 				lineaSingola = new PojoLineaBuilder()
 						.setNomeLinea(lineaDB.getNomeLinea())
+						.setNumLinea(lineaDB.getNumLinea())
 						.setDestinazione(lineaDB.getDestinazione())
 						.setFermate(lineaDB.getFermate()).costruisci();
 
@@ -254,6 +259,7 @@ public class LineaService {
 
 				lineaSingola = new PojoLineaBuilder()
 						.setNomeLinea(lineaDB.getNomeLinea())
+						.setNumLinea(lineaDB.getNumLinea())
 						.setDestinazione(lineaDB.getDestinazione())
 						.setFermate(lineaDB.getFermate()).costruisci();
 
@@ -348,6 +354,7 @@ public class LineaService {
 			lineaAggiornata = new LineaBuilder()
 					.setIdLinea(lineaVecchia.getIdLinea())
 					.setNomeLinea(nuovoNome)
+					.setNumLinea(lineaVecchia.getNumLinea())
 					.setDestinazione(lineaVecchia.getDestinazione())
 					.setFermate(lineaVecchia.getFermate()).costruisci();
 
@@ -361,6 +368,7 @@ public class LineaService {
 
 			risultato = new PojoLineaBuilder()
 					.setNomeLinea(lineaAggiornata.getNomeLinea())
+					.setNumLinea(lineaAggiornata.getNumLinea())
 					.setDestinazione(lineaAggiornata.getDestinazione())
 					.setFermate(lineaAggiornata.getFermate()).costruisci();
 

@@ -6,6 +6,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
+import service.excel.GeneratoreFoglioExcel;
 import service.inizializzadb.GestoreDatiDB;
 
 @Path("/gestioneDB")
@@ -21,7 +22,7 @@ public class GestioneDBRest {
 	@GET
 	@Path("/inizializza")
 	@Produces("application/json")
-	public Response dbInitFromJson() {
+	public Response inizializzaDBDaJSON() {
 		Response risposta = null;
 		Object[] risultato;
 		try {
@@ -31,6 +32,21 @@ public class GestioneDBRest {
 			risposta = Response.ok(risultato).build();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (sessione != null)
+				sessione.close();
+		}
+		return risposta;
+	}
+
+	@GET
+	@Path("/download/excel")
+	@Produces("application/Json")
+	public Response downloadExcel() {
+		Response risposta = null;
+		try {
+			GeneratoreFoglioExcel.scaricaExcel();
+			risposta = Response.ok().build();
 		} finally {
 			if (sessione != null)
 				sessione.close();

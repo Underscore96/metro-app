@@ -8,8 +8,7 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 
-import db.entity.Mezzo;
-import db.entity.TestBuilder;
+import db.entity.Corsa;
 import db.util.HibernateUtil;
 import exception.CustomException;
 import exception.ErrorMessages;
@@ -18,28 +17,28 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.ws.rs.core.Response;
 
-public class MezzoDAO {
+public class CorsaDAO {
 	Session sessione = null;
-	private static final String NUMMEZZO = "numMezzo";
+	private static final String NUMCORSA = "numCorsa";
 
-	public void crea(Mezzo mezzo) {
+	public void crea(Corsa corsa) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			sessione.persist(mezzo);
+			sessione.persist(corsa);
 
 			sessione.getTransaction().commit();
 
 		} catch (PropertyValueException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(String
-					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMMEZZO),
+					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMCORSA),
 					Response.Status.CONFLICT);
 		} catch (GenericJDBCException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(
-					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMMEZZO),
+					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMCORSA),
 					Response.Status.CONFLICT);
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
@@ -52,24 +51,24 @@ public class MezzoDAO {
 		}
 	}
 
-	public List<Mezzo> leggiDaNumMezzo(Integer numMezzo) {
-		List<Mezzo> risultati = new ArrayList<>();
+	public List<Corsa> leggiDaNumCorsa(Integer numCorsa) {
+		List<Corsa> risultati = new ArrayList<>();
 		CriteriaBuilder builder;
-		CriteriaQuery<Mezzo> criteria;
-		Root<Mezzo> root;
+		CriteriaQuery<Corsa> criteria;
+		Root<Corsa> root;
 
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
 			builder = sessione.getCriteriaBuilder();
-			criteria = builder.createQuery(Mezzo.class);
-			root = criteria.from(Mezzo.class);
+			criteria = builder.createQuery(Corsa.class);
+			root = criteria.from(Corsa.class);
 
 			criteria.select(root)
-					.where(builder.equal(root.get(NUMMEZZO), numMezzo));
+					.where(builder.equal(root.get(NUMCORSA), numCorsa));
 			risultati = sessione.createQuery(criteria).getResultList();
-			
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -82,24 +81,24 @@ public class MezzoDAO {
 		return risultati;
 	}
 
-	public Mezzo aggiorna(Mezzo mezzo) {
+	public Corsa aggiorna(Corsa corsa) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			mezzo = sessione.merge(mezzo);
+			corsa = sessione.merge(corsa);
 
 			sessione.getTransaction().commit();
-			
+
 		} catch (PropertyValueException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(String
-					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMMEZZO),
+					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMCORSA),
 					Response.Status.CONFLICT);
 		} catch (GenericJDBCException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(
-					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMMEZZO),
+					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMCORSA),
 					Response.Status.CONFLICT);
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
@@ -109,15 +108,15 @@ public class MezzoDAO {
 			if (sessione != null)
 				sessione.close();
 		}
-		return mezzo;
+		return corsa;
 	}
 
-	public void cancella(Mezzo mezzo) {
+	public void cancella(Corsa corsa) {
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
-			sessione.remove(mezzo);
+			sessione.remove(corsa);
 
 			sessione.getTransaction().commit();
 
@@ -130,21 +129,21 @@ public class MezzoDAO {
 		}
 	}
 
-	public List<Mezzo> trovaTuttiIMezzi() {
-		List<Mezzo> risultati = new ArrayList<>();
+	public List<Corsa> trovaTutteLeCorse() {
+		List<Corsa> risultati = new ArrayList<>();
 		CriteriaBuilder builder;
-		CriteriaQuery<Mezzo> criteria;
+		CriteriaQuery<Corsa> criteria;
 
 		try {
 			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
 			sessione.beginTransaction();
 
 			builder = sessione.getCriteriaBuilder();
-			criteria = builder.createQuery(Mezzo.class);
-			criteria.from(Mezzo.class);
+			criteria = builder.createQuery(Corsa.class);
+			criteria.from(Corsa.class);
 
 			risultati = sessione.createQuery(criteria).getResultList();
-			
+
 		} catch (HibernateException e) {
 			sessione.getTransaction().rollback();
 			throw new CustomException(e.getMessage(),
@@ -154,35 +153,5 @@ public class MezzoDAO {
 				sessione.close();
 		}
 		return risultati;
-	}
-	
-	public void creaTestBuilder(TestBuilder testEsempio) {
-		try {
-			sessione = HibernateUtil.getSessionFactory().getCurrentSession();
-			sessione.beginTransaction();
-
-			sessione.persist(testEsempio);
-
-			sessione.getTransaction().commit();
-
-		} catch (PropertyValueException e) {
-			sessione.getTransaction().rollback();
-			throw new CustomException(String
-					.format(ErrorMessages.PROPERTY_VALUE_EXCEPTION, NUMMEZZO),
-					Response.Status.CONFLICT);
-		} catch (GenericJDBCException e) {
-			sessione.getTransaction().rollback();
-			throw new CustomException(
-					String.format(ErrorMessages.UNIQUE_CONSTRAINT, NUMMEZZO),
-					Response.Status.CONFLICT);
-		} catch (HibernateException e) {
-			sessione.getTransaction().rollback();
-			throw new CustomException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		} finally {
-			if (sessione != null) {
-				sessione.close();
-			}
-		}
 	}
 }
